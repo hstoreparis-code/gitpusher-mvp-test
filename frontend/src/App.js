@@ -361,6 +361,13 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 }} />
               </PopoverContent>
             </Popover>
+            <button
+              onClick={() => setMenuOpen((prev) => !prev)}
+              className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 sm:hidden"
+              data-testid="mobile-menu-toggle-button"
+            >
+              <Menu className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>
