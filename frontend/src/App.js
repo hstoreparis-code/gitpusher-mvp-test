@@ -379,7 +379,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
               AI Git Automation
             </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight max-w-2xl mx-auto lg:mx-0">
               {t("heroTitle")}<span className="text-cyan-300">.</span>
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-xl">
