@@ -226,6 +226,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
   const { token } = useAuth();
   const navigate = useNavigate();
   const [authOpen, setAuthOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleGetStarted = () => {
     if (token) {
