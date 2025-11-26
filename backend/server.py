@@ -102,6 +102,8 @@ class ProjectCreate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     language: str = "en"  # "fr" | "en"
+    provider: str = "github"  # github | gitlab | bitbucket | gitea | azure_devops
+
 
 
 class ProjectPublic(BaseModel):
