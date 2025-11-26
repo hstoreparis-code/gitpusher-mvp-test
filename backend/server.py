@@ -16,6 +16,9 @@ import httpx
 import json
 from pathlib import Path
 
+# Setup logging
+logger = logging.getLogger(__name__)
+
 # Load env
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
