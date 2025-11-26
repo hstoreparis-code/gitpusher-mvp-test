@@ -31,15 +31,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 # OAuth & GitHub
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
-GOOGLE_REDIRECT_URI = os.environ.get(
-    "GOOGLE_REDIRECT_URI", "https://gitpusher.preview.emergentagent.com/auth/oauth/google/callback"
-)
+GOOGLE_REDIRECT_URI = os.environ.get("GOOGLE_REDIRECT_URI", "")
 
 GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID", "")
 GITHUB_CLIENT_SECRET = os.environ.get("GITHUB_CLIENT_SECRET", "")
-GITHUB_REDIRECT_URI = os.environ.get(
-    "GITHUB_REDIRECT_URI", "https://gitpusher.preview.emergentagent.com/auth/oauth/github/callback"
-)
+GITHUB_REDIRECT_URI = os.environ.get("GITHUB_REDIRECT_URI", "")
 
 # LLM (Emergent / OpenAI via Emergent gateway)
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY", "")
