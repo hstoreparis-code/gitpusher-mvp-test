@@ -160,6 +160,7 @@ function useI18n() {
     // Already loaded once
     if (dynamicTranslations[code]) {
       setLangState(code);
+      if (typeof window !== "undefined") window.localStorage.setItem("ui_lang", code);
       return;
     }
 
