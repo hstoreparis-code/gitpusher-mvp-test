@@ -816,7 +816,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </p>
             ) : jobs.length === 0 ? (
               <p className="text-slate-500" data-testid="jobs-empty-text">
-                Aucun job pour le moment. Lance une automatisation pour voir l'historique ici.
+                Aucun job pour le moment. Lance une automatisation pour voir l&apos;historique ici.
               </p>
             ) : (
               <div className="space-y-1" data-testid="jobs-list">
