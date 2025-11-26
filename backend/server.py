@@ -407,10 +407,6 @@ async def ensure_admin_user():
             logger.info("Existing user %s upgraded to admin", ADMIN_EMAIL)
 
 
-
-# Billing endpoints removed
-
-
 # Dependency: current user
 async def get_current_user(authorization: str = Depends(lambda authorization=Depends(lambda: None): authorization)):
     """Very small helper that expects Authorization: Bearer <token> header.
