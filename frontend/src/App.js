@@ -390,10 +390,10 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
               </div>
             </div>
 
-            {/* Central drag & drop square */}
+            {/* Central drag & drop square (half height) */}
             <div className="mt-6 flex justify-center">
               <label
-                className="relative w-full max-w-md aspect-square rounded-3xl border border-dashed border-cyan-400/60 bg-slate-950/40 hover:bg-slate-900/60 transition-colors flex flex-col items-center justify-center gap-3 cursor-pointer shadow-[0_0_40px_rgba(34,211,238,0.25)]"
+                className="relative w-full max-w-sm h-40 rounded-3xl border border-dashed border-cyan-400/60 bg-slate-950/40 hover:bg-slate-900/60 transition-colors flex flex-col items-center justify-center gap-3 cursor-pointer shadow-[0_0_40px_rgba(34,211,238,0.25)]"
                 data-testid="landing-file-dropzone"
                 onDragOver={(e) => {
                   e.preventDefault();
