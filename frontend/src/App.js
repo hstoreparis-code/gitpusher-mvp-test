@@ -251,13 +251,9 @@ function AuthCard({ t }) {
     }
   };
 
-  const startOAuth = async (provider) => {
-    try {
-      const urlRes = await axios.get(`${API}/auth/oauth/${provider}/url`);
-      window.location.href = urlRes.data.url;
-    } catch (err) {
-      setError("OAuth error");
-    }
+  const startOAuth = (provider) => {
+    // For now we focus on email/password flow; social login will come in a next iteration
+    setError("Social login (" + provider + ") sera disponible dans une prochaine version.");
   };
 
   return (
@@ -678,11 +674,11 @@ function Dashboard({ t }) {
 function AppShell() {
   const { lang, setLang, t } = useI18n();
   const [dark, setDark] = useState(true);
-  const { token } = useAuth();
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    if (token) navigate("/app");
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) navigate("/app");
     else navigate("/");
   };
 
