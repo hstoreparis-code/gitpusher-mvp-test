@@ -330,23 +330,48 @@ function Landing({ t, onGetStarted, lang, setLang, dark, setDark, currentLang, l
               {t("heroSubtitle")}
             </p>
 
-            {/* Steps now just above CTA */}
-            <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm mt-4">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-3">
-                <p className="font-medium mb-1">1. Upload</p>
-                <p className="text-slate-300">Fichiers zip, PDF, code… en un geste.</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-3">
-                <p className="font-medium mb-1">2. IA organise</p>
-                <p className="text-slate-300">Structure, README, commits intelligents.</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-3">
-                <p className="font-medium mb-1">3. Push GitHub</p>
-                <p className="text-slate-300">Repo créé et prêt à être partagé.</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-3">
-                <p className="font-medium mb-1">4. Analytics</p>
-                <p className="text-slate-300">Suivi des repos créés (optionnel).</p>
+            {/* Steps now just above CTA - redesigned inline */}
+            <div className="mt-4 flex flex-col gap-3 text-[11px] sm:text-xs">
+              <div className="flex flex-wrap gap-2">
+                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
+                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                    1
+                  </span>
+                  <div className="flex flex-col leading-tight">
+                    <span className="font-medium">Upload</span>
+                    <span className="text-[10px] text-slate-300">Zip, PDF, code…</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
+                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                    2
+                  </span>
+                  <div className="flex flex-col leading-tight">
+                    <span className="font-medium">IA organise</span>
+                    <span className="text-[10px] text-slate-300">Structure &amp; dossiers</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
+                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                    3
+                  </span>
+                  <div className="flex flex-col leading-tight">
+                    <span className="font-medium">Push GitHub</span>
+                    <span className="text-[10px] text-slate-300">Repo auto-créé</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
+                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                    4
+                  </span>
+                  <div className="flex flex-col leading-tight">
+                    <span className="font-medium">Analytics</span>
+                    <span className="text-[10px] text-slate-300">Suivi des repos</span>
+                  </div>
+                </div>
               </div>
             </div>
 
