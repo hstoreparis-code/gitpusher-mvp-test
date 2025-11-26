@@ -1007,20 +1007,19 @@ async def run_project_pipeline(user: Dict, project: Dict, uploads: List[Dict]) -
     commit_messages = await generate_commit_messages(operations, language=language)
     main_commit = commit_messages[0] if commit_messages else "chore: initial import"
 
-    # 3) Create GitHub repo
-    gh_token = user["github_access_token"]
-    gh_repo = await github_create_repo(gh_token, project["name"], project.get("description"))
-    repo_full_name = gh_repo["full_name"]
-    repo_url = gh_repo["html_url"]
+    # 3) Create Git repo for selected provider
+    gh_token = user["github_access_token"]  # TODO: provider-specific tokens
+    repo_info = await create_repo_for_provider(provider, gh_token, project["name"], project.get("description"))
+    repo_url = repo_info.url
 
-    # 4) Upload files via GitHub contents API
+    # 4) Upload files via provider contents API
     for upload in uploads:
         path = os.path.basename(upload["stored_path"])
         content_bytes = Path(upload["stored_path"]).read_bytes()
-        await github_put_file(gh_token, repo_full_name, path, content_bytes, main_commit)
+        await put_file_for_provider(provider, gh_token, repo_info, path, content_bytes, main_commit)
 
     # Upload README.md
-    await github_put_file(gh_token, repo_full_name, "README.md", readme_md.encode("utf-8"), main_commit)
+    await put_file_for_provider(provider, gh_token, repo_info, "README.md", readme_md.encode("utf-8"), main_commit)
 
     now = datetime.now(timezone.utc).isoformat()
     await db.projects.update_one(
