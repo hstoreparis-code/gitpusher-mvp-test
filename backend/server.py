@@ -145,6 +145,12 @@ class JobPublic(BaseModel):
     created_at: datetime
 
 
+class PlanUpdate(BaseModel):
+    plan: str
+
+
+
+
 # PlanUpdate class removed
 
 # FastAPI app
