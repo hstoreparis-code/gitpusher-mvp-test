@@ -142,11 +142,7 @@ class JobPublic(BaseModel):
     created_at: datetime
 
 
-class PlanUpdate(BaseModel):
-    plan: str
-
-    updated_at: datetime
-
+# PlanUpdate class removed
 
 # FastAPI app
 app = FastAPI(title="GitPusher API")
