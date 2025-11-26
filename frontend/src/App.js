@@ -1476,6 +1476,18 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 <Button
                   className="w-full rounded-full bg-slate-800 hover:bg-slate-700 text-xs"
                   data-testid="pricing-freemium-cta"
+                  onClick={async () => {
+                    try {
+                      const res = await axios.post(
+                        `${API}/billing/plan`,
+                        { plan: "freemium" },
+                        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+                      );
+                      console.log("Plan freemium appliqué", res.data);
+                    } catch (e) {
+                      console.error("Set freemium plan failed", e);
+                    }
+                  }}
                 >
                   Commencer gratuitement
                 </Button>
