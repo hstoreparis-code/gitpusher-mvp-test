@@ -669,6 +669,7 @@ function AuthCard({ t, onSuccess }) {
 
 function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
   const { token, user, logout } = useAuth();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
