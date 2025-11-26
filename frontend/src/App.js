@@ -667,7 +667,7 @@ function AuthCard({ t, onSuccess }) {
   );
 }
 
-function Dashboard({ t }) {
+function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
   const { token, user, logout } = useAuth();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -681,6 +681,10 @@ function Dashboard({ t }) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
 
   useEffect(() => {
     if (!token) return;
