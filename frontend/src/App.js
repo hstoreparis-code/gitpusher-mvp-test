@@ -132,7 +132,7 @@ function Landing({ t, onGetStarted, lang, setLang, dark, setDark }) {
       <header className="w-full border-b border-white/5 backdrop-blur-sm sticky top-0 z-10 bg-slate-950/70">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.55)] transition-colors">
               <DownloadCloud className="h-4 w-4 text-slate-950" />
             </div>
             <div className="flex flex-col">
