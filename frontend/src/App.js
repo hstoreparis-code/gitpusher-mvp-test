@@ -193,7 +193,7 @@ function useAuth() {
   return { token, user, login, register, logout };
 }
 
-function Landing({ t, onGetStarted, lang, setLang, dark, setDark, currentLang, languages }) {
+function Landing({ t, onGetStarted, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
