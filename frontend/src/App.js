@@ -155,6 +155,24 @@ function Landing({ t, onGetStarted, lang, setLang, dark, setDark }) {
             >
               {t("language")}
             </button>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-xs flex items-center gap-2"
+                  data-testid="auth-popover-trigger"
+                >
+                  <span>Login / Sign up</span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="end"
+                className="mt-2 w-80 bg-slate-900/95 border border-slate-700/80 shadow-xl rounded-2xl p-0 overflow-hidden"
+                data-testid="auth-popover-content"
+              >
+                <AuthCard t={t} />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </header>
