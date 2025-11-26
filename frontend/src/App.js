@@ -717,9 +717,9 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
   useEffect(() => {
     if (!token) return;
+    if (!token) return;
     loadProjects();
     loadJobs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const newProject = async () => {
