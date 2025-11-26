@@ -453,8 +453,8 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 <p className="text-[12px] text-slate-400 max-w-[80%] text-center">
                   Zip, PDF, dossiers de code… PUSH IN se charge de tout organiser et pousser sur GitHub.
                 </p>
-                <div className="mt-2 inline-flex items-center gap-2 text-[11px] text-slate-300">
-                  <div className="h-6 w-6 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500" />
+                <div className="mt-2 inline-flex items-center gap-2 text-[12px] text-slate-300">
+                  <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500" />
                   <span>No Git, no CLI, just drop.</span>
                 </div>
                 <input
