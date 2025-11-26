@@ -449,7 +449,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
   );
 }
 
-function AuthCard({ t }) {
+function AuthCard({ t, onSuccess }) {
   const { login, register } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState("login");
@@ -465,7 +465,8 @@ function AuthCard({ t }) {
     setLoading(true);
     try {
       await login(email, password);
-      navigate("/app");
+      if (onSuccess) onSuccess();
+      else navigate("/app");
     } catch (err) {
       setError(err?.response?.data?.detail || "Login failed");
     } finally {
@@ -480,7 +481,8 @@ function AuthCard({ t }) {
     try {
       await register(email, password, name);
       await login(email, password);
-      navigate("/app");
+      if (onSuccess) onSuccess();
+      else navigate("/app");
     } catch (err) {
       setError(err?.response?.data?.detail || "Signup failed");
     } finally {
