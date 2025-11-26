@@ -372,8 +372,8 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
         </div>
       </header>
 
-      <main className="flex-1 flex items-center">
-        <div className="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-[1.2fr,1fr] gap-10 items-center">
+      <main className="flex-1 flex items-center justify-center px-4">
+        <div className="w-full max-w-5xl grid md:grid-cols-[1.2fr,1fr] gap-10 items-center py-10">
           <div className="space-y-6">
             <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-cyan-300 bg-cyan-500/10 border border-cyan-400/30 px-3 py-1 rounded-full w-fit">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
