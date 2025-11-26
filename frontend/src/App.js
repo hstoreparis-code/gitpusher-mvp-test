@@ -440,8 +440,28 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
               >
                 {t("getStarted")}
               </Button>
-              <div className="flex items-center gap-2 text-xs text-slate-400">
+              <div className="flex items-center gap-3 text-xs text-slate-400">
                 <span>No Git, no CLI, juste ton navigateur.</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full border-slate-700/70 bg-slate-950/60 hover:bg-slate-900/80 text-[11px]"
+                  onClick={async () => {
+                    try {
+                      const res = await axios.post(`${API}/auth/demo`);
+                      const token = res.data?.access_token;
+                      if (token) {
+                        window.localStorage.setItem("token", token);
+                        navigate("/app");
+                      }
+                    } catch (e) {
+                      console.error("Demo login failed", e);
+                    }
+                  }}
+                  data-testid="demo-login-button"
+                >
+                  Accéder à la démo
+                </Button>
               </div>
             </div>
           </div>
