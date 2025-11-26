@@ -757,25 +757,86 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         mounted ? "opacity-100" : "opacity-0"
       }`}
     >
-      <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-sm">
+      <header className="w-full border-b border-white/5 backdrop-blur-sm sticky top-0 z-10 bg-slate-950/70">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold">{t("dashboardTitle")}</span>
-            {user && (
-              <span className="text-xs text-slate-400" data-testid="dashboard-user-email">
-                {user.email}
-              </span>
-            )}
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.55)]">
+              <DownloadCloud className="h-4 w-4 text-slate-950" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold tracking-tight">PUSH IN</span>
+              <span className="text-xs text-slate-400">{t("dashboardTitle")}</span>
+            </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={logout}
-            className="rounded-full border-slate-700 text-xs"
-            data-testid="logout-button"
-          >
-            Logout
-          </Button>
+          <div className="flex items-center gap-4 text-xs sm:text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-400 hidden sm:inline">{t("theme")}</span>
+              <Switch
+                checked={dark}
+                onCheckedChange={setDark}
+                data-testid="dashboard-theme-toggle-switch"
+              />
+            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className="px-2 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-xs flex items-center gap-1"
+                  data-testid="dashboard-language-popover-trigger"
+                >
+                  <span className="text-lg" aria-hidden="true">{currentLang.flag}</span>
+                  <span className="hidden sm:inline">{currentLang.label}</span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="end"
+                className="mt-2 w-64 bg-slate-900/95 border border-slate-700/80 shadow-xl rounded-2xl p-2"
+                data-testid="dashboard-language-popover-content"
+              >
+                <div className="max-h-64 overflow-auto text-xs">
+                  {languages.map((lng) => (
+                    <button
+                      key={lng.code}
+                      onClick={() => setLang(lng.code)}
+                      className={`w-full flex items-center justify-between px-2 py-1.5 rounded-md hover:bg-slate-800 text-left ${
+                        lng.code === lang ? "bg-slate-800/80" : ""
+                      }`}
+                      data-testid={`dashboard-language-option-${lng.code}`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="text-lg" aria-hidden="true">{lng.flag}</span>
+                        <span>{lng.label}</span>
+                      </span>
+                      {lng.code === lang && (
+                        <span className="text-[10px] text-cyan-300">Active</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
+            <div className="flex items-center gap-2 text-xs">
+              {user && (
+                <span
+                  className="hidden sm:inline text-slate-400"
+                  data-testid="dashboard-user-email"
+                >
+                  {user.email}
+                </span>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+                className="rounded-full border-slate-700 text-xs"
+                data-testid="logout-button"
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
         </div>
       </header>
 
