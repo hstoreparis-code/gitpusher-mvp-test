@@ -140,6 +140,11 @@ class JobPublic(BaseModel):
     status: str
     error: Optional[str] = None
     created_at: datetime
+
+
+class PlanUpdate(BaseModel):
+    plan: str
+
     updated_at: datetime
 
 
