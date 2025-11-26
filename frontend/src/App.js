@@ -1530,6 +1530,18 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 <Button
                   className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs"
                   data-testid="pricing-premium-cta"
+                  onClick={async () => {
+                    try {
+                      const res = await axios.post(
+                        `${API}/billing/plan`,
+                        { plan: "premium" },
+                        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+                      );
+                      console.log("Plan premium appliqué", res.data);
+                    } catch (e) {
+                      console.error("Set premium plan failed", e);
+                    }
+                  }}
                 >
                   Passer en Premium
                 </Button>
