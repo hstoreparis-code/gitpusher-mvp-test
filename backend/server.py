@@ -116,6 +116,49 @@ app = FastAPI(title="No-Code GitHub Pusher API")
 api_router = APIRouter(prefix="/api")
 
 
+
+
+class I18nTranslateRequest(BaseModel):
+    target_lang: str
+    base_lang: str = "en"
+    entries: Dict[str, str]
+
+
+@api_router.post("/i18n/translate")
+async def translate_i18n(req: I18nTranslateRequest):
+    """Translate UI strings using LLM. If EMERGENT_LLM_KEY is absent, return entries unchanged.
+
+    This is a simple helper: it takes key->English text and returns key->translated text.
+    """
+    if not EMERGENT_LLM_KEY:
+        # No key configured, just echo base entries
+        return {"translations": req.entries}
+
+    # Build prompt listing all keys and values
+    lines = [f"{k}: {v}" for k, v in req.entries.items()]
+    catalog = "\n".join(lines)
+
+    prompt = f"""
+You are a professional product UI translator.
+Translate each value to the target language "{req.target_lang}" while keeping the keys exactly the same.
+Return a JSON object only, with the same keys and translated string values, no explanations.
+
+Here are the entries (as key: text):
+{catalog}
+"""
+
+    text = await call_llm(prompt, language=req.target_lang)
+
+    try:
+        translated = json.loads(text)
+        if not isinstance(translated, dict):  # fallback if LLM didn't follow instructions
+            raise ValueError("Invalid LLM JSON")
+    except Exception:  # noqa: BLE001
+        # In case of parsing error, just return base entries
+        return {"translations": req.entries}
+
+    return {"translations": translated}
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
