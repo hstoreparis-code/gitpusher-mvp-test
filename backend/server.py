@@ -434,7 +434,7 @@ Propose a short list (3 to 5) of logical commit messages following Conventional 
 Respond with bullet list only.
 """
     text = await call_llm(prompt, language=language)
-    lines = [l.strip("-* ") for l in text.splitlines() if l.strip()]
+    lines = [line.strip("-* ") for line in text.splitlines() if line.strip()]
     return lines[:5]
 
 
