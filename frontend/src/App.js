@@ -1583,6 +1583,18 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   variant="outline"
                   className="w-full rounded-full border-cyan-400/60 text-cyan-200 text-xs hover:bg-slate-900/80"
                   data-testid="pricing-business-cta"
+                  onClick={async () => {
+                    try {
+                      const res = await axios.post(
+                        `${API}/billing/plan`,
+                        { plan: "business" },
+                        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+                      );
+                      console.log("Plan business appliqué", res.data);
+                    } catch (e) {
+                      console.error("Set business plan failed", e);
+                    }
+                  }}
                 >
                   Contacter l&apos;équipe
                 </Button>
