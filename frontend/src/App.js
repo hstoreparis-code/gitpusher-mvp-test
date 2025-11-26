@@ -1265,34 +1265,7 @@ function AccountPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
   );
 }
 
-            <div className="flex items-center gap-2 text-xs">
-              {user && (
-                <button
-                  onClick={openAccountSettings}
-                  className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10"
-                  data-testid="dashboard-account-button"
-                >
-                  <span className="truncate max-w-[140px] text-slate-200">{user.email}</span>
-                </button>
-              )}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  logout();
-                  navigate("/");
-                }}
-                className="rounded-full border-slate-700 text-xs"
-                data-testid="logout-button"
-              >
-                Logout
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1 max-w-6xl mx-auto px-4 py-6 grid lg:grid-cols-[1.1fr,1.4fr] gap-6">
+function AppShell() {
         <Card className="bg-slate-900/70 border-slate-800 flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between gap-4">
             <CardTitle className="text-sm sm:text-base">{t("dashboardTitle")}</CardTitle>
