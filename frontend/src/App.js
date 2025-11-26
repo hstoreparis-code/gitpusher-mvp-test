@@ -132,12 +132,12 @@ function Landing({ t, onGetStarted, lang, setLang, dark, setDark }) {
       <header className="w-full border-b border-white/5 backdrop-blur-sm sticky top-0 z-10 bg-slate-950/70">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center text-xs font-bold">
-              AI
+            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center">
+              <DownloadCloud className="h-4 w-4 text-slate-950" />
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold tracking-tight">No-Code Push GitHub</span>
-              <span className="text-xs text-slate-400">Workflow automatisé par IA</span>
+              <span className="text-sm font-semibold tracking-tight">PUSH IN</span>
+              <span className="text-xs text-slate-400">No-Code GitHub workflow</span>
             </div>
           </div>
           <div className="flex items-center gap-4 text-xs sm:text-sm">
