@@ -76,6 +76,8 @@ const translations = {
     linkRepo: "Ouvrir le repo GitHub",
     theme: "Mode sombre",
     language: "English",
+  },
+};
 
 const languages = [
   { code: "en", label: "English", flag: "🇬🇧" },
