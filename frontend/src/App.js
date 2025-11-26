@@ -773,34 +773,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       setSelected(res.data);
       setProjects((prev) => prev.map((p) => (p.id === res.data.id ? res.data : p)));
       setProgress(100);
-    } finally {
-    try {
-      const res = await axios.post(
-        `${API}/workflows/projects/${selected.id}/process`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      setSelected(res.data);
-      setProjects((prev) => prev.map((p) => (p.id === res.data.id ? res.data : p)));
-      setProgress(100);
       loadJobs();
     } catch (err) {
       console.error("Process project failed", err);
       setProgress(0);
     } finally {
-      setProcessing(false);
-    }
-  };
-
-  const openAccountSettings = () => {
-    if (!user) return;
-    navigate("/account");
-  };
-
-  if (!token) return <Navigate to="/" replace />;
-
-  return (
-
       setProcessing(false);
     }
   };
