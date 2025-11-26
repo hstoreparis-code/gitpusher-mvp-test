@@ -833,36 +833,24 @@ Respond with bullet list only.
     return lines[:5]
 
 
-# ---------- GITHUB HELPERS ----------
+# ---------- GENERIC GIT PROVIDER HELPERS ----------
 
 
-async def github_create_repo(token: str, name: str, description: Optional[str]) -> Dict:
-    async with httpx.AsyncClient() as client_http:
-        res = await client_http.post(
-            "https://api.github.com/user/repos",
-            headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
-            json={"name": name, "description": description or "", "private": False},
-            timeout=20,
-        )
-        if res.status_code not in (200, 201):
-            logger.error("GitHub create repo failed: %s", res.text)
-            raise HTTPException(status_code=400, detail="Failed to create GitHub repo")
-        return res.json()
+async def create_repo_for_provider(provider: str, token: str, name: str, description: Optional[str]) -> GitRepoInfo:
+    git_provider = get_git_provider(provider)
+    return await git_provider.create_repo(token, name, description)
 
 
-async def github_put_file(token: str, repo_full_name: str, path: str, content_bytes: bytes, message: str):
-    b64 = base64.b64encode(content_bytes).decode("utf-8")
-    async with httpx.AsyncClient() as client_http:
-        res = await client_http.put(
-            f"https://api.github.com/repos/{repo_full_name}/contents/{path}",
-            headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
-            json={"message": message, "content": b64},
-            timeout=20,
-        )
-        if res.status_code not in (200, 201):
-            logger.error("GitHub put file %s failed: %s", path, res.text)
-            raise HTTPException(status_code=400, detail=f"Failed to upload file {path} to GitHub")
-        return res.json()
+async def put_file_for_provider(
+    provider: str,
+    token: str,
+    repo: GitRepoInfo,
+    path: str,
+    content_bytes: bytes,
+    message: str,
+):
+    git_provider = get_git_provider(provider)
+    return await git_provider.put_file(token, repo, path, content_bytes, message)
 
 
 # ---------- WORKFLOWS: PROJECTS & UPLOADS ----------
