@@ -979,7 +979,9 @@ async def run_project_pipeline(user: Dict, project: Dict, uploads: List[Dict]) -
     Extrait de /process pour pouvoir être réutilisé par les jobs.
     """
     if not user.get("github_access_token"):
-        raise HTTPException(status_code=400, detail="GitHub not linked for this user")
+        # Pour l'instant, nous utilisons encore le token GitHub comme jeton unique.
+        # Plus tard, on pourra stocker un token par provider.
+        raise HTTPException(status_code=400, detail="Git provider token not linked for this user")
 
     if not uploads:
         raise HTTPException(status_code=400, detail="No files uploaded for this project")
