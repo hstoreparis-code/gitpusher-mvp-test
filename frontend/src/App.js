@@ -289,24 +289,6 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 checked={dark}
                 onCheckedChange={setDark}
                 data-testid="theme-toggle-switch"
-          {menuOpen && (
-            <div className="absolute right-4 top-14 z-20 flex flex-col gap-2 rounded-2xl border border-white/10 bg-slate-950/95 px-3 py-2 text-xs sm:hidden shadow-lg" data-testid="mobile-menu-panel">
-              <button
-                onClick={() => navigate("/pricing")}
-                className="flex items-center justify-between gap-2 px-2 py-1 rounded-lg hover:bg-slate-900"
-                data-testid="mobile-menu-pricing-button"
-              >
-                <span>Plans &amp; Tarifs</span>
-              </button>
-              <button
-                onClick={() => setAuthOpen(true)}
-                className="flex items-center justify-between gap-2 px-2 py-1 rounded-lg hover:bg-slate-900"
-                data-testid="mobile-menu-login-button"
-              >
-                <span>Login / Sign up</span>
-              </button>
-            </div>
-          )}
 
               />
             </div>
