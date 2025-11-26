@@ -998,17 +998,6 @@ async def get_job(job_id: str, authorization: Optional[str] = Header(default=Non
     )
 
 
-    if uploads_meta:
-        await db.uploads.insert_many(uploads_meta)
-
-    await db.projects.update_one(
-        {"_id": project_id},
-        {"$set": {"updated_at": datetime.now(timezone.utc).isoformat()}},
-    )
-
-    return {"uploaded": len(uploads_meta)}
-
-
 @api_router.post("/workflows/projects/{project_id}/process", response_model=ProjectDetail)
 async def process_project(project_id: str, authorization: Optional[str] = Header(default=None)):
     """Endpoint historique: exécute le pipeline pour un projet et renvoie le projet mis à jour.
