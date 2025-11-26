@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 from datetime import datetime, timezone, timedelta
 from jose import jwt, JWTError
 from passlib.context import CryptContext
