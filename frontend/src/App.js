@@ -690,6 +690,33 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   useEffect(() => {
     if (!token) return;
     axios
+
+  const loadProjects = async () => {
+    if (!token) return;
+    setLoading(true);
+    try {
+      const res = await axios.get(`${API}/workflows/projects`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProjects(res.data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadJobs = async () => {
+    if (!token) return;
+    setJobsLoading(true);
+    try {
+      const res = await axios.get(`${API}/jobs`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setJobs(res.data);
+    } finally {
+      setJobsLoading(false);
+    }
+  };
+
       .get(`${API}/workflows/projects`, {
         headers: { Authorization: `Bearer ${token}` },
       })
