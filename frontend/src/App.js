@@ -843,6 +843,200 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 </div>
               </PopoverContent>
             </Popover>
+            <div className="flex items-center gap-2 text-xs">
+              {user && (
+                <button
+                  onClick={openAccountSettings}
+                  className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10"
+                  data-testid="dashboard-account-button"
+                >
+                  <span className="truncate max-w-[140px] text-slate-200">{user.email}</span>
+                </button>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+                className="rounded-full border-slate-700 text-xs"
+                data-testid="logout-button"
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 max-w-6xl mx-auto px-4 py-6 grid lg:grid-cols-[1.1fr,1.4fr] gap-6">
+        <Card className="bg-slate-900/70 border-slate-800 flex flex-col">
+          <CardHeader className="flex flex-row items-center justify-between gap-4">
+            <CardTitle className="text-sm sm:text-base">{t("dashboardTitle")}</CardTitle>
+            <Button
+              size="sm"
+              className="rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs"
+              onClick={newProject}
+              disabled={creating}
+              data-testid="new-workflow-button"
+            >
+              {creating ? "…" : t("newWorkflow")}
+            </Button>
+          </CardHeader>
+          <CardContent className="flex-1 overflow-auto space-y-3">
+            {loading ? (
+              <p className="text-xs text-slate-400">Loading…</p>
+            ) : projects.length === 0 ? (
+              <p className="text-xs text-slate-400" data-testid="no-projects-text">
+                {t("noProjects")}
+              </p>
+            ) : (
+              <div className="space-y-2" data-testid="projects-list">
+                {projects.map((p) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setSelected(p)}
+                    className={`w-full text-left text-xs sm:text-sm px-3 py-2 rounded-xl border transition-colors ${
+                      selected?.id === p.id
+                        ? "bg-cyan-500/10 border-cyan-400/60"
+                        : "bg-slate-900/80 border-slate-800 hover:border-slate-600"
+                    }`}
+                    data-testid={`project-card-${p.id}`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-medium truncate">{p.name}</span>
+                      <span
+                        className={`text-[10px] px-2 py-0.5 rounded-full border ${
+                          p.status === "done"
+                            ? "border-emerald-500/50 text-emerald-300"
+                            : "border-amber-400/50 text-amber-200"
+                        }`}
+                        data-testid="project-status-pill"
+                      >
+                        {p.status}
+                      </span>
+                    </div>
+                    {p.github_repo_url && (
+                      <p className="text-[11px] text-cyan-300 truncate mt-1">
+                        {p.github_repo_url}
+                      </p>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="bg-slate-900/70 border-slate-800 flex flex-col" data-testid="project-stepper-card">
+          <CardHeader>
+            <CardTitle className="text-sm sm:text-base flex items-center justify-between">
+              <span>{selected ? selected.name : t("stepUpload")}</span>
+              {selected && selected.github_repo_url && (
+                <a
+                  href={selected.github_repo_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[11px] text-cyan-300 hover:text-cyan-200"
+                  data-testid="project-github-link"
+                >
+                  {t("linkRepo")}
+                </a>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 flex flex-col gap-4 text-xs sm:text-sm">
+            {!selected ? (
+              <p className="text-slate-400">{t("noProjects")}</p>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <p className="font-medium text-[11px] uppercase tracking-[0.18em] text-slate-400">
+                    1. {t("stepUpload")}
+                  </p>
+                  <label
+                    className="border border-dashed border-slate-700 rounded-2xl px-4 py-6 flex flex-col items-center justify-center gap-2 cursor-pointer bg-slate-900/60 hover:border-cyan-400/80 hover:bg-slate-900/80 transition-colors"
+                    data-testid="file-dropzone"
+                  >
+                    <span className="text-[11px] text-slate-300">Drop files or click to browse</span>
+                    <Input
+                      type="file"
+                      multiple
+                      className="hidden"
+                      onChange={onFilesSelected}
+                      data-testid="file-input"
+                    />
+                    {uploading && (
+                      <span className="text-[11px] text-cyan-300">Uploading…</span>
+                    )}
+                  </label>
+                </div>
+
+                <div className="space-y-3 mt-2">
+                  <p className="font-medium text-[11px] uppercase tracking-[0.18em] text-slate-400">
+                    2. {t("stepConfigure")}
+                  </p>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="repo-name" className="text-[11px]">
+                        {t("projectName")}
+                      </Label>
+                      <Input
+                        id="repo-name"
+                        defaultValue={selected.name}
+                        className="mt-1 h-8 text-xs bg-slate-950/60 border-slate-700"
+                        disabled
+                        data-testid="project-name-input"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="readme-lang" className="text-[11px]">
+                        {t("projectLanguage")}
+                      </Label>
+                      <select
+                        id="readme-lang"
+                        className="mt-1 h-8 w-full rounded-md bg-slate-950/60 border border-slate-700 text-xs px-2"
+                        defaultValue="en"
+                        disabled
+                        data-testid="readme-language-select"
+                      >
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 mt-2">
+                  <p className="font-medium text-[11px] uppercase tracking-[0.18em] text-slate-400">
+                    3. {t("stepLaunch")}
+                  </p>
+                  <Button
+                    className="rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs px-5"
+                    onClick={launch}
+                    disabled={processing}
+                    data-testid="launch-automation-button"
+                  >
+                    {processing ? "…" : t("launch")}
+                  </Button>
+                  {(processing || progress > 0) && (
+                    <div className="space-y-1">
+                      <Progress value={progress} className="h-1.5 bg-slate-800" data-testid="workflow-progress-bar" />
+                      <p className="text-[11px] text-slate-400" data-testid="processing-status-text">
+                        {processing ? t("processing") : selected.status}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </main>
+    </div>
+  );
+}
 
 function AccountPage({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
   const { token, user, logout } = useAuth();
