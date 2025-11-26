@@ -721,9 +721,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       await Promise.all([loadProjects(), loadJobs()]);
     };
     fetchAll();
-    // Intentionnellement, on ne met que 'token' pour éviter de recréer l'effet sur chaque render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, [token, loadProjects, loadJobs]);
 
   const newProject = async () => {
     setCreating(true);
