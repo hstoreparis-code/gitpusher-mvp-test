@@ -321,7 +321,10 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 className="mt-2 w-80 bg-slate-900/95 border border-slate-700/80 shadow-xl rounded-2xl p-0 overflow-hidden"
                 data-testid="auth-popover-content"
               >
-                <AuthCard t={t} />
+                <AuthCard t={t} onSuccess={() => {
+                  setAuthOpen(false);
+                  navigate("/app");
+                }} />
               </PopoverContent>
             </Popover>
           </div>
