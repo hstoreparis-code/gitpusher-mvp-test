@@ -222,7 +222,19 @@ function useAuth() {
   return { token, user, login, register, logout };
 }
 
-function Landing({ t, onGetStarted, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
+function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const [authOpen, setAuthOpen] = useState(false);
+
+  const handleGetStarted = () => {
+    if (token) {
+      navigate("/app");
+    } else {
+      setAuthOpen(true);
+    }
+  };
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
