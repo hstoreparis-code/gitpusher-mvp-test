@@ -256,7 +256,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
           <div className="flex items-center gap-4 text-xs sm:text-sm relative">
             {menuOpen && (
               <div
-                className="absolute right-0 top-10 z-20 flex flex-col gap-2 rounded-2xl border border-white/10 bg-slate-950/95 px-3 py-2 text-xs sm:hidden shadow-lg"
+                className="absolute right-0 top-10 z-20 flex flex-col gap-2 rounded-2xl border border-white/10 bg-slate-950/95 px-3 py-2 text-xs shadow-lg"
                 data-testid="mobile-menu-panel"
               >
                 <button
