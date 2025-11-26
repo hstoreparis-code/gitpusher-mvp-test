@@ -182,13 +182,43 @@ function Landing({ t, onGetStarted, lang, setLang, dark, setDark, currentLang, l
                 data-testid="theme-toggle-switch"
               />
             </div>
-            <button
-              onClick={() => setLang(lang === "en" ? "fr" : "en")}
-              className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-xs"
-              data-testid="language-toggle-button"
-            >
-              {t("language")}
-            </button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  className="px-2 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-xs flex items-center gap-1"
+                  data-testid="language-popover-trigger"
+                >
+                  <span className="text-lg" aria-hidden="true">{currentLang.flag}</span>
+                  <span className="hidden sm:inline">{currentLang.label}</span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="end"
+                className="mt-2 w-64 bg-slate-900/95 border border-slate-700/80 shadow-xl rounded-2xl p-2"
+                data-testid="language-popover-content"
+              >
+                <div className="max-h-64 overflow-auto text-xs">
+                  {languages.map((lng) => (
+                    <button
+                      key={lng.code}
+                      onClick={() => setLang(lng.code)}
+                      className={`w-full flex items-center justify-between px-2 py-1.5 rounded-md hover:bg-slate-800 text-left ${
+                        lng.code === lang ? "bg-slate-800/80" : ""
+                      }`}
+                      data-testid={`language-option-${lng.code}`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="text-lg" aria-hidden="true">{lng.flag}</span>
+                        <span>{lng.label}</span>
+                      </span>
+                      {lng.code === lang && (
+                        <span className="text-[10px] text-cyan-300">Active</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </PopoverContent>
+            </Popover>
 
             <Popover>
               <PopoverTrigger asChild>
