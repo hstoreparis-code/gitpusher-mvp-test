@@ -445,12 +445,12 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 }}
               >
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[11px] uppercase tracking-[0.18em] text-cyan-300">
+                  <span className="text-[12px] uppercase tracking-[0.22em] text-cyan-300">
                     Drag &amp; Drop
                   </span>
-                  <span className="text-sm font-medium">Dépose tes fichiers ici</span>
+                  <span className="text-base font-medium">Dépose tes fichiers ici</span>
                 </div>
-                <p className="text-[11px] text-slate-400 max-w-[80%] text-center">
+                <p className="text-[12px] text-slate-400 max-w-[80%] text-center">
                   Zip, PDF, dossiers de code… PUSH IN se charge de tout organiser et pousser sur GitHub.
                 </p>
                 <div className="mt-2 inline-flex items-center gap-2 text-[11px] text-slate-300">
