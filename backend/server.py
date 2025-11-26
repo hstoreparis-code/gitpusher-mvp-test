@@ -282,13 +282,6 @@ async def ensure_admin_user():
             )
             logger.info("Existing user %s upgraded to admin", ADMIN_EMAIL)
 
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 
 # Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
