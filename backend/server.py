@@ -1001,79 +1001,54 @@ async def get_job(job_id: str, authorization: Optional[str] = Header(default=Non
 
 @api_router.post("/workflows/projects/{project_id}/process", response_model=ProjectDetail)
 async def process_project(project_id: str, authorization: Optional[str] = Header(default=None)):
+    """Endpoint historique: exécute le pipeline pour un projet et renvoie le projet mis à jour.
+
+    Il crée également un job interne afin de s'aligner avec la nouvelle architecture jobs.
+    """
     user = await get_user_from_token(authorization)
     project = await db.projects.find_one({"_id": project_id, "user_id": user["_id"]})
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 
-    if not user.get("github_access_token"):
-        raise HTTPException(status_code=400, detail="GitHub not linked for this user")
+    uploads = await db.uploads.find({"project_id": project_id, "user_id": user["_id"]}).to_list(1000)
 
-    # Fetch uploaded files
-    uploads = await db.uploads.find({"project_id": project_id}).to_list(1000)
-    if not uploads:
-        raise HTTPException(status_code=400, detail="No files uploaded for this project")
-
-    file_list = [
-        {"path": os.path.basename(u["stored_path"]), "mime_type": u["mime_type"], "size": u["size"]}
-        for u in uploads
-    ]
-
-    language = project.get("language", "en")
-
-    # 1) Generate README
-    readme_md = await generate_readme(
-        file_list=file_list,
-        language=language,
-        project_name=project["name"],
-        description=project.get("description"),
-    )
-
-    # 2) Generate commit messages
-    operations = [f"add {f['path']}" for f in file_list] + ["add README.md"]
-    commit_messages = await generate_commit_messages(operations, language=language)
-    main_commit = commit_messages[0] if commit_messages else "chore: initial import"
-
-    # 3) Create GitHub repo
-    gh_token = user["github_access_token"]
-    gh_repo = await github_create_repo(gh_token, project["name"], project.get("description"))
-    repo_full_name = gh_repo["full_name"]
-    repo_url = gh_repo["html_url"]
-
-    # 4) Upload files via GitHub contents API
-    for upload in uploads:
-        path = os.path.basename(upload["stored_path"])
-        content_bytes = Path(upload["stored_path"]).read_bytes()
-        await github_put_file(gh_token, repo_full_name, path, content_bytes, main_commit)
-
-    # Upload README.md
-    await github_put_file(gh_token, repo_full_name, "README.md", readme_md.encode("utf-8"), main_commit)
-
+    # Crée un job pour garder un historique
+    job_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
-    await db.projects.update_one(
-        {"_id": project_id},
+    job_doc = {
+        "_id": job_id,
+        "user_id": user["_id"],
+        "project_id": project_id,
+        "status": "pending",
+        "error": None,
+        "created_at": now,
+        "updated_at": now,
+    }
+    await db.jobs.insert_one(job_doc)
+
+    # Exécute le pipeline de manière synchrone (comme avant)
+    updated_project = await run_project_pipeline(user, project, uploads)
+
+    # Marque le job comme terminé
+    await db.jobs.update_one(
+        {"_id": job_id},
         {
             "$set": {
-                "status": "done",
-                "github_repo_url": repo_url,
-                "github_repo_name": repo_full_name,
-                "readme_md": readme_md,
-                "commit_messages": commit_messages,
-                "updated_at": now,
+                "status": "completed",
+                "updated_at": datetime.now(timezone.utc).isoformat(),
             }
         },
     )
 
-    updated = await db.projects.find_one({"_id": project_id})
     return ProjectDetail(
-        id=updated["_id"],
-        name=updated["name"],
-        status=updated.get("status", "done"),
-        github_repo_url=updated.get("github_repo_url"),
-        created_at=datetime.fromisoformat(updated["created_at"]),
-        description=updated.get("description"),
-        readme_md=updated.get("readme_md"),
-        commit_messages=updated.get("commit_messages", []),
+        id=updated_project["_id"],
+        name=updated_project["name"],
+        status=updated_project.get("status", "done"),
+        github_repo_url=updated_project.get("github_repo_url"),
+        created_at=datetime.fromisoformat(updated_project["created_at"]),
+        description=updated_project.get("description"),
+        readme_md=updated_project.get("readme_md"),
+        commit_messages=updated_project.get("commit_messages", []),
     )
 
 
