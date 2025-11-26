@@ -791,6 +791,16 @@ async def upload_files(
         }
         uploads_meta.append(meta)
 
+    if uploads_meta:
+        await db.uploads.insert_many(uploads_meta)
+
+    await db.projects.update_one(
+        {"_id": project_id},
+        {"$set": {"updated_at": datetime.now(timezone.utc).isoformat()}},
+    )
+
+    return {"uploaded": len(uploads_meta)}
+
 
 # ---------- JOBS (WORKFLOW ORCHESTRATION) ----------
 
