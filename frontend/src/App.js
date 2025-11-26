@@ -713,7 +713,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   };
 
   const openAccountSettings = () => {
-    const newName = window.prompt("Nouveau nom d'affichage :", user?.display_name || "");
+    if (!user) return;
+    const newName = window.prompt("Nouveau nom d'affichage :", user.display_name || user.email || "");
     if (!newName || !token) return;
     axios
       .patch(
