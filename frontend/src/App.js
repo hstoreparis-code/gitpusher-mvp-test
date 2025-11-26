@@ -76,13 +76,46 @@ const translations = {
     linkRepo: "Ouvrir le repo GitHub",
     theme: "Mode sombre",
     language: "English",
+
+const languages = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "de", label: "Deutschland", flag: "🇩🇪" },
+  { code: "es", label: "España", flag: "🇪🇸" },
+  { code: "it", label: "Italia", flag: "🇮🇹" },
+  { code: "pt", label: "Portugal", flag: "🇵🇹" },
+  { code: "nl", label: "Nederland", flag: "🇳🇱" },
+  { code: "be", label: "Belgique", flag: "🇧🇪" },
+  { code: "lu", label: "Luxembourg", flag: "🇱🇺" },
+  { code: "ie", label: "Ireland", flag: "🇮🇪" },
+  { code: "dk", label: "Danmark", flag: "🇩🇰" },
+  { code: "se", label: "Sverige", flag: "🇸🇪" },
+  { code: "fi", label: "Suomi", flag: "🇫🇮" },
+  { code: "pl", label: "Polska", flag: "🇵🇱" },
+  { code: "cz", label: "Česko", flag: "🇨🇿" },
+  { code: "sk", label: "Slovensko", flag: "🇸🇰" },
+  { code: "hu", label: "Magyarország", flag: "🇭🇺" },
+  { code: "si", label: "Slovenija", flag: "🇸🇮" },
+  { code: "hr", label: "Hrvatska", flag: "🇭🇷" },
+  { code: "ro", label: "România", flag: "🇷🇴" },
+  { code: "bg", label: "България", flag: "🇧🇬" },
+  { code: "gr", label: "Ελλάδα", flag: "🇬🇷" },
+  { code: "lt", label: "Lietuva", flag: "🇱🇹" },
+  { code: "lv", label: "Latvija", flag: "🇱🇻" },
+  { code: "ee", label: "Eesti", flag: "🇪🇪" },
+  { code: "cy", label: "Κύπρος", flag: "🇨🇾" },
+  { code: "mt", label: "Malta", flag: "🇲🇹" },
+  { code: "cn", label: "中国", flag: "🇨🇳" },
+];
+
   },
 };
 
 function useI18n() {
   const [lang, setLang] = useState("en");
-  const t = (key) => translations[lang][key] || key;
-  return { lang, setLang, t };
+  const t = (key) => (translations[lang]?.[key] || translations.en[key] || key);
+  const currentLang = languages.find((l) => l.code === lang) || languages[0];
+  return { lang, setLang, t, currentLang, languages };
 }
 
 // ---- Auth helpers (MVP: token in localStorage) ----
@@ -122,7 +155,7 @@ function useAuth() {
   return { token, user, login, register, logout };
 }
 
-function Landing({ t, onGetStarted, lang, setLang, dark, setDark }) {
+function Landing({ t, onGetStarted, lang, setLang, dark, setDark, currentLang, languages }) {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
@@ -691,7 +724,7 @@ function Dashboard({ t }) {
 }
 
 function AppShell() {
-  const { lang, setLang, t } = useI18n();
+  const { lang, setLang, t, currentLang, languages } = useI18n();
   const [dark, setDark] = useState(true);
   const navigate = useNavigate();
 
@@ -705,7 +738,18 @@ function AppShell() {
     <Routes>
       <Route
         path="/"
-        element={<Landing t={t} lang={lang} setLang={setLang} dark={dark} setDark={setDark} onGetStarted={handleGetStarted} />}
+        element={
+          <Landing
+            t={t}
+            lang={lang}
+            setLang={setLang}
+            dark={dark}
+            setDark={setDark}
+            onGetStarted={handleGetStarted}
+            currentLang={currentLang}
+            languages={languages}
+          />
+        }
       />
       <Route path="/app" element={<Dashboard t={t} />} />
       <Route path="*" element={<Navigate to="/" replace />} />
