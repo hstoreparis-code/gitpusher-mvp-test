@@ -689,39 +689,29 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
-  const loadProjects = async () => {
-    if (!token) return;
-    setLoading(true);
-    try {
-      const res = await axios.get(`${API}/workflows/projects`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setProjects(res.data);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadJobs = async () => {
-    if (!token) return;
-    setJobsLoading(true);
-    try {
-      const res = await axios.get(`${API}/jobs`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setJobs(res.data);
-    } finally {
-      setJobsLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (!token) return;
     const fetchAll = async () => {
-      await Promise.all([loadProjects(), loadJobs()]);
+      setLoading(true);
+      setJobsLoading(true);
+      try {
+        const [projectsRes, jobsRes] = await Promise.all([
+          axios.get(`${API}/workflows/projects`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`${API}/jobs`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
+        setProjects(projectsRes.data);
+        setJobs(jobsRes.data);
+      } finally {
+        setLoading(false);
+        setJobsLoading(false);
+      }
     };
     fetchAll();
-  }, [token, loadProjects, loadJobs]);
+  }, [token]);
 
   const newProject = async () => {
     setCreating(true);
