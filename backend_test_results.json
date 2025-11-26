@@ -1,0 +1,70 @@
+{
+  "total_tests": 9,
+  "passed_tests": 0,
+  "success_rate": 0.0,
+  "test_results": [
+    {
+      "name": "API Health Check",
+      "success": false,
+      "details": "API root endpoint accessible",
+      "expected_status": 200,
+      "actual_status": 502
+    },
+    {
+      "name": "User Registration",
+      "success": false,
+      "details": "Email: test_258aa408@example.com",
+      "expected_status": 200,
+      "actual_status": 502
+    },
+    {
+      "name": "User Login",
+      "success": false,
+      "details": "No registered user available",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "User Profile",
+      "success": false,
+      "details": "No authentication token available",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Create Project",
+      "success": false,
+      "details": "No authentication token available",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "List Projects",
+      "success": false,
+      "details": "No authentication token available",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "File Upload",
+      "success": false,
+      "details": "No token or project available",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Process Project (No GitHub)",
+      "success": false,
+      "details": "No token or project available",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Invalid Auth Handling",
+      "success": false,
+      "details": "Should reject invalid tokens",
+      "expected_status": 401,
+      "actual_status": 502
+    }
+  ]
+}
