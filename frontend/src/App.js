@@ -48,9 +48,9 @@ const baseTranslations = {
     language: "Français",
   },
   fr: {
-    heroTitle: "Workflow GitHub No-Code",
+    heroTitle: "Workflow Git No-Code",
     heroSubtitle:
-      "Dépose tes fichiers, l’IA organise ton projet, génère le README et pousse sur GitHub.",
+      "Dépose tes fichiers, l’IA organise ton projet, génère le README et pousse sur tes dépôts Git (GitHub aujourd’hui, GitLab & Bitbucket à venir).",
     getStarted: "Commencer",
     loginTab: "Connexion",
     signupTab: "Inscription",
