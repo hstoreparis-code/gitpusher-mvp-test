@@ -18,9 +18,9 @@ const API = `${BACKEND_URL}/api`;
 // ---- Small i18n helper ----
 const baseTranslations = {
   en: {
-    heroTitle: "No-Code GitHub Workflow",
+    heroTitle: "No-Code Git Workflow",
     heroSubtitle:
-      "Upload your files, let AI organize your project, generate README and push to GitHub.",
+      "Upload your files, let AI organize your project, generate README and push to your Git repos (GitHub today, GitLab & Bitbucket next).",
     getStarted: "Get started",
     loginTab: "Login",
     signupTab: "Sign up",
@@ -32,7 +32,7 @@ const baseTranslations = {
     orContinueWith: "or continue with",
     google: "Continue with Google",
     github: "Continue with GitHub",
-    dashboardTitle: "Your AI-powered repos",
+    dashboardTitle: "Your AI-powered Git repos",
     newWorkflow: "New workflow",
     noProjects: "No project yet. Create your first AI-powered repo.",
     stepUpload: "Upload files",
@@ -43,7 +43,7 @@ const baseTranslations = {
     projectLanguage: "README language",
     launch: "Launch automation",
     processing: "Processing… This may take a few seconds.",
-    linkRepo: "Open GitHub repo",
+    linkRepo: "Open repo",
     theme: "Dark mode",
     language: "Français",
   },
