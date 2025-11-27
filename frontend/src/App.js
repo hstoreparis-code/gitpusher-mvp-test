@@ -564,9 +564,24 @@ function AuthCard({ t, onSuccess }) {
     }
   };
 
-  const startOAuth = (provider) => {
-    // For now we focus on email/password flow; social login will come in a next iteration
-    setError("Social login (" + provider + ") sera disponible dans une prochaine version.");
+  const startOAuth = async (provider) => {
+    try {
+      setLoading(true);
+      setError("");
+      
+      // Fetch the OAuth URL from the backend
+      const response = await axios.get(`${API}/auth/oauth/${provider}/url`);
+      const oauthUrl = response.data.url;
+      
+      // Redirect to the OAuth provider
+      window.location.href = oauthUrl;
+    } catch (err) {
+      setError(
+        err?.response?.data?.detail || 
+        `OAuth ${provider} n'est pas encore configuré. Veuillez contacter l'administrateur.`
+      );
+      setLoading(false);
+    }
   };
 
   return (
