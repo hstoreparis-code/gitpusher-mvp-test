@@ -726,56 +726,103 @@ async def github_oauth_url():
 
 
 @api_router.get("/auth/oauth/github/callback")
-async def github_callback(code: str, authorization: Optional[str] = Header(default=None)):
-    """Callback called after user granted repo access. We link the GitHub token to the current logged-in user."""
+async def github_callback(code: str):
+    """
+    GitHub OAuth callback - can be used for:
+    1. Initial login/signup (creates or finds user, returns JWT)
+    2. Linking GitHub to existing account (would need user to be logged in)
+    For now, we support case 1 (login/signup)
+    """
     if not GITHUB_CLIENT_ID or not GITHUB_CLIENT_SECRET:
-        raise HTTPException(status_code=500, detail="GitHub OAuth not configured")
+        return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=oauth_not_configured")
 
-    # For simplicity: frontend should call this endpoint with an existing Bearer (user logged in already)
-    user = await get_user_from_token(authorization)
+    try:
+        async with httpx.AsyncClient() as client_http:
+            token_res = await client_http.post(
+                "https://github.com/login/oauth/access_token",
+                data={
+                    "client_id": GITHUB_CLIENT_ID,
+                    "client_secret": GITHUB_CLIENT_SECRET,
+                    "code": code,
+                    "redirect_uri": GITHUB_REDIRECT_URI,
+                },
+                headers={"Accept": "application/json"},
+                timeout=20,
+            )
+            if token_res.status_code != 200:
+                return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=failed_token_exchange")
+            token_data = token_res.json()
+            gh_token = token_data.get("access_token")
+            if not gh_token:
+                return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=no_github_token")
 
-    async with httpx.AsyncClient() as client_http:
-        token_res = await client_http.post(
-            "https://github.com/login/oauth/access_token",
-            data={
-                "client_id": GITHUB_CLIENT_ID,
-                "client_secret": GITHUB_CLIENT_SECRET,
-                "code": code,
-                "redirect_uri": GITHUB_REDIRECT_URI,
-            },
-            headers={"Accept": "application/json"},
-            timeout=20,
-        )
-        if token_res.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to exchange GitHub code")
-        token_data = token_res.json()
-        gh_token = token_data.get("access_token")
-        if not gh_token:
-            raise HTTPException(status_code=400, detail="No GitHub token returned")
+            # Fetch GitHub user profile
+            user_res = await client_http.get(
+                "https://api.github.com/user",
+                headers={"Authorization": f"Bearer {gh_token}"},
+                timeout=20,
+            )
+            if user_res.status_code != 200:
+                return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=failed_profile_fetch")
+            gh_profile = user_res.json()
+            gh_id = str(gh_profile.get("id"))
+            gh_email = gh_profile.get("email")
+            gh_login = gh_profile.get("login")
+            gh_name = gh_profile.get("name") or gh_login
 
-        # Fetch GitHub user id
-        user_res = await client_http.get(
-            "https://api.github.com/user",
-            headers={"Authorization": f"Bearer {gh_token}"},
-            timeout=20,
-        )
-        if user_res.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to fetch GitHub profile")
-        gh_profile = user_res.json()
-        gh_id = str(gh_profile.get("id"))
+            # If no public email, try to fetch from emails endpoint
+            if not gh_email:
+                emails_res = await client_http.get(
+                    "https://api.github.com/user/emails",
+                    headers={"Authorization": f"Bearer {gh_token}"},
+                    timeout=20,
+                )
+                if emails_res.status_code == 200:
+                    emails = emails_res.json()
+                    primary = next((e for e in emails if e.get("primary")), None)
+                    gh_email = primary["email"] if primary else emails[0]["email"] if emails else None
+            
+            # Fallback email if still none
+            if not gh_email:
+                gh_email = f"{gh_login}@github.local"
 
-    await db.users.update_one(
-        {"_id": user["_id"]},
-        {
-            "$set": {
+        # Find or create user
+        user = await db.users.find_one({"email": gh_email})
+        if user:
+            # Update existing user with GitHub info
+            await db.users.update_one(
+                {"_id": user["_id"]},
+                {
+                    "$set": {
+                        "provider_github_id": gh_id,
+                        "github_access_token": gh_token,
+                        "updated_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                },
+            )
+        else:
+            # Create new user
+            user_id = str(uuid.uuid4())
+            user = {
+                "_id": user_id,
+                "email": gh_email,
+                "display_name": gh_name,
+                "password_hash": None,
+                "provider_google_id": None,
                 "provider_github_id": gh_id,
                 "github_access_token": gh_token,
+                "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
-        },
-    )
+            await db.users.insert_one(user)
 
-    return {"status": "linked"}
+        # Create JWT token for the user
+        token = create_access_token({"sub": user["_id"]})
+        return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?token={token}")
+
+    except Exception as e:
+        logger.error(f"GitHub OAuth error: {str(e)}")
+        return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=oauth_failed")
 
 
 # ---------- LLM HELPERS ----------
