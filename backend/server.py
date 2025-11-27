@@ -645,64 +645,69 @@ async def google_oauth_url():
     return {"url": url}
 
 
-@api_router.get("/auth/oauth/google/callback", response_model=TokenResponse)
+@api_router.get("/auth/oauth/google/callback")
 async def google_callback(code: str):
     if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
-        raise HTTPException(status_code=500, detail="Google OAuth not configured")
+        return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=oauth_not_configured")
 
-    async with httpx.AsyncClient() as client_http:
-        token_res = await client_http.post(
-            "https://oauth2.googleapis.com/token",
-            data={
-                "code": code,
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "redirect_uri": GOOGLE_REDIRECT_URI,
-                "grant_type": "authorization_code",
-            },
-            timeout=20,
-        )
-        if token_res.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to exchange Google code")
-        token_data = token_res.json()
-        access_token = token_data.get("access_token")
+    try:
+        async with httpx.AsyncClient() as client_http:
+            token_res = await client_http.post(
+                "https://oauth2.googleapis.com/token",
+                data={
+                    "code": code,
+                    "client_id": GOOGLE_CLIENT_ID,
+                    "client_secret": GOOGLE_CLIENT_SECRET,
+                    "redirect_uri": GOOGLE_REDIRECT_URI,
+                    "grant_type": "authorization_code",
+                },
+                timeout=20,
+            )
+            if token_res.status_code != 200:
+                return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=failed_token_exchange")
+            token_data = token_res.json()
+            access_token = token_data.get("access_token")
 
-        userinfo_res = await client_http.get(
-            "https://www.googleapis.com/oauth2/v2/userinfo",
-            headers={"Authorization": f"Bearer {access_token}"},
-            timeout=20,
-        )
-        if userinfo_res.status_code != 200:
-            raise HTTPException(status_code=400, detail="Failed to fetch Google profile")
-        profile = userinfo_res.json()
+            userinfo_res = await client_http.get(
+                "https://www.googleapis.com/oauth2/v2/userinfo",
+                headers={"Authorization": f"Bearer {access_token}"},
+                timeout=20,
+            )
+            if userinfo_res.status_code != 200:
+                return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=failed_profile_fetch")
+            profile = userinfo_res.json()
 
-    email = profile.get("email")
-    google_id = profile.get("id")
-    name = profile.get("name") or email.split("@")[0]
+        email = profile.get("email")
+        google_id = profile.get("id")
+        name = profile.get("name") or email.split("@")[0]
 
-    user = await db.users.find_one({"email": email})
-    if user:
-        await db.users.update_one(
-            {"_id": user["_id"]},
-            {"$set": {"provider_google_id": google_id, "updated_at": datetime.now(timezone.utc).isoformat()}},
-        )
-    else:
-        user_id = str(uuid.uuid4())
-        user = {
-            "_id": user_id,
-            "email": email,
-            "display_name": name,
-            "password_hash": None,
-            "provider_google_id": google_id,
-            "provider_github_id": None,
-            "github_access_token": None,
-            "created_at": datetime.now(timezone.utc).isoformat(),
-            "updated_at": datetime.now(timezone.utc).isoformat(),
-        }
-        await db.users.insert_one(user)
+        user = await db.users.find_one({"email": email})
+        if user:
+            await db.users.update_one(
+                {"_id": user["_id"]},
+                {"$set": {"provider_google_id": google_id, "updated_at": datetime.now(timezone.utc).isoformat()}},
+            )
+        else:
+            user_id = str(uuid.uuid4())
+            user = {
+                "_id": user_id,
+                "email": email,
+                "display_name": name,
+                "password_hash": None,
+                "provider_google_id": google_id,
+                "provider_github_id": None,
+                "github_access_token": None,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }
+            await db.users.insert_one(user)
 
-    token = create_access_token({"sub": user["_id"]})
-    return TokenResponse(access_token=token)
+        token = create_access_token({"sub": user["_id"]})
+        return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?token={token}")
+    
+    except Exception as e:
+        logger.error(f"Google OAuth error: {str(e)}")
+        return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?error=oauth_failed")
 
 
 # ---------- GITHUB OAUTH ----------
