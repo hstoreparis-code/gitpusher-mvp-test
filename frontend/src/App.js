@@ -1106,99 +1106,99 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </CardContent>
             </Card>
 
-          <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl" data-testid="jobs-history-card">
-            <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center">
-                  <Activity className="h-4 w-4 text-slate-950" />
-                </div>
-                <CardTitle className="text-sm sm:text-base">Historique des jobs</CardTitle>
-              </div>
-              <div className="px-2 py-1 rounded-full bg-violet-500/10 border border-violet-500/30">
-                <span className="text-xs font-medium text-violet-300">{jobs.length} total</span>
-              </div>
-            </CardHeader>
-            <CardContent className="flex-1 overflow-auto space-y-2 text-xs sm:text-sm">
-              {jobsLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <div className="h-8 w-8 border-3 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              ) : jobs.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <div className="h-16 w-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-4">
-                    <Activity className="h-8 w-8 text-slate-600" />
+            <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl" data-testid="jobs-history-card">
+              <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center">
+                    <Activity className="h-4 w-4 text-slate-950" />
                   </div>
-                  <p className="text-sm text-slate-500" data-testid="jobs-empty-text">
-                    Aucun job pour le moment. Lance une automatisation pour voir l&apos;historique ici.
-                  </p>
+                  <CardTitle className="text-sm sm:text-base">Historique des jobs</CardTitle>
                 </div>
-              ) : (
-                <div className="space-y-2" data-testid="jobs-list">
-                  {jobs.map((job) => (
-                    <div
-                      key={job.id}
-                      className="group flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-900/60 hover:border-slate-700 transition-all duration-200"
-                      data-testid={`job-row-${job.id}`}
-                    >
-                      <div className="flex items-center gap-3 flex-1">
-                        <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
-                          job.status === "completed"
-                            ? "bg-emerald-500/20"
-                            : job.status === "failed"
-                              ? "bg-red-500/20"
-                              : "bg-amber-400/20"
-                        }`}>
-                          {job.status === "completed" ? (
-                            <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-                          ) : job.status === "failed" ? (
-                            <XCircle className="h-5 w-5 text-red-400" />
-                          ) : (
-                            <AlertCircle className="h-5 w-5 text-amber-400" />
-                          )}
-                        </div>
-                        <div className="flex flex-col gap-1 flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium text-xs">Job {job.id.slice(0, 8)}</span>
-                            <span
-                              className={`text-[10px] px-2 py-0.5 rounded-full border font-medium ${
-                                job.status === "completed"
-                                  ? "border-emerald-500/60 bg-emerald-500/10 text-emerald-300"
-                                  : job.status === "failed"
-                                    ? "border-red-500/60 bg-red-500/10 text-red-300"
-                                    : "border-amber-400/60 bg-amber-400/10 text-amber-200"
-                              }`}
-                              data-testid="job-status-pill"
-                            >
-                              {job.status}
-                            </span>
+                <div className="px-2 py-1 rounded-full bg-violet-500/10 border border-violet-500/30">
+                  <span className="text-xs font-medium text-violet-300">{jobs.length} total</span>
+                </div>
+              </CardHeader>
+              <CardContent className="flex-1 overflow-auto space-y-2 text-xs sm:text-sm">
+                {jobsLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="h-8 w-8 border-3 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                ) : jobs.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center py-12 text-center">
+                    <div className="h-16 w-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-4">
+                      <Activity className="h-8 w-8 text-slate-600" />
+                    </div>
+                    <p className="text-sm text-slate-500" data-testid="jobs-empty-text">
+                      Aucun job pour le moment. Lance une automatisation pour voir l&apos;historique ici.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-2" data-testid="jobs-list">
+                    {jobs.map((job) => (
+                      <div
+                        key={job.id}
+                        className="group flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-900/60 hover:border-slate-700 transition-all duration-200"
+                        data-testid={`job-row-${job.id}`}
+                      >
+                        <div className="flex items-center gap-3 flex-1">
+                          <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${
+                            job.status === "completed"
+                              ? "bg-emerald-500/20"
+                              : job.status === "failed"
+                                ? "bg-red-500/20"
+                                : "bg-amber-400/20"
+                          }`}>
+                            {job.status === "completed" ? (
+                              <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                            ) : job.status === "failed" ? (
+                              <XCircle className="h-5 w-5 text-red-400" />
+                            ) : (
+                              <AlertCircle className="h-5 w-5 text-amber-400" />
+                            )}
                           </div>
-                          <span className="text-[11px] text-slate-400">
-                            {job.project_name || job.project_id}
-                          </span>
-                          {job.created_at && (
-                            <span className="text-[10px] text-slate-500 flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {new Date(job.created_at).toLocaleString()}
+                          <div className="flex flex-col gap-1 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium text-xs">Job {job.id.slice(0, 8)}</span>
+                              <span
+                                className={`text-[10px] px-2 py-0.5 rounded-full border font-medium ${
+                                  job.status === "completed"
+                                    ? "border-emerald-500/60 bg-emerald-500/10 text-emerald-300"
+                                    : job.status === "failed"
+                                      ? "border-red-500/60 bg-red-500/10 text-red-300"
+                                      : "border-amber-400/60 bg-amber-400/10 text-amber-200"
+                                }`}
+                                data-testid="job-status-pill"
+                              >
+                                {job.status}
+                              </span>
+                            </div>
+                            <span className="text-[11px] text-slate-400">
+                              {job.project_name || job.project_id}
                             </span>
-                          )}
-                          {job.error && (
-                            <span
-                              className="text-[10px] text-red-300 flex items-center gap-1"
-                              data-testid="job-error-text"
-                            >
-                              <XCircle className="h-3 w-3" />
-                              <span className="truncate">{job.error}</span>
-                            </span>
-                          )}
+                            {job.created_at && (
+                              <span className="text-[10px] text-slate-500 flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {new Date(job.created_at).toLocaleString()}
+                              </span>
+                            )}
+                            {job.error && (
+                              <span
+                                className="text-[10px] text-red-300 flex items-center gap-1"
+                                data-testid="job-error-text"
+                              >
+                                <XCircle className="h-3 w-3" />
+                                <span className="truncate">{job.error}</span>
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
       </main>
     </div>
   );
