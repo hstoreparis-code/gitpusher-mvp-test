@@ -931,64 +931,151 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
       </header>
 
-      <main className="flex-1 max-w-6xl mx-auto px-4 py-6 grid lg:grid-cols-[1.1fr,1.4fr] gap-6">
-        <Card className="bg-slate-900/70 border-slate-800 flex flex-col">
-          <CardHeader className="flex flex-row items-center justify-between gap-4">
-            <CardTitle className="text-sm sm:text-base">{t("dashboardTitle")}</CardTitle>
-            <Button
-              size="sm"
-              className="rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs"
-              onClick={newProject}
-              disabled={creating}
-              data-testid="new-workflow-button"
-            >
-              {creating ? "…" : t("newWorkflow")}
-            </Button>
-          </CardHeader>
-          <CardContent className="flex-1 overflow-auto space-y-3">
-            {loading ? (
-              <p className="text-xs text-slate-400">Loading…</p>
-            ) : projects.length === 0 ? (
-              <p className="text-xs text-slate-400" data-testid="no-projects-text">
-                {t("noProjects")}
-              </p>
-            ) : (
-              <div className="space-y-2" data-testid="projects-list">
-                {projects.map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => setSelected(p)}
-                    className={`w-full text-left text-xs sm:text-sm px-3 py-2 rounded-xl border transition-colors ${
-                      selected?.id === p.id
-                        ? "bg-cyan-500/10 border-cyan-400/60"
-                        : "bg-slate-900/80 border-slate-800 hover:border-slate-600"
-                    }`}
-                    data-testid={`project-card-${p.id}`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-medium truncate">{p.name}</span>
-                      <span
-                        className={`text-[10px] px-2 py-0.5 rounded-full border ${
-                          p.status === "done"
-                            ? "border-emerald-500/50 text-emerald-300"
-                            : "border-amber-400/50 text-amber-200"
-                        }`}
-                        data-testid="project-status-pill"
-                      >
-                        {p.status}
-                      </span>
-                    </div>
-                    {p.github_repo_url && (
-                      <p className="text-[11px] text-cyan-300 truncate mt-1">
-                        {p.github_repo_url}
-                      </p>
-                    )}
-                  </button>
-                ))}
+      <main className="flex-1 max-w-7xl mx-auto px-4 py-6 space-y-6">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Total Projects */}
+          <Card className="bg-gradient-to-br from-cyan-500/10 via-slate-900/70 to-slate-900/70 border-cyan-500/20 backdrop-blur-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Total Projects</p>
+                  <p className="text-2xl font-bold text-cyan-300">{projects.length}</p>
+                </div>
+                <div className="h-12 w-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                  <GitBranch className="h-6 w-6 text-cyan-400" />
+                </div>
               </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Completed Projects */}
+          <Card className="bg-gradient-to-br from-emerald-500/10 via-slate-900/70 to-slate-900/70 border-emerald-500/20 backdrop-blur-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Completed</p>
+                  <p className="text-2xl font-bold text-emerald-300">
+                    {projects.filter(p => p.status === "done").length}
+                  </p>
+                </div>
+                <div className="h-12 w-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-400" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Pending Projects */}
+          <Card className="bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-900/70 border-amber-500/20 backdrop-blur-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Pending</p>
+                  <p className="text-2xl font-bold text-amber-300">
+                    {projects.filter(p => p.status !== "done").length}
+                  </p>
+                </div>
+                <div className="h-12 w-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-amber-400" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Total Jobs */}
+          <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/20 backdrop-blur-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-slate-400 mb-1">Total Jobs</p>
+                  <p className="text-2xl font-bold text-violet-300">{jobs.length}</p>
+                </div>
+                <div className="h-12 w-12 rounded-full bg-violet-500/20 flex items-center justify-center">
+                  <Activity className="h-6 w-6 text-violet-400" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid lg:grid-cols-[1.1fr,1.4fr] gap-6">
+          {/* Projects List */}
+          <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl">
+            <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center">
+                  <GitBranch className="h-4 w-4 text-slate-950" />
+                </div>
+                <CardTitle className="text-sm sm:text-base">{t("dashboardTitle")}</CardTitle>
+              </div>
+              <Button
+                size="sm"
+                className="rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 text-xs shadow-lg"
+                onClick={newProject}
+                disabled={creating}
+                data-testid="new-workflow-button"
+              >
+                {creating ? "…" : t("newWorkflow")}
+              </Button>
+            </CardHeader>
+            <CardContent className="flex-1 overflow-auto space-y-3">
+              {loading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="h-8 w-8 border-3 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              ) : projects.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="h-16 w-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-4">
+                    <GitBranch className="h-8 w-8 text-slate-600" />
+                  </div>
+                  <p className="text-sm text-slate-400" data-testid="no-projects-text">
+                    {t("noProjects")}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2" data-testid="projects-list">
+                  {projects.map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => setSelected(p)}
+                      className={`group w-full text-left text-xs sm:text-sm px-4 py-3 rounded-xl border transition-all duration-200 ${
+                        selected?.id === p.id
+                          ? "bg-gradient-to-r from-cyan-500/20 to-violet-500/20 border-cyan-400/60 shadow-lg shadow-cyan-500/20"
+                          : "bg-slate-900/80 border-slate-800 hover:border-slate-600 hover:shadow-md"
+                      }`}
+                      data-testid={`project-card-${p.id}`}
+                    >
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className={`h-2 w-2 rounded-full ${
+                            p.status === "done" ? "bg-emerald-400" : "bg-amber-400"
+                          } ${selected?.id === p.id ? "animate-pulse" : ""}`}></div>
+                          <span className="font-medium truncate">{p.name}</span>
+                        </div>
+                        <span
+                          className={`text-[10px] px-2 py-1 rounded-full border font-medium ${
+                            p.status === "done"
+                              ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300"
+                              : "border-amber-400/50 bg-amber-400/10 text-amber-200"
+                          }`}
+                          data-testid="project-status-pill"
+                        >
+                          {p.status}
+                        </span>
+                      </div>
+                      {p.github_repo_url && (
+                        <div className="flex items-center gap-1.5 text-[11px] text-cyan-400 truncate">
+                          <Rocket className="h-3 w-3" />
+                          <span className="truncate">{p.github_repo_url}</span>
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
         <div className="space-y-4">
           <Card className="bg-slate-900/70 border-slate-800 flex flex-col" data-testid="project-stepper-card">
