@@ -382,9 +382,19 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight max-w-2xl mx-auto lg:mx-0">
               {t("heroTitle")}<span className="text-cyan-300">.</span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0">
-              {t("heroSubtitle")}
-            </p>
+            {lang === "fr" ? (
+              <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0">
+                Dépose tes fichiers, l’IA organise ton projet, génère le README et pousse sur tes dépôts Git (
+                <span className="text-cyan-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.9)]">
+                  GitHub aujourd’hui, GitLab &amp; Bitbucket à venir
+                </span>
+                ).
+              </p>
+            ) : (
+              <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0">
+                {t("heroSubtitle")}
+              </p>
+            )}
 
             {/* Steps now just above CTA - redesigned inline */}
             <div className="mt-6 flex flex-col gap-3 text-[12px] sm:text-xs">
