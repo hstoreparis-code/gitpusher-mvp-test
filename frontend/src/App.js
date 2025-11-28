@@ -1071,16 +1071,16 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
           {/* Completed Projects */}
           <Card className="bg-gradient-to-br from-emerald-500/10 via-slate-900/70 to-slate-900/70 border-emerald-500/20 backdrop-blur-sm">
-            <CardContent className="p-4">
+            <CardContent className="px-4 py-5 sm:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-300 mb-1">Completed</p>
-                  <p className="text-2xl font-bold text-emerald-300">
+                  <p className="text-sm text-slate-200 mb-1">Completed</p>
+                  <p className="text-3xl sm:text-2xl font-bold text-emerald-300">
                     {projects.filter(p => p.status === "done").length}
                   </p>
                 </div>
-                <div className="h-12 w-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                  <CheckCircle2 className="h-6 w-6 text-emerald-400" />
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                  <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
                 </div>
               </div>
             </CardContent>
