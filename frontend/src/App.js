@@ -3264,7 +3264,7 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
             <Button
               size="lg"
               className="rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 px-8 py-3 shadow-lg text-sm"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/pricing")}
             >
               Commencer Gratuitement
             </Button>
