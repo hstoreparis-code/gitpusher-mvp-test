@@ -1637,13 +1637,142 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
             </p>
           </section>
 
-          {/* Plans */}
+          {/* Credit Packs */}
           <section className="grid gap-6 md:grid-cols-3">
-            {/* Freemium */}
-            <Card
-              className="bg-slate-900/70 border-slate-800 flex flex-col justify-between"
-              data-testid="pricing-freemium-card"
-            >
+            {/* Pack Starter */}
+            <Card className="bg-slate-900/70 border-slate-800 hover:border-cyan-500/30 transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <CardTitle className="text-xl font-bold">Pack Starter</CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400">Essai</span>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-bold text-cyan-300">10</span>
+                  <span className="text-slate-400 text-sm">crédits</span>
+                </div>
+                <p className="text-2xl font-semibold text-slate-300 mt-2">5€</p>
+                <p className="text-xs text-slate-500">0,50€ par crédit</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2 text-sm text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>10 uploads avec génération IA complète</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>Support de 6 plateformes Git</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>README + .gitignore + LICENSE + CHANGELOG</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span>Support email (48h)</span>
+                  </li>
+                </ul>
+                <Button className="w-full rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 mt-4" size="lg">
+                  Acheter - 5€
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Pack Pro */}
+            <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/30 hover:border-violet-500/50 transition-all duration-300 relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 text-slate-950 text-xs font-bold">
+                  ⭐ POPULAIRE
+                </span>
+              </div>
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2 mt-2">
+                  <CardTitle className="text-xl font-bold">Pack Pro</CardTitle>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-bold text-violet-300">50</span>
+                  <span className="text-slate-400 text-sm">crédits</span>
+                </div>
+                <p className="text-2xl font-semibold text-slate-300 mt-2">20€</p>
+                <p className="text-xs text-emerald-400">0,40€ par crédit • Économie de 20%</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2 text-sm text-slate-300">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <span className="font-medium">50 uploads avec génération IA</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <span>Tous les providers supportés</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <span>4 fichiers générés par IA</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <span>Historique illimité</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <span>Support prioritaire (24h)</span>
+                  </li>
+                </ul>
+                <Button className="w-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 font-semibold mt-4 shadow-lg" size="lg">
+                  Acheter - 20€
+                </Button>
+                <p className="text-center text-xs text-slate-500">Meilleur rapport qualité/prix</p>
+              </CardContent>
+            </Card>
+
+            {/* Pack Business */}
+            <Card className="bg-slate-900/70 border-amber-500/30 hover:border-amber-500/50 transition-all duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <CardTitle className="text-xl font-bold">Pack Business</CardTitle>
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-bold text-amber-300">100</span>
+                  <span className="text-slate-400 text-sm">crédits</span>
+                </div>
+                <p className="text-2xl font-semibold text-slate-300 mt-2">35€</p>
+                <p className="text-xs text-emerald-400">0,35€ par crédit • Économie de 30%</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2 text-sm text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>100 uploads avec génération IA</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Accès prioritaire aux nouveaux providers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Génération IA personnalisable</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>API Partner pour intégrations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Autopush automatique</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Support premium (12h) + Slack</span>
+                  </li>
+                </ul>
+                <Button className="w-full rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold mt-4" size="lg">
+                  Acheter - 35€
+                </Button>
+                <p className="text-center text-xs text-slate-500">Maximum d'économies</p>
+              </CardContent>
+            </Card>
+          </section>
               <CardHeader className="space-y-2">
                 <CardTitle className="text-base flex items-center justify-between">
                   <span>🌱 Freemium</span>
