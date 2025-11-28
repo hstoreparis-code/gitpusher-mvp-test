@@ -2506,14 +2506,14 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   <span className="text-4xl font-bold text-cyan-300">10</span>
                   <span className="text-slate-400 text-sm">crédits</span>
                 </div>
-                <p className="text-2xl font-semibold text-slate-300 mt-2">5€</p>
-                <p className="text-xs text-slate-500">0,50€ par crédit</p>
+                <p className="text-2xl font-semibold text-slate-300 mt-2">9,99€</p>
+                <p className="text-xs text-slate-500">≈ 1€ par crédit • 5 uploads</p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <ul className="space-y-2 text-sm text-slate-400">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                    <span>10 uploads avec génération IA complète</span>
+                    <span>5 uploads avec génération IA complète</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -2529,7 +2529,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   </li>
                 </ul>
                 <Button className="w-full rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 mt-4" size="lg">
-                  Acheter - 5€
+                  Acheter - 9,99€
                 </Button>
               </CardContent>
             </Card>
