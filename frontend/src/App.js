@@ -1394,11 +1394,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   <Clock className="h-6 w-6 text-amber-400" />
                 </div>
               </div>
-              <p className="text-sm text-slate-400 mb-2">Pending</p>
+              <p className="text-sm text-slate-100 mb-2 font-semibold">Pending</p>
               <p className="text-3xl font-bold text-amber-300">
                 {projects.filter(p => p.status !== "done").length}
               </p>
-              <p className="text-xs text-slate-500 mt-2">En attente de traitement</p>
+              <p className="text-xs text-slate-300 mt-2">En attente de traitement</p>
             </CardContent>
           </Card>
 
