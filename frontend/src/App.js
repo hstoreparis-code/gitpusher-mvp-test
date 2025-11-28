@@ -692,16 +692,18 @@ function AuthCard({ t, onSuccess }) {
               data-testid="github-oauth-button"
               disabled={loading}
             >
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900 border border-cyan-400/80">
-                <Github className="h-6 w-6 text-cyan-300" />
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="text-[11px] sm:text-sm font-semibold text-slate-50">
-                  Continuer avec GitHub
+              <span className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-900 border border-cyan-400/80">
+                  <Github className="h-6 w-6 text-cyan-300" />
                 </span>
-                {oauthProvider === "github" && (
-                  <span className="h-3 w-3 rounded-full bg-cyan-400 animate-ping" />
-                )}
+                <span className="flex items-center gap-2">
+                  <span className="text-[11px] sm:text-sm font-semibold text-slate-50">
+                    Continuer avec GitHub
+                  </span>
+                  {oauthProvider === "github" && (
+                    <span className="h-3 w-3 rounded-full bg-cyan-400 animate-ping" />
+                  )}
+                </span>
               </span>
             </Button>
             {oauthProvider === "github" && (
