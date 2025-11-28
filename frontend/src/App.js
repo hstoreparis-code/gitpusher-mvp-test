@@ -1055,6 +1055,74 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
       <main className="flex-1 w-full max-w-full sm:max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-8 space-y-3 sm:space-y-8 overflow-x-hidden">
         {/* Dashboard Title */}
+        {/* TEST MODE - Developer Controls */}
+        <Card className="mb-4 bg-amber-500/10 border-amber-500/30">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <p className="text-xs sm:text-sm font-semibold text-amber-300 mb-1">🧪 MODE TEST - Simulateur d'abonnement</p>
+                <p className="text-[10px] sm:text-xs text-slate-400">Testez les différents scénarios de crédits et d'abonnement</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const newCredits = Math.max(0, (user?.credits || 0) - 1);
+                    setUser({ ...user, credits: newCredits });
+                  }}
+                  variant="outline"
+                  className="text-xs border-red-500/50 text-red-300 hover:bg-red-500/20"
+                >
+                  -1 crédit
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setUser({ ...user, credits: (user?.credits || 0) + 5 });
+                  }}
+                  variant="outline"
+                  className="text-xs border-green-500/50 text-green-300 hover:bg-green-500/20"
+                >
+                  +5 crédits
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setUser({ ...user, credits: (user?.credits || 0) + 50 });
+                  }}
+                  variant="outline"
+                  className="text-xs border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/20"
+                >
+                  +50 crédits
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const plans = ["Free", "Starter", "Pro", "Enterprise"];
+                    const currentIndex = plans.indexOf(user?.plan || "Free");
+                    const nextPlan = plans[(currentIndex + 1) % plans.length];
+                    setUser({ ...user, plan: nextPlan });
+                  }}
+                  variant="outline"
+                  className="text-xs border-violet-500/50 text-violet-300 hover:bg-violet-500/20"
+                >
+                  Changer Plan
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    setUser({ ...user, credits: 1, plan: "Free" });
+                  }}
+                  variant="outline"
+                  className="text-xs border-amber-500/50 text-amber-300 hover:bg-amber-500/20"
+                >
+                  ⚠️ Mode Alerte
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="mb-4 sm:mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             <div>
