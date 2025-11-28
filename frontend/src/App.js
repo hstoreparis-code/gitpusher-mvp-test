@@ -3179,54 +3179,7 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
           </CardContent>
         </Card>
 
-        {/* Business Model */}
-        <Card className="bg-slate-900/70 border-slate-800">
-          <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
-              💰 Modèle Économique
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 text-sm">
-            <div className="space-y-3">
-              <div>
-                <h3 className="font-semibold text-cyan-300 mb-2">Pay-per-Use avec Crédits</h3>
-                <p className="text-slate-400 text-xs mb-3">
-                  Système flexible de crédits permettant une facturation à l'usage sans engagement.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-3 gap-3">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-slate-950 to-slate-900 border border-slate-700">
-                  <p className="text-xs text-slate-400 mb-1">Pack Starter</p>
-                  <p className="text-2xl font-bold text-cyan-300">10</p>
-                  <p className="text-xs text-slate-400">crédits / 5€</p>
-                  <p className="text-[10px] text-slate-500 mt-2">Idéal pour tester</p>
-                </div>
-                
-                <div className="p-4 rounded-xl bg-gradient-to-br from-violet-500/10 to-slate-900 border border-violet-500/30">
-                  <div className="flex items-center gap-1 mb-1">
-                    <p className="text-xs text-slate-400">Pack Pro</p>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-300">Populaire</span>
-                  </div>
-                  <p className="text-2xl font-bold text-violet-300">50</p>
-                  <p className="text-xs text-slate-400">crédits / 20€</p>
-                  <p className="text-[10px] text-slate-500 mt-2">Meilleur rapport</p>
-                </div>
-                
-                <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-slate-900 border border-amber-500/30">
-                  <p className="text-xs text-slate-400 mb-1">Pack Business</p>
-                  <p className="text-2xl font-bold text-amber-300">100</p>
-                  <p className="text-xs text-slate-400">crédits / 35€</p>
-                  <p className="text-[10px] text-slate-500 mt-2">Maximum d'économies</p>
-                </div>
-              </div>
-              
-              <p className="text-xs text-slate-500 italic">
-                1 crédit = 1 upload/push complet avec génération IA
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Business Model (section retirée sur demande) */}
 
         {/* Advanced Features */}
         <Card className="bg-slate-900/70 border-slate-800">
