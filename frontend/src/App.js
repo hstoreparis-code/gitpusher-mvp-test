@@ -1162,7 +1162,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <button
                       key={p.id}
                       onClick={() => setSelected(p)}
-                      className={`group w-full text-left text-base sm:text-base px-4 py-3 rounded-xl border transition-all duration-200 ${
+                      className={`group w-full text-left text-sm sm:text-sm px-3 py-2 rounded-xl border transition-all duration-200 ${
                         selected?.id === p.id
                           ? "bg-gradient-to-r from-cyan-500/20 to-violet-500/20 border-cyan-400/60 shadow-lg shadow-cyan-500/20"
                           : "bg-slate-900/80 border-slate-800 hover:border-slate-600 hover:shadow-md"
