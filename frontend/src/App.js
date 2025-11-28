@@ -1800,7 +1800,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                     Pour tester la plateforme sans engagement.
                   </p>
                 </CardHeader>
-                <CardContent className="text-xs">
+                <CardContent className="pt-4 md:pt-0 text-xs">
                   <ul className="text-slate-300">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -1940,7 +1940,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   <span className="text-xs text-slate-400">/ mois</span>
                 </div>
               </CardHeader>
-              <CardContent className="text-xs">
+              <CardContent className="pt-4 md:pt-0 text-xs">
                 <ul className="text-slate-200">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
