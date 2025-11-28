@@ -3829,7 +3829,9 @@ function AppShell() {
           />
         } 
       />
-
+      <Route 
+        path="/" 
+        element={
           <Landing
             t={t}
             lang={lang}
