@@ -2156,17 +2156,21 @@ function AccountPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
       {/* Header réutilisé du landing page */}
       <header className="w-full border-b border-white/5 backdrop-blur-sm sticky top-0 z-10 bg-slate-950/70">
         <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="h-11 w-11 md:h-[52px] md:w-[52px] rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_24px_rgba(34,211,238,0.65)] transition-colors">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 md:gap-3 group"
+          >
+            <div className="h-11 w-11 md:h-[52px] md:w-[52px] rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_24px_rgba(34,211,238,0.65)] transition-colors group-hover:scale-105">
               <DownloadCloud className="h-[22px] w-[22px] md:h-[26px] md:w-[26px] text-slate-950" />
             </div>
-            <div className="flex flex-col leading-tight">
+            <div className="flex flex-col leading-tight text-left">
               <span className="text-[17px] md:text-[19px] font-semibold tracking-tight">
                 Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span>
               </span>
               <span className="text-[11px] md:text-[13px] text-slate-400">Mon compte</span>
             </div>
-          </div>
+          </button>
           <div className="flex items-center gap-2 md:gap-3 text-xs sm:text-sm relative">
             <div className="flex items-center gap-2">
               <span className="text-slate-400 hidden sm:inline text-sm">{t("theme")}</span>
@@ -2920,17 +2924,21 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50">
       <header className="w-full border-b border-white/5 backdrop-blur-sm sticky top-0 z-10 bg-slate-950/70">
         <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="h-11 w-11 md:h-[52px] md:w-[52px] rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_24px_rgba(34,211,238,0.65)] transition-colors">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 md:gap-3 group"
+          >
+            <div className="h-11 w-11 md:h-[52px] md:w-[52px] rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_24px_rgba(34,211,238,0.65)] transition-colors group-hover:scale-105">
               <DownloadCloud className="h-[22px] w-[22px] md:h-[26px] md:w-[26px] text-slate-950" />
             </div>
-            <div className="flex flex-col leading-tight">
+            <div className="flex flex-col leading-tight text-left">
               <span className="text-[17px] md:text-[19px] font-semibold tracking-tight">
                 Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span>
               </span>
               <span className="text-[11px] md:text-[13px] text-slate-400">Livre Blanc</span>
             </div>
-          </div>
+          </button>
           <Button
             variant="outline"
             size="sm"
