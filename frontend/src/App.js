@@ -1184,6 +1184,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
             </div>
           </CardContent>
         </Card>
+      </main>
+    </div>
+  );
+}
 
 function ProDashboard({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
   const { token, user, logout } = useAuth();
