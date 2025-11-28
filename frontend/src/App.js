@@ -969,27 +969,82 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </PopoverContent>
             </Popover>
             <div className="flex items-center gap-2 text-[11px] sm:text-xs">
-              {user && (
-                <button
-                  onClick={openAccountSettings}
-                  className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 max-w-[140px]"
-                  data-testid="dashboard-account-button"
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button
+                    className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 max-w-[160px]"
+                    data-testid="dashboard-user-menu-button"
+                  >
+                    <span className="truncate text-slate-200 text-xs sm:text-sm">{user?.email || "Compte"}</span>
+                    <span className="text-[10px] text-slate-400">▼</span>
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent
+                  align="end"
+                  className="mt-2 w-72 bg-slate-900/95 border border-slate-700/80 shadow-xl rounded-2xl p-3 text-xs sm:text-sm"
                 >
-                  <span className="truncate text-slate-200">{user.email}</span>
-                </button>
-              )}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  logout();
-                  navigate("/");
-                }}
-                className="rounded-full border-slate-700 text-[11px] sm:text-xs px-3 py-1"
-                data-testid="logout-button"
-              >
-                Logout
-              </Button>
+                  <div className="space-y-3" data-testid="dashboard-user-menu">
+                    <div>
+                      <p className="text-[11px] text-slate-400 mb-1">Compte</p>
+                      <p className="font-semibold text-slate-100 truncate">{user?.email}</p>
+                      {user?.display_name && (
+                        <p className="text-[11px] text-slate-400 truncate">{user.display_name}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <p className="text-[11px] text-slate-400">Tokens de providers</p>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs text-slate-300">GitHub token</span>
+                          <Button
+                            variant="outline"
+                            size="xs"
+                            className="h-7 px-2 rounded-full border-slate-600 text-[11px]"
+                            onClick={openAccountSettings}
+                          >
+                            Gérer
+                          </Button>
+                        </div>
+                        <p className="text-[10px] text-slate-500">
+                          Renseigne ton token GitHub personnel ou vérifie la connexion OAuth.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-slate-800 pt-2 space-y-2">
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start px-2 py-1.5 text-xs text-slate-200 hover:bg-slate-800/80 rounded-lg"
+                        onClick={() => navigate("/account")}
+                      >
+                        Paramètres du compte
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start px-2 py-1.5 text-xs text-slate-200 hover:bg-slate-800/80 rounded-lg"
+                        onClick={() => {
+                          window.location.href = "mailto:support@votresupport.local?subject=Support%20GitPusher";
+                        }}
+                      >
+                        Aide &amp; support
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          logout();
+                          navigate("/");
+                        }}
+                        className="w-full rounded-full border-red-500/60 text-red-300 text-xs mt-1"
+                        data-testid="logout-button"
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </div>
