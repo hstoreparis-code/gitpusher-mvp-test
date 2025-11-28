@@ -519,6 +519,27 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
 
         </div>
       </main>
+
+      {/* Footer with White Paper link */}
+      <footer className="w-full border-t border-white/5 py-6 px-4">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <p>© 2024 GitPusher. No-Code Git Workflow powered by AI.</p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate("/whitepaper")}
+              className="hover:text-cyan-300 transition-colors underline"
+            >
+              📄 Livre Blanc
+            </button>
+            <button
+              onClick={() => navigate("/pricing")}
+              className="hover:text-cyan-300 transition-colors"
+            >
+              Tarifs
+            </button>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
