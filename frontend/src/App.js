@@ -613,18 +613,59 @@ function AuthCard({ t, onSuccess }) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {/* Bouton GitHub mis en avant en haut */}
-        <div className="mb-4">
-          <Button
-            className="w-full justify-center rounded-full bg-slate-950 border border-slate-700 hover:border-cyan-400/80 hover:bg-slate-900 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(148,163,184,0.6)] px-4 py-3 flex items-center gap-2"
-            onClick={() => startOAuth("github")}
-            data-testid="github-oauth-button"
-          >
-            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-900">
-              <span className="text-lg">🐙</span>
-            </span>
-            <span>Continuer avec GitHub (recommandé)</span>
-          </Button>
+        {/* Bloc connexions rapides en premier */}
+        <div className="mb-5 space-y-3">
+          <div className="space-y-2">
+            <p className="text-[11px] text-slate-400">Connexion ultra-rapide :</p>
+            <Button
+              className="w-full justify-center rounded-full bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-cyan-400/70 hover:border-cyan-300 hover:bg-slate-900 text-xs sm:text-sm font-semibold shadow-[0_0_22px_rgba(56,189,248,0.8)] px-4 py-3 flex items-center gap-2"
+              onClick={() => startOAuth("github")}
+              data-testid="github-oauth-button"
+            >
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-900 border border-cyan-400/60">
+                <span className="text-lg">🐙</span>
+              </span>
+              <span>Continuer avec GitHub (recommandé)</span>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-[11px] sm:text-xs">
+            <Button
+              variant="outline"
+              className="w-full justify-center rounded-full border-slate-700 bg-slate-900 hover:bg-slate-800"
+              onClick={() => startOAuth("google")}
+              data-testid="google-oauth-button"
+            >
+              Google
+            </Button>
+            <Button
+              variant="outline"
+              disabled
+              className="w-full justify-center rounded-full border-slate-800 bg-slate-900/60 text-slate-500"
+            >
+              GitLab (bientôt)
+            </Button>
+            <Button
+              variant="outline"
+              disabled
+              className="w-full justify-center rounded-full border-slate-800 bg-slate-900/60 text-slate-500"
+            >
+              Bitbucket (bientôt)
+            </Button>
+            <Button
+              variant="outline"
+              disabled
+              className="w-full justify-center rounded-full border-slate-800 bg-slate-900/60 text-slate-500"
+            >
+              Gitea / Codeberg (bientôt)
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] text-slate-500 pt-1">
+            <div className="flex-1 h-px bg-slate-700" />
+            <span>ou avec email / mot de passe</span>
+            <div className="flex-1 h-px bg-slate-700" />
+          </div>
         </div>
 
         <Tabs value={tab} onValueChange={setTab} className="w-full">
