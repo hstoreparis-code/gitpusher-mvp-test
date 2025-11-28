@@ -1119,7 +1119,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           </Card>
         </div>
 
-        <div className="grid md:grid-cols-[1.1fr,1.4fr] gap-4 sm:gap-6">
+        <div className="grid md:grid-cols-[1.1fr,1.4fr] gap-3 sm:gap-6">
           {/* Projects List */}
           <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm">
             <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
@@ -1129,7 +1129,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 </div>
                 <div className="flex flex-col">
                   <CardTitle className="text-base sm:text-lg">{t("dashboardTitle")}</CardTitle>
-                  <p className="text-sm sm:text-xs text-slate-400">Clique sur un workflow puis renomme le repo avant de lancer.</p>
+                  <p className="hidden sm:block text-xs text-slate-400">Clique sur un workflow puis renomme le repo avant de lancer.</p>
                 </div>
               </div>
               <Button
