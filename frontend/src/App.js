@@ -1027,23 +1027,33 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               <span className="text-[11px] md:text-[13px] text-slate-400 truncate">No-Code GitHub workflow</span>
             </div>
           {/* Toggle Free / Premium */}
-          <div className="hidden sm:flex items-center gap-2 px-2 py-1 rounded-full bg-slate-900/70 border border-slate-700/80">
-            <span className="text-[10px] text-slate-400">Free</span>
-            <button
-              type="button"
-              onClick={() => navigate("/pricing#pro")}
-              className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${
-                currentPlan === "premium" ? "bg-cyan-500" : "bg-slate-300"
-              }`}
-              aria-label="Basculer vers Premium"
-            >
-              <span
-                className={`absolute top-[3px] w-4 h-4 rounded-full bg-black transition-transform duration-200 ${
-                  currentPlan === "premium" ? "translate-x-[22px]" : "translate-x-[2px]"
+          <div className="hidden sm:flex items-center gap-2">
+            <div className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700/80 flex items-center gap-2 shadow-[0_0_12px_rgba(15,23,42,0.6)]">
+              <span className={`text-[10px] font-medium ${currentPlan === "freemium" ? "text-slate-50" : "text-slate-400"}`}>
+                Free
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (currentPlan !== "premium") {
+                    navigate("/pricing#pro");
+                  }
+                }}
+                className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${
+                  currentPlan === "premium" ? "bg-cyan-500" : "bg-slate-300"
                 }`}
-              />
-            </button>
-            <span className="text-[10px] text-slate-200 font-medium">Premium</span>
+                aria-label="Basculer vers Premium"
+              >
+                <span
+                  className={`absolute top-[3px] w-4 h-4 rounded-full bg-black transition-transform duration-200 ${
+                    currentPlan === "premium" ? "translate-x-[26px]" : "translate-x-[2px]"
+                  }`}
+                />
+              </button>
+              <span className={`text-[10px] font-medium ${currentPlan === "premium" ? "text-slate-50" : "text-slate-400"}`}>
+                Premium
+              </span>
+            </div>
           </div>
 
           </button>
