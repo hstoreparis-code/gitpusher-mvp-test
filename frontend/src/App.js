@@ -1241,7 +1241,240 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           </CardContent>
         </Card>
 
-        {/* Rest of dashboard content would go here */}
+        {/* CONTENU PRINCIPAL DU DASHBOARD USER */}
+        <div className="grid gap-4 lg:grid-cols-[2fr,3fr]">
+          {/* Colonne projets */}
+          <Card className="bg-slate-900/80 border-slate-800/80">
+            <CardHeader>
+              <CardTitle className="text-sm sm:text-base flex items-center justify-between gap-2">
+                <span>Projets</span>
+                <Button
+                  size="sm"
+                  className="text-xs rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950"
+                  onClick={newProject}
+                  disabled={creating}
+                  data-testid="dashboard-new-project-button"
+                >
+                  {creating ? "Création..." : "Nouveau"}
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-2 sm:p-3 text-xs sm:text-sm">
+              {loading ? (
+                <p className="text-slate-400 text-xs">Chargement des projets...</p>
+              ) : projects.length === 0 ? (
+                <p className="text-slate-500 text-xs">
+                  Aucun projet pour l&apos;instant. Crée ton premier dépôt IA avec le bouton "Nouveau".
+                </p>
+              ) : (
+                <div className="space-y-1 max-h-[260px] overflow-y-auto pr-1" data-testid="dashboard-projects-list">
+                  {projects.map((project) => (
+                    <button
+                      key={project.id}
+                      type="button"
+                      onClick={() => setSelected(project)}
+                      className={`w-full flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg border text-left transition-colors text-[11px] sm:text-xs ${
+                        selected?.id === project.id
+                          ? "border-cyan-400/70 bg-cyan-500/10 text-slate-50"
+                          : "border-slate-800 bg-slate-950/60 hover:bg-slate-900/60 text-slate-200"
+                      }`}
+                    >
+                      <div className="min-w-0">
+                        <p className="font-medium truncate">{project.name || "Projet sans nom"}</p>
+                        <p className="text-[10px] text-slate-400 truncate">{project.description || "Sans description"}</p>
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] border ${
+                            project.status === "completed"
+                              ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
+                              : project.status === "archived"
+                                ? "bg-slate-800 text-slate-300 border-slate-600"
+                                : "bg-cyan-500/15 text-cyan-300 border-cyan-500/40"
+                          }`}
+                        >
+                          {project.status || "draft"}
+                        </span>
+                        {project.repo_url && (
+                          <a
+                            href={project.repo_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] text-cyan-300 hover:text-cyan-200"
+                          >
+                            <Github className="w-3 h-3" />
+                            Repo
+                          </a>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Colonne principale: détails projet + drag & drop + jobs */}
+          <Card className="bg-slate-900/80 border-slate-800/80">
+            <CardHeader>
+              <CardTitle className="text-sm sm:text-base flex items-center justify-between gap-2">
+                <span>Détails du projet</span>
+                {selected && (
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="xs"
+                      className="h-7 px-2 rounded-full border-slate-600 text-[10px]"
+                      onClick={() => archiveProject(selected.id)}
+                    >
+                      Archiver
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="xs"
+                      className="h-7 px-2 rounded-full border-red-500/60 text-red-300 text-[10px]"
+                      onClick={() => deleteProject(selected.id)}
+                    >
+                      Supprimer
+                    </Button>
+                  </div>
+                )}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-3 sm:p-4 text-xs sm:text-sm space-y-4">
+              {!selected ? (
+                <p className="text-slate-500 text-xs">
+                  Sélectionne un projet dans la colonne de gauche pour voir les détails, uploader des fichiers et lancer
+                  l&apos;automatisation.
+                </p>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <div className="flex-1">
+                        <Label className="text-[11px] text-slate-300">Nom du dépôt</Label>
+                        <Input
+                          value={selected.name || ""}
+                          disabled
+                          className="h-8 text-xs bg-slate-950/60 border-slate-700/80"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <Label className="text-[11px] text-slate-300">Langue du README</Label>
+                        <Input
+                          value={selected.language || "en"}
+                          disabled
+                          className="h-8 text-xs bg-slate-950/60 border-slate-700/80"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-[11px] text-slate-300">Description</Label>
+                      <textarea
+                        value={selected.description || ""}
+                        disabled
+                        className="w-full mt-1 rounded-md bg-slate-950/60 border border-slate-700/80 text-xs text-slate-200 p-2 resize-none min-h-[40px]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Zone drag & drop */}
+                  <div className="mt-3">
+                    <p className="text-[11px] text-slate-400 mb-1">Fichiers du projet</p>
+                    <label
+                      className="relative flex flex-col items-center justify-center gap-2 border border-dashed border-cyan-400/60 rounded-xl bg-slate-950/40 hover:bg-slate-900/60 cursor-pointer py-6"
+                    >
+                      <span className="text-[11px] uppercase tracking-[0.18em] text-cyan-300">Drag &amp; Drop</span>
+                      <span className="text-xs text-slate-200">Dépose tes fichiers ici ou clique pour parcourir</span>
+                      <input
+                        type="file"
+                        multiple
+                        className="hidden"
+                        onChange={onFilesSelected}
+                        data-testid="dashboard-file-input"
+                      />
+                    </label>
+                    {uploadedFiles.length > 0 && (
+                      <div className="mt-2 space-y-1 text-[11px] text-slate-300">
+                        <p className="font-semibold">Fichiers sélectionnés :</p>
+                        <ul className="max-h-24 overflow-y-auto pr-1 list-disc list-inside">
+                          {uploadedFiles.map((f, idx) => (
+                            <li key={`${f.name}-${idx}`} className="truncate">
+                              {f.name} <span className="text-slate-500">({Math.round(f.size / 1024)} Ko)</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Progression & bouton Lancer */}
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-[11px] text-slate-400">Automatisation</p>
+                      <Button
+                        size="sm"
+                        className="text-[11px] rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950"
+                        onClick={launch}
+                        disabled={processing}
+                        data-testid="dashboard-launch-button"
+                      >
+                        {processing ? "En cours..." : "Lancer"}
+                      </Button>
+                    </div>
+                    {processing || progress > 0 ? (
+                      <div className="space-y-1">
+                        <Progress value={progress} className="h-1.5 bg-slate-800" />
+                        <p className="text-[10px] text-slate-500">
+                          {processing ? "Traitement en cours..." : progress === 100 ? "Terminé" : `${progress}%`}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {/* Jobs récents pour ce projet */}
+                  <div className="mt-4">
+                    <p className="text-[11px] text-slate-400 mb-1">Jobs pour ce projet</p>
+                    {jobsLoading ? (
+                      <p className="text-[11px] text-slate-400">Chargement...</p>
+                    ) : (
+                      <div className="space-y-1 max-h-32 overflow-y-auto pr-1 text-[11px]">
+                        {jobs
+                          .filter((j) => j.project_id === selected.id)
+                          .slice(0, 5)
+                          .map((job) => (
+                            <div
+                              key={job.id}
+                              className="flex items-center justify-between gap-2 border-b border-slate-800/60 pb-1"
+                            >
+                              <div className="min-w-0">
+                                <p className="font-medium text-slate-100 truncate">{job.status}</p>
+                                <p className="font-mono text-[10px] text-slate-500 truncate">{job.id}</p>
+                              </div>
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] border ${
+                                  job.status === "completed"
+                                    ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
+                                    : job.status === "failed" || job.error
+                                      ? "bg-red-500/15 text-red-300 border-red-500/40"
+                                      : "bg-slate-800 text-slate-200 border-slate-600"
+                                }`}
+                              >
+                                {job.status}
+                              </span>
+                            </div>
+                          ))}
+                        {jobs.filter((j) => j.project_id === selected.id).length === 0 && (
+                          <p className="text-[11px] text-slate-500">Aucun job encore pour ce projet.</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </main>
     </div>
   );
