@@ -2489,7 +2489,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
               Payez uniquement pour ce que vous utilisez
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
-              Système de crédits flexible. <strong className="text-cyan-300">1 crédit = 1 upload</strong> avec génération IA complète (README, .gitignore, LICENSE, CHANGELOG) + push vers vos plateformes Git préférées.
+              Système de crédits flexible. <strong className="text-cyan-300">2 crédits = 1 upload</strong> avec génération IA complète (README, .gitignore, LICENSE, CHANGELOG) + push vers vos plateformes Git préférées.
             </p>
           </section>
 
