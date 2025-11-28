@@ -2380,9 +2380,9 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-slate-300">
             <p>
-              <strong className="text-cyan-300">GitPusher</strong> est une plateforme SaaS innovante qui élimine la complexité 
+              <strong className="text-slate-50">Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span></strong> est une plateforme SaaS innovante qui élimine la complexité 
               de Git pour les développeurs, designers et créateurs de contenu. En combinant l'automatisation IA et une 
-              interface No-Code, GitPusher permet de créer et gérer des repositories Git en quelques clics.
+              interface No-Code, Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span> permet de créer et gérer des repositories Git en quelques clics.
             </p>
             <div className="grid sm:grid-cols-3 gap-4 pt-4">
               <div className="p-4 rounded-xl bg-slate-950/50 border border-slate-800">
