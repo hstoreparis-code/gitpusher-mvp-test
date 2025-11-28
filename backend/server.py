@@ -166,16 +166,14 @@ class PlanUpdate(BaseModel):
 app = FastAPI(title="GitPusher API")
 api_router = APIRouter(prefix="/api")
 
-# Initialize services
-credits_service = CreditsService(db)
-storage_service = StorageService()
-git_service = GitService()
+# Initialize services (will be used in v1 endpoints)
+from services.credits_service import CreditsService
+from services.storage_service import StorageService  
+from services.git_service import GitService
 
-# Create v1 router
-v1_router = APIRouter(prefix="/v1")
-
-# We need to pass dependencies to route handlers
-# For now, we'll modify each route file to accept these as dependencies
+credits_service_instance = CreditsService(db)
+storage_service_instance = StorageService()
+git_service_instance = GitService()
 
 
 
