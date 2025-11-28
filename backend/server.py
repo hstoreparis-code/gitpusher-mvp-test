@@ -111,6 +111,11 @@ class ProjectCreate(BaseModel):
     provider: str = "github"  # github | gitlab | bitbucket | gitea | azure_devops
 
 
+class ProjectUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    language: Optional[str] = None
+
 
 class ProjectPublic(BaseModel):
     id: str
@@ -1150,6 +1155,39 @@ async def get_project(project_id: str, authorization: Optional[str] = Header(def
     doc = await db.projects.find_one({"_id": project_id, "user_id": user["_id"]})
     if not doc:
         raise HTTPException(status_code=404, detail="Project not found")
+
+    return ProjectDetail(
+        id=doc["_id"],
+        name=doc["name"],
+        status=doc.get("status", "pending"),
+        github_repo_url=doc.get("github_repo_url"),
+        created_at=datetime.fromisoformat(doc["created_at"]),
+        description=doc.get("description"),
+        readme_md=doc.get("readme_md"),
+        commit_messages=doc.get("commit_messages", []),
+    )
+
+
+@api_router.patch("/workflows/projects/{project_id}", response_model=ProjectDetail)
+async def update_project(project_id: str, payload: ProjectUpdate, authorization: Optional[str] = Header(default=None)):
+    """Met à jour les métadonnées du projet (nom du repo, description, langue)."""
+    user = await get_user_from_token(authorization)
+    doc = await db.projects.find_one({"_id": project_id, "user_id": user["_id"]})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    updates: Dict[str, Any] = {}
+    if payload.name is not None:
+        updates["name"] = payload.name
+    if payload.description is not None:
+        updates["description"] = payload.description
+    if payload.language is not None:
+        updates["language"] = payload.language
+
+    if updates:
+        updates["updated_at"] = datetime.now(timezone.utc).isoformat()
+        await db.projects.update_one({"_id": project_id}, {"$set": updates})
+        doc = await db.projects.find_one({"_id": project_id, "user_id": user["_id"]})
 
     return ProjectDetail(
         id=doc["_id"],
