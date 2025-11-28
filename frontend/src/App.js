@@ -680,8 +680,8 @@ function AuthCard({ t, onSuccess }) {
       <CardContent>
         {/* Bloc connexions rapides en premier */}
         <div className="mb-5 space-y-3">
-          <div className="space-y-2">
-            <p className="text-[11px] text-slate-400">Connexion ultra-rapide :</p>
+          <div className="space-y-2 flex flex-col items-center">
+            <p className="text-[11px] text-slate-400 self-start">Connexion ultra-rapide :</p>
             <Button
               className={`w-full sm:w-auto justify-center rounded-full bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border text-xs sm:text-sm font-semibold px-3 py-2 flex items-center gap-2 transition-all duration-200 text-slate-50 ${
                 oauthProvider === "github"
