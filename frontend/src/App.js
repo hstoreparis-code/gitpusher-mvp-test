@@ -1325,7 +1325,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           className="h-8 text-xs bg-slate-950/60 border-slate-700 max-w-xs"
                         />
                         <p className="text-[11px] text-slate-500 max-w-xs">
-                          Ce nom sera utilisé comme nom du dépôt GitHub créé par GitPusher.
+                          Ce nom sera utilisé comme nom du dépôt GitHub créé par Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span>.
                         </p>
                       </div>
                     </div>
