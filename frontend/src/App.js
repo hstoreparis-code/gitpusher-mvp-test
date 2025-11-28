@@ -1493,16 +1493,89 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                               }`}
                               data-testid="project-status-pill"
                         >
-                          {p.status}
+                          {p.status === "archived" ? "Archivé" : p.status}
                         </span>
-                      </div>
-                      {p.github_repo_url && (
-                        <div className="flex items-center gap-1.5 text-[11px] text-cyan-400 truncate">
-                          <Rocket className="h-3 w-3" />
-                          <span className="truncate">{p.github_repo_url}</span>
+                          </div>
                         </div>
-                      )}
-                    </button>
+                        {p.github_repo_url && (
+                          <div className="flex items-center gap-1.5 text-[11px] text-cyan-400 truncate">
+                            <Rocket className="h-3 w-3" />
+                            <span className="truncate">{p.github_repo_url}</span>
+                          </div>
+                        )}
+                      </button>
+
+                      {/* Actions Menu */}
+                      <Popover open={projectMenuOpen === p.id} onOpenChange={(open) => setProjectMenuOpen(open ? p.id : null)}>
+                        <PopoverTrigger asChild>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setProjectMenuOpen(projectMenuOpen === p.id ? null : p.id);
+                            }}
+                            className="absolute top-2 right-2 p-1 rounded-lg hover:bg-slate-800 transition-all opacity-0 group-hover:opacity-100"
+                          >
+                            <span className="text-slate-400">⋮</span>
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-48 p-2 bg-slate-900/95 border border-slate-700/80 shadow-xl rounded-xl" align="end">
+                          <div className="space-y-1">
+                            {/* Modifier */}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelected(p);
+                                setProjectMenuOpen(null);
+                              }}
+                              className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-slate-800 transition-all text-left"
+                            >
+                              <span className="text-cyan-400">✏️</span>
+                              <span className="text-sm text-slate-200">Modifier</span>
+                            </button>
+
+                            {/* Archiver/Désarchiver */}
+                            {p.status !== "archived" ? (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  archiveProject(p.id);
+                                  setProjectMenuOpen(null);
+                                }}
+                                className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-slate-800 transition-all text-left"
+                              >
+                                <span className="text-amber-400">📦</span>
+                                <span className="text-sm text-slate-200">Archiver</span>
+                              </button>
+                            ) : (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  archiveProject(p.id);
+                                  setProjectMenuOpen(null);
+                                }}
+                                className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-slate-800 transition-all text-left"
+                              >
+                                <span className="text-emerald-400">📤</span>
+                                <span className="text-sm text-slate-200">Désarchiver</span>
+                              </button>
+                            )}
+
+                            {/* Supprimer */}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteProject(p.id);
+                                setProjectMenuOpen(null);
+                              }}
+                              className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-red-500/20 transition-all text-left"
+                            >
+                              <span className="text-red-400">🗑️</span>
+                              <span className="text-sm text-red-300">Supprimer</span>
+                            </button>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   ))}
                 </div>
               )}
