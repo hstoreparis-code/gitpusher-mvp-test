@@ -1261,7 +1261,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center">
                     <Activity className="h-4 w-4 text-slate-950" />
                   </div>
-                  <CardTitle className="text-sm sm:text-base">Historique des jobs</CardTitle>
+                  <CardTitle className="text-base sm:text-lg">Historique des jobs</CardTitle>
                 </div>
                 <div className="px-2 py-1 rounded-full bg-violet-500/10 border border-violet-500/30">
                   <span className="text-xs font-medium text-violet-300">{jobs.length} total</span>
