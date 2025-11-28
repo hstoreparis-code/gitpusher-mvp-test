@@ -1236,7 +1236,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         strokeWidth="8"
                         strokeLinecap="round"
                         strokeDasharray={`${((user?.credits || 0) / 100) * 283} 283`}
-                        className={`transition-all duration-500 ${(user?.credits || 0) <= 2 ? 'animate-pulse' : ''}`}
+                        className="transition-all duration-500"
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
