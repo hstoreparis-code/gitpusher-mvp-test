@@ -1209,33 +1209,76 @@ async def run_project_pipeline(user: Dict, project: Dict, uploads: List[Dict]) -
 
     language = project.get("language", "en")
     provider = project.get("provider", "github")
+    auto_prompts = project.get("auto_prompts", {
+        "readme": True,
+        "gitignore": True,
+        "license": True,
+        "changelog": True
+    })
 
     # 1) Generate README
-    readme_md = await generate_readme(
-        file_list=file_list,
-        language=language,
-        project_name=project["name"],
-        description=project.get("description"),
-    )
+    readme_md = None
+    if auto_prompts.get("readme", True):
+        readme_md = await generate_readme(
+            file_list=file_list,
+            language=language,
+            project_name=project["name"],
+            description=project.get("description"),
+        )
 
-    # 2) Generate commit messages
-    operations = [f"add {f['path']}" for f in file_list] + ["add README.md"]
+    # 2) Generate .gitignore
+    gitignore_content = None
+    if auto_prompts.get("gitignore", True):
+        gitignore_content = await generate_gitignore(file_list=file_list, language=language)
+
+    # 3) Generate LICENSE
+    license_content = None
+    if auto_prompts.get("license", True):
+        author_name = user.get("display_name", "Project Contributors")
+        license_content = await generate_license(license_type="MIT", author_name=author_name)
+
+    # 4) Generate CHANGELOG
+    changelog_content = None
+    if auto_prompts.get("changelog", True):
+        changelog_content = await generate_changelog(project_name=project["name"])
+
+    # 5) Generate commit messages
+    operations = [f"add {f['path']}" for f in file_list]
+    if readme_md:
+        operations.append("add README.md")
+    if gitignore_content:
+        operations.append("add .gitignore")
+    if license_content:
+        operations.append("add LICENSE")
+    if changelog_content:
+        operations.append("add CHANGELOG.md")
+    
     commit_messages = await generate_commit_messages(operations, language=language)
     main_commit = commit_messages[0] if commit_messages else "chore: initial import"
 
-    # 3) Create Git repo for selected provider
+    # 6) Create Git repo for selected provider
     gh_token = user["github_access_token"]  # TODO: provider-specific tokens
     repo_info = await create_repo_for_provider(provider, gh_token, project["name"], project.get("description"))
     repo_url = repo_info.url
 
-    # 4) Upload files via provider contents API
+    # 7) Upload user files via provider contents API
     for upload in uploads:
         path = os.path.basename(upload["stored_path"])
         content_bytes = Path(upload["stored_path"]).read_bytes()
         await put_file_for_provider(provider, gh_token, repo_info, path, content_bytes, main_commit)
 
-    # Upload README.md
-    await put_file_for_provider(provider, gh_token, repo_info, "README.md", readme_md.encode("utf-8"), main_commit)
+    # 8) Upload generated files
+    if readme_md:
+        await put_file_for_provider(provider, gh_token, repo_info, "README.md", readme_md.encode("utf-8"), main_commit)
+    
+    if gitignore_content:
+        await put_file_for_provider(provider, gh_token, repo_info, ".gitignore", gitignore_content.encode("utf-8"), main_commit)
+    
+    if license_content:
+        await put_file_for_provider(provider, gh_token, repo_info, "LICENSE", license_content.encode("utf-8"), main_commit)
+    
+    if changelog_content:
+        await put_file_for_provider(provider, gh_token, repo_info, "CHANGELOG.md", changelog_content.encode("utf-8"), main_commit)
 
     now = datetime.now(timezone.utc).isoformat()
     await db.projects.update_one(
