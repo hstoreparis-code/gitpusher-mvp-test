@@ -2653,6 +2653,20 @@ function AppShell() {
         } 
       />
       <Route 
+        path="/whitepaper" 
+        element={
+          <WhitePaperPage 
+            t={t} 
+            lang={lang}
+            setLang={setLang}
+            dark={dark}
+            setDark={setDark}
+            currentLang={currentLang}
+            languages={languages}
+          />
+        } 
+      />
+      <Route 
         path="/auth/callback" 
         element={<OAuthCallback />} 
       />
