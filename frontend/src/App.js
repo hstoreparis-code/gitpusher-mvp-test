@@ -1619,30 +1619,6 @@ function ProDashboard({ t, lang, setLang, dark, setDark, currentLang, languages,
 }
 
 // TODO: cleanup duplicate test buttons removed here
-
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    const currentUser = testUser || authUser;
-                    setTestUser({ ...currentUser, credits: 1, plan: "Free" });
-                  }}
-                  variant="outline"
-                  className="text-xs border-amber-500/50 text-amber-300 hover:bg-amber-500/20"
-                >
-                  ⚠️ Mode Alerte
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    setTestUser(null);
-                  }}
-                  variant="outline"
-                  className="text-xs border-slate-500/50 text-slate-300 hover:bg-slate-500/20"
-                >
-                  Reset
-                </Button>
-              </div>
             </div>
           </CardContent>
         </Card>
