@@ -613,6 +613,20 @@ function AuthCard({ t, onSuccess }) {
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {/* Bouton GitHub mis en avant en haut */}
+        <div className="mb-4">
+          <Button
+            className="w-full justify-center rounded-full bg-slate-950 border border-slate-700 hover:border-cyan-400/80 hover:bg-slate-900 text-xs sm:text-sm font-semibold shadow-[0_0_18px_rgba(148,163,184,0.6)] px-4 py-3 flex items-center gap-2"
+            onClick={() => startOAuth("github")}
+            data-testid="github-oauth-button"
+          >
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-900">
+              <span className="text-lg">🐙</span>
+            </span>
+            <span>Continuer avec GitHub (recommandé)</span>
+          </Button>
+        </div>
+
         <Tabs value={tab} onValueChange={setTab} className="w-full">
           <TabsList className="grid grid-cols-2 mb-4 bg-slate-800/80" data-testid="auth-tabs-list">
             <TabsTrigger value="login" data-testid="login-tab-button">
