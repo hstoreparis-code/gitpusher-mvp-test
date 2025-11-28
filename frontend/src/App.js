@@ -397,45 +397,45 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
             )}
 
             {/* Steps now just above CTA - redesigned inline */}
-            <div className="mt-6 flex flex-col gap-3 text-[12px] sm:text-xs">
-              <div className="flex flex-wrap gap-2">
-                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
-                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+            <div className="mt-6 flex flex-col gap-3 text-[12px] sm:text-xs lg:text-sm">
+              <div className="flex flex-wrap gap-2 lg:gap-3">
+                <div className="flex-1 min-w-[130px] lg:min-w-[160px] rounded-full border border-white/10 bg-white/5 px-3 py-2 lg:px-4 lg:py-3 flex items-center gap-2">
+                  <span className="h-6 w-6 lg:h-7 lg:w-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] lg:text-[13px] font-semibold">
                     1
                   </span>
                   <div className="flex flex-col leading-tight">
                     <span className="font-medium">Upload</span>
-                    <span className="text-[10px] text-slate-300">Zip, PDF, code…</span>
+                    <span className="text-[10px] lg:text-[11px] text-slate-300">Zip, PDF, code…</span>
                   </div>
                 </div>
 
-                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
-                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                <div className="flex-1 min-w-[130px] lg:min-w-[160px] rounded-full border border-white/10 bg-white/5 px-3 py-2 lg:px-4 lg:py-3 flex items-center gap-2">
+                  <span className="h-6 w-6 lg:h-7 lg:w-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] lg:text-[13px] font-semibold">
                     2
                   </span>
                   <div className="flex flex-col leading-tight">
                     <span className="font-medium">IA organise</span>
-                    <span className="text-[10px] text-slate-300">Structure &amp; dossiers</span>
+                    <span className="text-[10px] lg:text-[11px] text-slate-300">Structure &amp; dossiers</span>
                   </div>
                 </div>
 
-                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
-                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                <div className="flex-1 min-w-[130px] lg:min-w-[160px] rounded-full border border-white/10 bg-white/5 px-3 py-2 lg:px-4 lg:py-3 flex items-center gap-2">
+                  <span className="h-6 w-6 lg:h-7 lg:w-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] lg:text-[13px] font-semibold">
                     3
                   </span>
                   <div className="flex flex-col leading-tight">
                     <span className="font-medium">Push GitHub</span>
-                    <span className="text-[10px] text-slate-300">Repo auto-créé</span>
+                    <span className="text-[10px] lg:text-[11px] text-slate-300">Repo auto-créé</span>
                   </div>
                 </div>
 
-                <div className="flex-1 min-w-[130px] rounded-full border border-white/10 bg-white/5 px-3 py-2 flex items-center gap-2">
-                  <span className="h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] font-semibold">
+                <div className="flex-1 min-w-[130px] lg:min-w-[160px] rounded-full border border-white/10 bg-white/5 px-3 py-2 lg:px-4 lg:py-3 flex items-center gap-2">
+                  <span className="h-6 w-6 lg:h-7 lg:w-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] lg:text-[13px] font-semibold">
                     4
                   </span>
                   <div className="flex flex-col leading-tight">
                     <span className="font-medium">Analytics</span>
-                    <span className="text-[10px] text-slate-300">Suivi des repos</span>
+                    <span className="text-[10px] lg:text-[11px] text-slate-300">Suivi des repos</span>
                   </div>
                 </div>
               </div>
