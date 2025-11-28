@@ -788,7 +788,7 @@ function AuthCard({ t, onSuccess }) {
 }
 
 function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
-  const { token, user, logout } = useAuth();
+  const { token, user: authUser, logout } = useAuth();
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [jobs, setJobs] = useState([]);
@@ -800,6 +800,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [mounted, setMounted] = useState(false);
+  
+  // State for testing credits/plan (overrides authUser for display)
+  const [testUser, setTestUser] = useState(null);
+  const user = testUser || authUser;
 
   useEffect(() => {
     setMounted(true);
