@@ -1055,12 +1055,13 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-full sm:max-w-md mx-auto px-3 sm:px-4 py-3 sm:py-6 space-y-3 sm:space-y-6 overflow-x-hidden">
-        {/* Dashboard Title - Mobile Only */}
-        <div className="mb-4 sm:hidden">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+      <main className="flex-1 w-full max-w-full sm:max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-8 space-y-3 sm:space-y-8 overflow-x-hidden">
+        {/* Dashboard Title */}
+        <div className="mb-4">
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent sm:mb-2">
             DASHBOARD
           </h1>
+          <p className="hidden sm:block text-slate-400 text-sm">Gérez vos workflows Git alimentés par l'IA</p>
         </div>
 
         {/* Stats Cards - Mobile */}
