@@ -1636,6 +1636,271 @@ async def v1_get_upload_status(upload_id: str):
 @v1_router.get("/providers")
 async def v1_list_providers():
     """List all supported Git providers."""
+
+
+
+# ---------- SIMPLIFIED UPLOAD ENDPOINT (All-in-One) ----------
+
+@v1_router.post("/upload")
+async def v1_upload_and_push(
+    provider: str = Form(...),
+    repoName: str = Form(...),
+    file: UploadFile = File(...),
+    authorization: str = Header(None)
+):
+    """
+    Simplified endpoint: Upload file and push to Git provider in one call.
+    This combines upload + job creation + processing into a single endpoint.
+    """
+    user = await get_user_from_token(authorization)
+    
+    # Check GitHub token
+    if not user.get("github_access_token"):
+        raise HTTPException(status_code=400, detail="GitHub token not linked. Please connect via OAuth first.")
+    
+    # Check credits
+    if not await credits_service.consume_credits(user["_id"], 1):
+        raise HTTPException(status_code=402, detail="Insufficient credits. Please purchase more credits.")
+    
+    # Create job first
+    job_id = str(uuid.uuid4())
+    now = datetime.now(timezone.utc).isoformat()
+    
+    await db.jobs_v1.insert_one({
+        "_id": job_id,
+        "user_id": user["_id"],
+        "provider": provider,
+        "repo_name": repoName,
+        "status": "pending",
+        "logs": ["Job created"],
+        "created_at": now,
+        "updated_at": now
+    })
+    
+    try:
+        # Update job status
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$set": {"status": "running"}, "$push": {"logs": "Processing upload..."}}
+        )
+        
+        # Read file
+        content = await file.read()
+        file_size = len(content)
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": f"File received: {file.filename} ({file_size} bytes)"}}
+        )
+        
+        # Extract if ZIP
+        upload_id = uuid.uuid4().hex
+        result = await storage_service.save_upload(upload_id, content, file.filename)
+        extracted_files = await storage_service.extract_files(upload_id, file.filename)
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": f"Extracted {len(extracted_files)} files"}}
+        )
+        
+        # Generate AI files
+        file_list = [{"path": f, "mime_type": "text/plain", "size": 0} for f in extracted_files]
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": "Generating README with AI..."}}
+        )
+        
+        readme_md = await generate_readme(
+            file_list=file_list,
+            language="en",
+            project_name=repoName,
+            description=None
+        )
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": "Generating .gitignore..."}}
+        )
+        
+        gitignore_content = await generate_gitignore(file_list=file_list, language="en")
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": "Generating LICENSE..."}}
+        )
+        
+        license_content = await generate_license("MIT", user.get("display_name", "Contributor"))
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": "Generating CHANGELOG..."}}
+        )
+        
+        changelog_content = await generate_changelog(repoName)
+        
+        # Create repo on selected provider
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": f"Creating repository on {provider}..."}}
+        )
+        
+        repo_info = await git_service.create_repo(
+            token=user["github_access_token"],
+            name=repoName,
+            description=f"Created via GitPusher",
+            private=False,
+            provider=provider
+        )
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": f"Repository created: {repo_info.url}"}}
+        )
+        
+        # Upload all files
+        commit_msg = "feat: initial commit via GitPusher"
+        
+        # Upload user files
+        upload_path = storage_service.get_upload_path(upload_id)
+        if file.filename.endswith('.zip'):
+            extract_dir = upload_path / "extracted"
+            for root, dirs, files in os.walk(extract_dir):
+                for f in files:
+                    file_path = Path(root) / f
+                    rel_path = file_path.relative_to(extract_dir)
+                    content_bytes = file_path.read_bytes()
+                    
+                    await git_service.put_file(
+                        token=user["github_access_token"],
+                        repo_full_name=repo_info.full_name,
+                        path=str(rel_path),
+                        content_bytes=content_bytes,
+                        message=commit_msg,
+                        provider=provider
+                    )
+                    
+                    await db.jobs_v1.update_one(
+                        {"_id": job_id},
+                        {"$push": {"logs": f"Uploaded: {rel_path}"}}
+                    )
+        else:
+            # Single file
+            file_path = upload_path / file.filename
+            content_bytes = file_path.read_bytes()
+            
+            await git_service.put_file(
+                token=user["github_access_token"],
+                repo_full_name=repo_info.full_name,
+                path=file.filename,
+                content_bytes=content_bytes,
+                message=commit_msg,
+                provider=provider
+            )
+        
+        # Upload generated files
+        await git_service.put_file(
+            user["github_access_token"],
+            repo_info.full_name,
+            "README.md",
+            readme_md.encode("utf-8"),
+            commit_msg,
+            provider
+        )
+        
+        await git_service.put_file(
+            user["github_access_token"],
+            repo_info.full_name,
+            ".gitignore",
+            gitignore_content.encode("utf-8"),
+            commit_msg,
+            provider
+        )
+        
+        await git_service.put_file(
+            user["github_access_token"],
+            repo_info.full_name,
+            "LICENSE",
+            license_content.encode("utf-8"),
+            commit_msg,
+            provider
+        )
+        
+        await git_service.put_file(
+            user["github_access_token"],
+            repo_info.full_name,
+            "CHANGELOG.md",
+            changelog_content.encode("utf-8"),
+            commit_msg,
+            provider
+        )
+        
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {"$push": {"logs": "All files uploaded successfully!"}}
+        )
+        
+        # Store repo in DB
+        await db.repos_v1.insert_one({
+            "_id": str(uuid.uuid4()),
+            "user_id": user["_id"],
+            "job_id": job_id,
+            "name": repoName,
+            "url": repo_info.url,
+            "provider": provider,
+            "private": False,
+            "created_at": now
+        })
+        
+        # Mark job as success
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {
+                "$set": {
+                    "status": "success",
+                    "repo_url": repo_info.url,
+                    "updated_at": datetime.now(timezone.utc).isoformat()
+                },
+                "$push": {"logs": f"✅ Complete! Repo: {repo_info.url}"}
+            }
+        )
+        
+        # Cleanup
+        await storage_service.cleanup_upload(upload_id)
+        
+        return {
+            "jobId": job_id,
+            "status": "success",
+            "repoUrl": repo_info.url,
+            "message": "Repository created and files pushed successfully!"
+        }
+        
+    except Exception as e:
+        # Mark job as failed
+        await db.jobs_v1.update_one(
+            {"_id": job_id},
+            {
+                "$set": {"status": "failed"},
+                "$push": {"logs": f"❌ Error: {str(e)}"}
+            }
+        )
+        
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# Update /repos endpoint to support provider filter
+@v1_router.get("/repos/by-provider")
+async def v1_list_repos_by_provider(provider: Optional[str] = None, authorization: str = Header(None)):
+    """List repos filtered by provider."""
+    user = await get_user_from_token(authorization)
+    
+    query = {"user_id": user["_id"]}
+    if provider:
+        query["provider"] = provider
+    
+    repos = await db.repos_v1.find(query, {"_id": 0}).to_list(100)
+    return {"repos": repos, "provider": provider}
+
     return {"providers": git_service.get_all_providers()}
 
 async def v1_complete_upload(payload: UploadCompleteRequest, authorization: str = Header(None)):
