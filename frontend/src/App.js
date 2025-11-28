@@ -2583,7 +2583,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
             </Card>
 
             {/* Pack Business */}
-            <Card className="bg-slate-900/70 border-amber-500/30 hover:border-amber-500/50 transition-all duration-300">
+            <Card className="bg-slate-900/70 border-amber-500/30 hover:border-amber-500/50 transition-all duration-300 shadow-[0_0_40px_rgba(251,191,36,0.35)]">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <CardTitle className="text-xl font-bold">Pack Business</CardTitle>
