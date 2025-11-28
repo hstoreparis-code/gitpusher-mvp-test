@@ -1122,7 +1122,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         <div className="grid md:grid-cols-[1.1fr,1.4fr] gap-3 sm:gap-6">
           {/* Projects List */}
           <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm">
-            <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
+            <CardHeader className="flex flex-row items-center justify-between gap-3 pb-3">
               <div className="flex items-center gap-2">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center">
                   <GitBranch className="h-4 w-4 text-slate-950" />
@@ -1312,7 +1312,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
             </Card>
 
             <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm" data-testid="jobs-history-card">
-              <CardHeader className="flex flex-row items-center justify-between gap-4 pb-4">
+              <CardHeader className="flex flex-row items-center justify-between gap-3 pb-3">
                 <div className="flex items-center gap-2">
                   <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center">
                     <Activity className="h-4 w-4 text-slate-950" />
