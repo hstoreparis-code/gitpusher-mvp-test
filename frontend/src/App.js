@@ -2945,9 +2945,10 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
             variant="outline"
             size="sm"
             onClick={() => navigate("/")}
-            className="px-4 py-2 rounded-lg border-cyan-400 text-cyan-300 text-sm bg-cyan-500/10 hover:bg-cyan-500/20 shadow-[0_0_18px_rgba(34,211,238,0.65)] hover:shadow-[0_0_26px_rgba(34,211,238,0.9)] transition-all"
+            className="px-4 py-2 rounded-lg border-cyan-400 text-cyan-300 text-sm bg-cyan-500/10 hover:bg-cyan-500/20 shadow-[0_0_18px_rgba(34,211,238,0.65)] hover:shadow-[0_0_26px_rgba(34,211,238,0.9)] transition-all flex items-center gap-2"
           >
-            Retour
+            <ArrowLeft className="h-4 w-4" />
+            <span>Retour</span>
           </Button>
         </div>
       </header>
