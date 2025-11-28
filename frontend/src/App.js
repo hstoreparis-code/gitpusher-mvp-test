@@ -1395,16 +1395,16 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </CardContent>
             </Card>
 
-            <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm" data-testid="jobs-history-card">
-              <CardHeader className="flex flex-row items-center justify-between gap-3 pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center">
-                    <Activity className="h-4 w-4 text-slate-950" />
+            <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm hover:border-slate-700 transition-colors" data-testid="jobs-history-card">
+              <CardHeader className="flex flex-row items-center justify-between gap-3 pb-4 sm:pb-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
+                    <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-slate-950" />
                   </div>
-                  <CardTitle className="text-base sm:text-lg">Historique des jobs</CardTitle>
+                  <CardTitle className="text-base sm:text-xl font-bold">Historique des jobs</CardTitle>
                 </div>
-                <div className="px-2 py-1 rounded-full bg-violet-500/10 border border-violet-500/30">
-                  <span className="text-xs font-medium text-violet-300">{jobs.length} total</span>
+                <div className="px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/30">
+                  <span className="text-xs sm:text-sm font-semibold text-violet-300">{jobs.length} total</span>
                 </div>
               </CardHeader>
               <CardContent className="flex-1 overflow-auto space-y-2 text-xs sm:text-sm">
