@@ -1091,13 +1091,13 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-300 mb-1">Pending</p>
+                  <p className="text-xs sm:text-sm text-slate-300 mb-1">Pending</p>
                   <p className="text-2xl font-bold text-amber-300">
                     {projects.filter(p => p.status !== "done").length}
                   </p>
                 </div>
-                <div className="h-12 w-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                  <Clock className="h-6 w-6 text-amber-400" />
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+                  <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-amber-400" />
                 </div>
               </div>
             </CardContent>
