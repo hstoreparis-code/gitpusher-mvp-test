@@ -413,6 +413,7 @@ class BackendAPITester:
             self.test_list_projects,
             self.test_file_upload,
             self.test_project_process_without_github,
+            self.test_admin_login_and_users_endpoint,
             self.test_invalid_auth,
         ]
         
