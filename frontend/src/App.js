@@ -1026,9 +1026,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </span>
               <span className="text-[11px] md:text-[13px] text-slate-400 truncate">No-Code GitHub workflow</span>
             </div>
-          {/* Toggle Free / Premium (verrouillé sur Free, clic ouvre la page tarifs) */}
-          <div className="hidden sm:flex items-center gap-2">
-            <div className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700/80 flex items-center gap-2 shadow-[0_0_12px_rgba(15,23,42,0.6)]">
+          </button>
+          <div className="flex items-center gap-2 sm:gap-4 text-[11px] sm:text-sm">
+            {/* Toggle Free / Premium (verrouillé sur Free, clic ouvre la page tarifs) */}
+            <div className="flex sm:hidden items-center gap-2 px-2 py-1 rounded-full bg-slate-900/80 border border-slate-700/80 mr-2">
               <span className="text-[10px] font-medium text-slate-50">Free</span>
               <button
                 type="button"
@@ -1040,10 +1041,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </button>
               <span className="text-[10px] font-medium text-slate-400">Premium</span>
             </div>
-          </div>
 
-          </button>
-          <div className="flex items-center gap-2 sm:gap-4 text-[11px] sm:text-sm">
             <div className="hidden xs:flex items-center gap-2">
               <span className="text-slate-400 hidden sm:inline">{t("theme")}</span>
               <Switch
