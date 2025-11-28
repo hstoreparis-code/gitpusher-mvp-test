@@ -1236,7 +1236,6 @@ function ProDashboard({ t, lang, setLang, dark, setDark, currentLang, languages,
   const { token, user, logout } = useAuth();
   const effectivePlan = user?.plan?.toLowerCase?.() || "freemium";
 
-  const { token, user, logout } = useAuth();
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [jobs, setJobs] = useState([]);
