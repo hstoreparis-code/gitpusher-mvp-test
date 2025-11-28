@@ -230,8 +230,10 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
 
   const handleGetStarted = () => {
     if (token) {
-      navigate("/app");
+      // Utilisateur connecté : on l'envoie directement sur les tarifs, ancre Freemium
+      navigate("/pricing#freemium");
     } else {
+      // Non connecté : on ouvre le modal d'authentification comme avant
       setAuthOpen(true);
     }
   };
