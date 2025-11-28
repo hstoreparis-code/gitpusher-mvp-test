@@ -1051,7 +1051,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
+      <main className="flex-1 w-full max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-6 space-y-3 sm:space-y-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Total Projects */}
