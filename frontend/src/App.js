@@ -1461,30 +1461,37 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               ) : (
                 <div className="space-y-2" data-testid="projects-list">
                   {projects.map((p) => (
-                    <button
+                    <div
                       key={p.id}
-                      onClick={() => setSelected(p)}
-                      className={`group w-full text-left text-sm sm:text-sm px-3 py-2 rounded-xl border transition-all duration-200 ${
+                      className={`group relative w-full text-left text-sm sm:text-sm px-3 py-2 rounded-xl border transition-all duration-200 ${
                         selected?.id === p.id
                           ? "bg-gradient-to-r from-cyan-500/20 to-violet-500/20 border-cyan-400/60 shadow-lg shadow-cyan-500/20"
                           : "bg-slate-900/80 border-slate-800 hover:border-slate-600 hover:shadow-md"
                       }`}
                       data-testid={`project-card-${p.id}`}
                     >
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className={`h-2 w-2 rounded-full ${
-                            p.status === "done" ? "bg-emerald-400" : "bg-amber-400"
-                          } ${selected?.id === p.id ? "animate-pulse" : ""}`}></div>
-                          <span className="font-medium truncate">{p.name}</span>
-                        </div>
-                        <span
-                          className={`text-xs px-2 py-1 rounded-full border font-medium ${
-                            p.status === "done"
-                              ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300"
-                              : "border-amber-400/50 bg-amber-400/10 text-amber-200"
-                          }`}
-                          data-testid="project-status-pill"
+                      <button
+                        onClick={() => setSelected(p)}
+                        className="w-full text-left"
+                      >
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <div className={`h-2 w-2 rounded-full flex-shrink-0 ${
+                              p.status === "done" ? "bg-emerald-400" : 
+                              p.status === "archived" ? "bg-slate-500" : "bg-amber-400"
+                            } ${selected?.id === p.id ? "animate-pulse" : ""}`}></div>
+                            <span className="font-medium truncate">{p.name}</span>
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full border font-medium ${
+                                p.status === "done"
+                                  ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300"
+                                  : p.status === "archived"
+                                  ? "border-slate-500/50 bg-slate-500/10 text-slate-400"
+                                  : "border-amber-400/50 bg-amber-400/10 text-amber-200"
+                              }`}
+                              data-testid="project-status-pill"
                         >
                           {p.status}
                         </span>
