@@ -2535,7 +2535,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
             </Card>
 
             {/* Pack Pro */}
-            <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/30 hover:border-violet-500/50 transition-all duration-300 relative">
+            <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/30 hover:border-violet-500/50 transition-all duration-300 relative shadow-[0_0_40px_rgba(139,92,246,0.35)]">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 text-slate-950 text-xs font-bold">
                   ⭐ POPULAIRE
