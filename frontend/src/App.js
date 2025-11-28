@@ -444,7 +444,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
             {/* Central drag & drop square (centered & larger) */}
             <div className="mt-8 flex justify-center">
               <label
-                className="relative w-full max-w-md h-52 rounded-3xl border border-dashed border-cyan-400/60 bg-slate-950/40 hover:bg-slate-900/60 transition-colors flex flex-col items-center justify-center gap-4 cursor-pointer shadow-[0_0_44px_rgba(34,211,238,0.35)]"
+                className="relative w-full max-w-md lg:max-w-lg h-52 lg:h-64 rounded-3xl border border-dashed border-cyan-400/60 bg-slate-950/40 hover:bg-slate-900/60 transition-colors flex flex-col items-center justify-center gap-4 cursor-pointer shadow-[0_0_44px_rgba(34,211,238,0.35)]"
                 data-testid="landing-file-dropzone"
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -455,16 +455,16 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 }}
               >
                 <div className="flex flex-col items-center gap-1">
-                  <span className="text-[12px] uppercase tracking-[0.22em] text-cyan-300">
+                  <span className="text-[12px] lg:text-[14px] uppercase tracking-[0.22em] text-cyan-300">
                     Drag &amp; Drop
                   </span>
-                  <span className="text-base font-medium">Dépose tes fichiers ici</span>
+                  <span className="text-base lg:text-lg font-medium">Dépose tes fichiers ici</span>
                 </div>
-                <p className="text-[12px] text-slate-400 max-w-[80%] text-center">
+                <p className="text-[12px] lg:text-[13px] text-slate-400 max-w-[80%] text-center">
                   Zip, PDF, dossiers de code… PUSH IN se charge de tout organiser et pousser sur GitHub.
                 </p>
-                <div className="mt-2 inline-flex items-center gap-2 text-[12px] text-slate-300">
-                  <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500" />
+                <div className="mt-2 inline-flex items-center gap-2 text-[12px] lg:text-[13px] text-slate-300">
+                  <div className="h-7 w-7 lg:h-8 lg:w-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500" />
                   <span>No Git, no CLI, just drop.</span>
                 </div>
                 <input
