@@ -2411,7 +2411,7 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <p className="text-slate-300">
-              GitPusher supporte <strong className="text-cyan-300">12 plateformes Git</strong> différentes, 
+              Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span> supporte <strong className="text-cyan-300">12 plateformes Git</strong> différentes, 
               permettant une distribution mondiale et une flexibilité maximale.
             </p>
             
