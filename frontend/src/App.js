@@ -674,7 +674,7 @@ function AuthCard({ t, onSuccess }) {
     <Card className="bg-slate-900/70 border-white/10 shadow-2xl shadow-cyan-500/20 text-slate-50">
       <CardHeader>
         <CardTitle className="text-base font-semibold">
-          {t("loginTab")} / {t("signupTab")}
+          Connexion via Git providers
         </CardTitle>
       </CardHeader>
       <CardContent>
