@@ -1121,7 +1121,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           <span className="font-medium truncate">{p.name}</span>
                         </div>
                         <span
-                          className={`text-[10px] px-2 py-1 rounded-full border font-medium ${
+                          className={`text-xs px-2 py-1 rounded-full border font-medium ${
                             p.status === "done"
                               ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300"
                               : "border-amber-400/50 bg-amber-400/10 text-amber-200"
@@ -1321,18 +1321,18 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                                 {job.status}
                               </span>
                             </div>
-                            <span className="text-[11px] text-slate-400">
+                            <span className="text-xs text-slate-300">
                               {job.project_name || job.project_id}
                             </span>
                             {job.created_at && (
-                              <span className="text-[10px] text-slate-500 flex items-center gap-1">
+                              <span className="text-[11px] text-slate-400 flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {new Date(job.created_at).toLocaleString()}
                               </span>
                             )}
                             {job.error && (
                               <span
-                                className="text-[10px] text-red-300 flex items-center gap-1"
+                                className="text-[11px] text-red-300 flex items-center gap-1"
                                 data-testid="job-error-text"
                               >
                                 <XCircle className="h-3 w-3" />
