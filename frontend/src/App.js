@@ -2640,7 +2640,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
             <div className="grid gap-6 md:grid-cols-3">
               {/* Freemium */}
               <Card
-                className="bg-slate-900/70 border-slate-800 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between"
+                className="bg-slate-900/70 border-slate-800 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between shadow-[0_0_40px_rgba(148,163,184,0.25)]"
                 data-testid="pricing-freemium-card"
               >
                 <CardHeader>
