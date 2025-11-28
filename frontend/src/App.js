@@ -2360,7 +2360,7 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
             Livre Blanc Technique
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-            GitPusher
+            Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span>
             <span className="block text-2xl sm:text-3xl mt-2 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
               Révolutionnez Votre Workflow Git
             </span>
