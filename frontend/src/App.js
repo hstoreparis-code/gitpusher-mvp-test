@@ -2268,7 +2268,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">Aucun Git, aucune CLI, aucun IDE</span>
                     <span className="text-[11px] text-slate-400">
-                      Publiez depuis votre navigateur, GitPusher gère toute la plomberie Git.
+                      Publiez depuis votre navigateur, Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span> gère toute la plomberie Git.
                     </span>
                   </div>
                   <span className="text-xs text-slate-400 group-open:rotate-180 transition-transform">
