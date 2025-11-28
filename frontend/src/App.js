@@ -1501,6 +1501,135 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                       </div>
                     </div>
 
+                    {/* Sélection Provider Git */}
+                    <div className="space-y-3 p-4 sm:p-6 bg-slate-950/40 rounded-xl border border-slate-800/50">
+                      <h3 className="font-semibold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                        <span className="h-6 w-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs text-emerald-400">🔗</span>
+                        Choisir votre hébergeur Git
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-400">
+                        Sélectionnez la plateforme où votre dépôt sera créé
+                      </p>
+                      
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {/* GitHub */}
+                        <button
+                          onClick={() => {
+                            if (!user?.github_access_token) {
+                              navigate("/account");
+                            } else {
+                              setSelectedProvider("github");
+                            }
+                          }}
+                          className={`p-3 sm:p-4 rounded-xl border transition-all ${
+                            selectedProvider === "github"
+                              ? "border-emerald-500/60 bg-emerald-500/10 shadow-lg shadow-emerald-500/20"
+                              : "border-slate-700 bg-slate-900/60 hover:border-slate-600"
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="text-2xl sm:text-3xl">🐙</div>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-200">GitHub</span>
+                            {user?.github_access_token && (
+                              <span className="text-[10px] text-emerald-400">✓ Connecté</span>
+                            )}
+                            {!user?.github_access_token && (
+                              <span className="text-[10px] text-amber-400">Se connecter</span>
+                            )}
+                          </div>
+                        </button>
+
+                        {/* GitLab */}
+                        <button
+                          onClick={() => navigate("/account")}
+                          className={`p-3 sm:p-4 rounded-xl border transition-all ${
+                            selectedProvider === "gitlab"
+                              ? "border-orange-500/60 bg-orange-500/10"
+                              : "border-slate-700 bg-slate-900/60 hover:border-slate-600"
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="text-2xl sm:text-3xl">🦊</div>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-200">GitLab</span>
+                            <span className="text-[10px] text-slate-500">Bientôt</span>
+                          </div>
+                        </button>
+
+                        {/* Bitbucket */}
+                        <button
+                          onClick={() => navigate("/account")}
+                          className={`p-3 sm:p-4 rounded-xl border transition-all ${
+                            selectedProvider === "bitbucket"
+                              ? "border-blue-500/60 bg-blue-500/10"
+                              : "border-slate-700 bg-slate-900/60 hover:border-slate-600"
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="text-2xl sm:text-3xl">🪣</div>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-200">Bitbucket</span>
+                            <span className="text-[10px] text-slate-500">Bientôt</span>
+                          </div>
+                        </button>
+
+                        {/* Gitea */}
+                        <button
+                          onClick={() => navigate("/account")}
+                          className={`p-3 sm:p-4 rounded-xl border transition-all ${
+                            selectedProvider === "gitea"
+                              ? "border-green-500/60 bg-green-500/10"
+                              : "border-slate-700 bg-slate-900/60 hover:border-slate-600"
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="text-2xl sm:text-3xl">🍵</div>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-200">Gitea</span>
+                            <span className="text-[10px] text-slate-500">Bientôt</span>
+                          </div>
+                        </button>
+
+                        {/* Codeberg */}
+                        <button
+                          onClick={() => navigate("/account")}
+                          className={`p-3 sm:p-4 rounded-xl border transition-all ${
+                            selectedProvider === "codeberg"
+                              ? "border-cyan-500/60 bg-cyan-500/10"
+                              : "border-slate-700 bg-slate-900/60 hover:border-slate-600"
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="text-2xl sm:text-3xl">🏔️</div>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-200">Codeberg</span>
+                            <span className="text-[10px] text-slate-500">Bientôt</span>
+                          </div>
+                        </button>
+
+                        {/* Gitee */}
+                        <button
+                          onClick={() => navigate("/account")}
+                          className={`p-3 sm:p-4 rounded-xl border transition-all ${
+                            selectedProvider === "gitee"
+                              ? "border-red-500/60 bg-red-500/10"
+                              : "border-slate-700 bg-slate-900/60 hover:border-slate-600"
+                          }`}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="text-2xl sm:text-3xl">🐝</div>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-200">Gitee</span>
+                            <span className="text-[10px] text-slate-500">Bientôt</span>
+                          </div>
+                        </button>
+                      </div>
+
+                      {selectedProvider === "github" && user?.github_access_token && (
+                        <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+                          <span className="text-emerald-400">✓</span>
+                          <p className="text-xs sm:text-sm text-emerald-300">
+                            Prêt à créer sur GitHub
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
                     {/* Étape 1 : Upload */}
                     <div className="space-y-3 p-4 sm:p-6 bg-slate-950/40 rounded-xl border border-slate-800/50">
                       <h3 className="font-semibold text-slate-100 text-base sm:text-lg flex items-center gap-2">
