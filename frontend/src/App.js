@@ -2646,11 +2646,11 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
                     <CardTitle className="text-xl font-bold">Freemium</CardTitle>
-                    <span className="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400">Gratuit</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">Gratuit</span>
                   </div>
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-bold text-cyan-300">0€</span>
-                    <span className="text-slate-400 text-sm">/ mois</span>
+                    <span className="text-cyan-300 text-sm">/ mois</span>
                   </div>
                   <p className="text-xs text-slate-400 mt-2">
                     Pour tester la plateforme sans engagement.
