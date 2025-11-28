@@ -1055,11 +1055,45 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
       <main className="flex-1 w-full max-w-full sm:max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-8 space-y-3 sm:space-y-8 overflow-x-hidden">
         {/* Dashboard Title */}
-        <div className="mb-4">
-          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent sm:mb-2">
-            DASHBOARD
-          </h1>
-          <p className="hidden sm:block text-slate-400 text-sm">Gérez vos workflows Git alimentés par l'IA</p>
+        <div className="mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+            <div>
+              <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                DASHBOARD
+              </h1>
+              <p className="hidden sm:block text-slate-400 text-sm mt-1">Gérez vos workflows Git alimentés par l'IA</p>
+            </div>
+            
+            {/* Credits & Subscription Card */}
+            <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/30 backdrop-blur-sm">
+              <CardContent className="p-3 sm:p-4">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center shadow-lg">
+                    <span className="text-xl sm:text-2xl">💎</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs sm:text-sm text-slate-400">Crédits restants</p>
+                    <p className="text-lg sm:text-2xl font-bold text-violet-300">{user?.credits || 0}</p>
+                    <p className="text-[10px] sm:text-xs text-slate-500">Plan: {user?.plan || "Free"}</p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate("/pricing")}
+                    className="hidden sm:flex px-4 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-400 hover:to-fuchsia-400 text-slate-950 text-sm font-semibold shadow-lg"
+                  >
+                    Gérer
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => navigate("/pricing")}
+                    className="sm:hidden px-3 py-1.5 rounded-lg bg-violet-500/20 border border-violet-400/50 hover:bg-violet-500/30 text-violet-300 text-xs font-semibold"
+                  >
+                    +
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Stats Cards - Mobile */}
