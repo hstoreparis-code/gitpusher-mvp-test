@@ -1,0 +1,5 @@
+Notes pour implémentation routes admin:
+- /api/admin/users : list users (admin only)
+- /api/admin/jobs : list jobs (admin only)
+- /api/admin/users/{user_id}/plan-credits : update plan + credits (admin only)
+- Protection via is_admin dans get_user_from_token.
