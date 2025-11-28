@@ -972,12 +972,12 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               <Popover>
                 <PopoverTrigger asChild>
                   <button
-                    className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 max-w-[140px] sm:max-w-[200px]"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 max-w-[160px] sm:max-w-[220px]"
                     data-testid="dashboard-user-menu-button"
                   >
                     <span className="hidden sm:inline truncate text-slate-200 text-xs sm:text-sm">{user?.email || "Compte"}</span>
-                    <span className="inline-flex sm:hidden items-center justify-center h-4 w-4 rounded-full bg-slate-800 text-[10px]">👤</span>
-                    <span className="text-[10px] text-slate-400">▼</span>
+                    <span className="inline-flex sm:hidden items-center justify-center h-5 w-5 rounded-full bg-slate-800 text-[11px]">👤</span>
+                    <span className="text-[11px] text-slate-400">▼</span>
                   </button>
                 </PopoverTrigger>
                 <PopoverContent
