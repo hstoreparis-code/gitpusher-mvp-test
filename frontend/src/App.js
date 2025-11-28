@@ -2719,14 +2719,17 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
               <CardHeader className="mt-2">
                 <div className="flex items-center justify-between mb-2">
                   <CardTitle className="text-xl font-bold">Premium</CardTitle>
-                  <span className="text-xs text-cyan-100 font-medium">19,99€ / mois</span>
                 </div>
-                <p className="text-xs text-slate-100">
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-3xl font-bold text-cyan-300">19,99€</span>
+                  <span className="text-cyan-300 text-sm">/ mois</span>
+                </div>
+                <p className="text-xs text-slate-400">
                   Pour créateurs réguliers, non-dev, auto-entrepreneurs, étudiants IA.
                 </p>
                 <div className="flex items-baseline gap-2 mt-3">
-                  <span className="text-3xl font-bold text-cyan-300">Illimité</span>
-                  <span className="text-xs text-cyan-100">uploads / mois</span>
+                  <span className="text-2xl font-bold text-cyan-300">Illimité</span>
+                  <span className="text-xs text-cyan-300">uploads / mois</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4 text-sm">
