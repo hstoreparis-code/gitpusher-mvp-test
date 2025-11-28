@@ -1793,14 +1793,14 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                     <span className="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400">Gratuit</span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <p className="text-3xl font-semibold text-slate-50">0€</p>
-                    <span className="text-xs text-slate-400">/ mois</span>
+                    <span className="text-3xl font-bold text-cyan-300">0€</span>
+                    <span className="text-slate-400 text-sm">/ mois</span>
                   </div>
                   <p className="text-xs text-slate-400 mt-2">
                     Pour tester la plateforme sans engagement.
                   </p>
                 </CardHeader>
-                <CardContent className="pt-4 md:pt-0 text-xs">
+                <CardContent className="pt-4 md:pt-0 text-sm">
                   <ul className="text-slate-300">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -1873,7 +1873,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   <span className="text-xs text-cyan-100">uploads / mois</span>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4 text-xs">
+              <CardContent className="space-y-4 text-sm">
                 <ul className="space-y-2 text-slate-100">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0 mt-0.5" />
@@ -1936,11 +1936,11 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   Pour écoles, agences, équipes SaaS et créateurs IA multi-comptes.
                 </p>
                 <div className="flex items-baseline gap-2 mt-3">
-                  <span className="text-lg font-semibold text-amber-300">À partir de 199€</span>
-                  <span className="text-xs text-slate-400">/ mois</span>
+                  <span className="text-2xl font-semibold text-amber-300">À partir de 199€</span>
+                  <span className="text-slate-400 text-sm">/ mois</span>
                 </div>
               </CardHeader>
-              <CardContent className="pt-4 md:pt-0 text-xs">
+              <CardContent className="pt-4 md:pt-0 text-sm">
                 <ul className="text-slate-200">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
