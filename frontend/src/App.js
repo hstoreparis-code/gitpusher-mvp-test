@@ -979,7 +979,17 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     }
   };
 
-  if (!token) return <Navigate to="/" replace />;
+  // Si pas de token, on redirige vers la landing et on demande l'ouverture de la modale de connexion
+  useEffect(() => {
+    if (!token) {
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("open_auth_on_landing", "1");
+      }
+      navigate("/", { replace: true });
+    }
+  }, [token, navigate]);
+
+  if (!token) return null;
 
   return (
     <div
