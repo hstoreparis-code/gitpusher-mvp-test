@@ -1784,88 +1784,122 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
             <div className="grid gap-6 md:grid-cols-3">
               {/* Freemium */}
               <Card
-                className="bg-slate-900/70 border-slate-800 flex flex-col justify-between"
+                className="bg-slate-900/70 border-slate-800 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between"
                 data-testid="pricing-freemium-card"
               >
-              <CardHeader className="space-y-2">
-                <CardTitle className="text-base flex items-center justify-between">
-                  <span>🌱 Freemium</span>
-                  <span className="text-[11px] text-slate-400">Gratuit</span>
-                </CardTitle>
-                <p className="text-xs text-slate-400">
-                  Pour tester la plateforme sans engagement.
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <ul className="space-y-1">
-                  <li>✔️ 1 upload / mois (ZIP, PDF, fichiers ou code)</li>
-                  <li>✔️ Création automatique d&apos;un dépôt GitHub</li>
-                  <li>✔️ Organisation IA basique des fichiers</li>
-                  <li>✔️ Génération d&apos;un README simplifié</li>
-                  <li>✔️ Commit automatique</li>
-                  <li>✔️ Support par email (48–72h)</li>
-                </ul>
-                <div className="pt-2">
-                  <p className="text-lg font-semibold">0€<span className="text-xs text-slate-400"> / mois</span></p>
+                <CardHeader>
+                  <div className="flex items-center justify-between mb-2">
+                    <CardTitle className="text-xl font-bold">Freemium</CardTitle>
+                    <span className="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400">Gratuit</span>
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-3xl font-semibold text-slate-50">0€</p>
+                    <span className="text-xs text-slate-400">/ mois</span>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-2">
+                    Pour tester la plateforme sans engagement.
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4 text-xs">
+                  <ul className="space-y-2 text-slate-300">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>1 upload / mois (ZIP, PDF, fichiers ou code)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>Création automatique d&apos;un dépôt GitHub</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>Organisation IA basique des fichiers</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>Génération d&apos;un README simplifié</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>Commit automatique</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <span>Support par email (48–72h)</span>
+                    </li>
+                  </ul>
+                </CardContent>
+                <div className="px-6 pb-5">
+                  <Button
+                    className="w-full rounded-full bg-slate-800 hover:bg-slate-700 text-xs"
+                    data-testid="pricing-freemium-cta"
+                    onClick={async () => {
+                      try {
+                        const res = await axios.post(
+                          `${API}/billing/plan`,
+                          { plan: "freemium" },
+                          { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+                        );
+                        console.log("Plan freemium appliqué", res.data);
+                      } catch (e) {
+                        console.error("Set freemium plan failed", e);
+                      }
+                    }}
+                  >
+                    Commencer gratuitement
+                  </Button>
                 </div>
-              </CardContent>
-              <div className="px-6 pb-5">
-                <Button
-                  className="w-full rounded-full bg-slate-800 hover:bg-slate-700 text-xs"
-                  data-testid="pricing-freemium-cta"
-                  onClick={async () => {
-                    try {
-                      const res = await axios.post(
-                        `${API}/billing/plan`,
-                        { plan: "freemium" },
-                        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
-                      );
-                      console.log("Plan freemium appliqué", res.data);
-                    } catch (e) {
-                      console.error("Set freemium plan failed", e);
-                    }
-                  }}
-                >
-                  Commencer gratuitement
-                </Button>
-              </div>
-            </Card>
+              </Card>
 
             {/* Premium */}
             <Card
-              className="bg-gradient-to-b from-cyan-500/20 via-cyan-500/10 to-slate-900 border border-cyan-400/60 flex flex-col justify-between shadow-[0_0_40px_rgba(34,211,238,0.40)]"
+              className="bg-gradient-to-br from-cyan-500/20 via-cyan-500/10 to-slate-900 border border-cyan-400/60 flex flex-col justify-between shadow-[0_0_40px_rgba(34,211,238,0.40)] relative"
               data-testid="pricing-premium-card"
             >
-              <CardHeader className="space-y-2">
-                <CardTitle className="text-base flex items-center justify-between">
-                  <span>⚡ Premium</span>
-                  <span className="text-[11px] text-cyan-200">19,99€ / mois</span>
-                </CardTitle>
-                <p className="text-xs text-slate-200">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 text-slate-950 text-xs font-bold">
+                  ⭐ RECOMMANDÉ
+                </span>
+              </div>
+              <CardHeader className="mt-2">
+                <div className="flex items-center justify-between mb-2">
+                  <CardTitle className="text-xl font-bold">Premium</CardTitle>
+                  <span className="text-xs text-cyan-100 font-medium">19,99€ / mois</span>
+                </div>
+                <p className="text-xs text-slate-100">
                   Pour créateurs réguliers, non-dev, auto-entrepreneurs, étudiants IA.
                 </p>
+                <div className="flex items-baseline gap-2 mt-3">
+                  <span className="text-3xl font-bold text-cyan-300">Illimité</span>
+                  <span className="text-xs text-cyan-100">uploads / mois</span>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <p className="font-semibold text-slate-100">Uploads &amp; IA</p>
-                <ul className="space-y-1">
-                  <li>🔥 Uploads illimités</li>
-                  <li>🔥 Structuration automatique des dossiers</li>
-                  <li>🔥 Génération d&apos;un README complet (pro, marketing, documentation)</li>
-                  <li>🔥 Commit intelligent multi-étapes</li>
-                  <li>🔥 Détection du langage / dépendances</li>
-                </ul>
-                <p className="font-semibold text-slate-100 pt-2">Plateformes &amp; productivité</p>
-                <ul className="space-y-1">
-                  <li>🔥 Support GitHub, GitLab &amp; Bitbucket</li>
-                  <li>🔥 Historique de projets + duplication en 1 clic</li>
-                  <li>🔥 Processing rapide et prioritaire</li>
-                  <li>🔥 Export ZIP final organisé</li>
-                  <li>🔥 Support 24/7 prioritaire</li>
+              <CardContent className="space-y-4 text-xs">
+                <ul className="space-y-2 text-slate-100">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0 mt-0.5" />
+                    <span>Uploads illimités avec génération IA avancée</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0 mt-0.5" />
+                    <span>Structuration automatique des dossiers &amp; langage détecté</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0 mt-0.5" />
+                    <span>README complet (pro, marketing, documentation)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0 mt-0.5" />
+                    <span>Commits intelligents multi-étapes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0 mt-0.5" />
+                    <span>Support GitHub, GitLab &amp; Bitbucket + support prioritaire</span>
+                  </li>
                 </ul>
               </CardContent>
               <div className="px-6 pb-5 space-y-2">
                 <Button
-                  className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs"
+                  className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-semibold"
                   data-testid="pricing-premium-cta"
                   onClick={async () => {
                     try {
@@ -1882,7 +1916,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 >
                   Passer en Premium
                 </Button>
-                <p className="text-[10px] text-slate-300 text-center">
+                <p className="text-[10px] text-slate-200 text-center">
                   Sans engagement. Annulation en un clic.
                 </p>
               </div>
@@ -1890,35 +1924,50 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
 
             {/* Business */}
             <Card
-              className="bg-slate-900/80 border-slate-700 flex flex-col justify-between"
+              className="bg-slate-900/80 border-amber-500/40 hover:border-amber-400/60 transition-all duration-300 flex flex-col justify-between"
               data-testid="pricing-business-card"
             >
-              <CardHeader className="space-y-2">
-                <CardTitle className="text-base flex items-center justify-between">
-                  <span>🏢 Business</span>
-                  <span className="text-[11px] text-slate-400">Sur devis</span>
-                </CardTitle>
-                <p className="text-xs text-slate-400">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <CardTitle className="text-xl font-bold">Business</CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/40">Sur devis</span>
+                </div>
+                <p className="text-xs text-slate-300">
                   Pour écoles, agences, équipes SaaS et créateurs IA multi-comptes.
                 </p>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <ul className="space-y-1">
-                  <li>✔️ 10 à 200 utilisateurs</li>
-                  <li>✔️ Intégration API + webhooks</li>
-                  <li>✔️ Automations avancées (CI/CD auto, nettoyage, versioning IA)</li>
-                  <li>✔️ Tableau de bord boosté IA</li>
-                  <li>✔️ Branding entreprise</li>
-                  <li>✔️ SLA &amp; support dédié</li>
-                </ul>
-                <div className="pt-2">
-                  <p className="text-sm font-semibold">À partir de 199€<span className="text-xs text-slate-400"> / mois</span></p>
+                <div className="flex items-baseline gap-2 mt-3">
+                  <span className="text-lg font-semibold text-amber-300">À partir de 199€</span>
+                  <span className="text-xs text-slate-400">/ mois</span>
                 </div>
+              </CardHeader>
+              <CardContent className="space-y-4 text-xs">
+                <ul className="space-y-2 text-slate-200">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>10 à 200 utilisateurs</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Intégration API complète + webhooks</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Automations avancées (CI/CD auto, nettoyage, versioning IA)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>Tableau de bord boosté IA &amp; branding entreprise</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <span>SLA &amp; support dédié</span>
+                  </li>
+                </ul>
               </CardContent>
               <div className="px-6 pb-5">
                 <Button
                   variant="outline"
-                  className="w-full rounded-full border-cyan-400/60 text-cyan-200 text-xs hover:bg-slate-900/80"
+                  className="w-full rounded-full border-amber-400/60 text-amber-200 text-xs hover:bg-amber-500/10"
                   data-testid="pricing-business-cta"
                   onClick={async () => {
                     try {
