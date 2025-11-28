@@ -3830,7 +3830,7 @@ function AppShell() {
       <Route 
         path="/app/pro" 
         element={
-          <Dashboard 
+          <ProDashboard 
             t={t} 
             lang={lang}
             setLang={setLang}
