@@ -810,6 +810,9 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   
   // State for auth modal
   const [authOpen, setAuthOpen] = useState(false);
+  
+  // State for uploaded files
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   useEffect(() => {
     setMounted(true);
