@@ -1622,21 +1622,18 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
       </header>
 
       <main className="flex-1">
-        <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
-          <section className="space-y-4">
-            <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-cyan-300 bg-cyan-500/10 border border-cyan-400/30 px-3 py-1 rounded-full w-fit">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
-              <span>Plans &amp; Tarifs</span>
+        <div className="max-w-5xl mx-auto px-4 py-12 space-y-12">
+          {/* Hero Section */}
+          <section className="text-center space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-xs text-cyan-300 mb-2">
+              <span className="h-2 w-2 rounded-full bg-cyan-300 animate-pulse" />
+              PLANS &amp; TARIFS
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
-              Publiez vos projets Git sans écrire une ligne de code.
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+              Payez uniquement pour ce que vous utilisez
             </h1>
-            <p className="text-sm sm:text-base text-slate-300 max-w-2xl">
-              GitPusher automatise la création de vos dépôts (
-              <span className="text-cyan-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.9)] neon-flicker">
-                GitHub, GitLab, Bitbucket, Gitea, Codeberg, Gitee
-              </span>
-              ), range vos fichiers avec l&apos;IA, génère votre README et pousse tout en un clic.
+            <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
+              Système de crédits flexible. <strong className="text-cyan-300">1 crédit = 1 upload</strong> avec génération IA complète (README, .gitignore, LICENSE, CHANGELOG) + push vers vos plateformes Git préférées.
             </p>
           </section>
 
