@@ -160,14 +160,22 @@ class PlanUpdate(BaseModel):
 app = FastAPI(title="GitPusher API")
 api_router = APIRouter(prefix="/api")
 
-# Initialize services (will be used in v1 endpoints)
+# Import services after DB is initialized
+import sys
+sys.path.insert(0, str(ROOT_DIR))
+
 from services.credits_service import CreditsService
 from services.storage_service import StorageService  
 from services.git_service import GitService
-
-credits_service_instance = CreditsService(db)
-storage_service_instance = StorageService()
-git_service_instance = GitService()
+from models.schemas import (
+    GitHubTokenRequest, GitHubTokenResponse,
+    UploadInitRequest, UploadInitResponse, UploadStatus, UploadCompleteRequest,
+    JobCreateRequest, JobCreateResponse, JobStatus,
+    RepoCreateRequest, RepoCreateResponse,
+    BillingCreditsResponse, BillingPurchaseRequest, BillingPurchaseResponse,
+    AutopushSettings, AutopushTriggerRequest,
+    PartnerRepoCreateRequest, WebhookJobCompleted
+)
 
 
 
