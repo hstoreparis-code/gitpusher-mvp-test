@@ -3811,9 +3811,6 @@ function AppShell() {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
       <Route 
         path="/app/pro" 
         element={
