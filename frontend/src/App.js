@@ -2496,7 +2496,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
           {/* Credit Packs */}
           <section className="grid gap-6 md:grid-cols-3">
             {/* Pack Starter */}
-            <Card className="bg-slate-900/70 border-slate-800 hover:border-cyan-500/30 transition-all duration-300">
+            <Card className="bg-slate-900/70 border-cyan-400/50 hover:border-cyan-500/70 transition-all duration-300 shadow-[0_0_40px_rgba(34,211,238,0.35)]">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <CardTitle className="text-xl font-bold">Pack Starter</CardTitle>
