@@ -1053,17 +1053,17 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Total Projects */}
           <Card className="bg-gradient-to-br from-cyan-500/10 via-slate-900/70 to-slate-900/70 border-cyan-500/20 backdrop-blur-sm">
-            <CardContent className="p-4">
+            <CardContent className="px-4 py-5 sm:p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-300 mb-1">Total Projects</p>
-                  <p className="text-2xl font-bold text-cyan-300">{projects.length}</p>
+                  <p className="text-sm text-slate-200 mb-1">Total Projects</p>
+                  <p className="text-3xl sm:text-2xl font-bold text-cyan-300">{projects.length}</p>
                 </div>
-                <div className="h-12 w-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                  <GitBranch className="h-6 w-6 text-cyan-400" />
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                  <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-cyan-400" />
                 </div>
               </div>
             </CardContent>
