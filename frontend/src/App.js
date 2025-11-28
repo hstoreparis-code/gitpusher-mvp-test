@@ -1276,19 +1276,19 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           </Card>
 
           <div className="space-y-4">
-            <Card className="bg-slate-900/70 border-slate-800 flex flex-col text-sm" data-testid="project-stepper-card">
-              <CardHeader>
-                <CardTitle className="text-sm sm:text-base flex items-center justify-between">
+            <Card className="bg-slate-900/70 border-slate-800 flex flex-col text-sm hover:border-slate-700 transition-colors" data-testid="project-stepper-card">
+              <CardHeader className="pb-4 sm:pb-6">
+                <CardTitle className="text-base sm:text-xl flex items-center justify-between font-bold">
                   <span>{selected ? selected.name : t("stepUpload")}</span>
                   {selected && selected.github_repo_url && (
                     <a
                       href={selected.github_repo_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 px-3 py-1 rounded-full border border-cyan-400/70 bg-cyan-500/10 hover:bg-cyan-500/30 text-[11px] text-cyan-200 font-semibold shadow-[0_0_12px_rgba(34,211,238,0.8)] neon-flicker"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/70 bg-cyan-500/10 hover:bg-cyan-500/30 text-xs sm:text-sm text-cyan-200 font-semibold shadow-[0_0_12px_rgba(34,211,238,0.8)] neon-flicker transition-all"
                       data-testid="project-github-link"
                     >
-                      <Rocket className="h-3 w-3" />
+                      <Rocket className="h-4 w-4" />
                       <span>{t("linkRepo")}</span>
                     </a>
                   )}
