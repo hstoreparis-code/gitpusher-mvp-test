@@ -1940,8 +1940,8 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   <span className="text-xs text-slate-400">/ mois</span>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4 md:space-y-3 text-xs">
-                <ul className="space-y-2 md:space-y-1 text-slate-200">
+              <CardContent className="text-xs">
+                <ul className="text-slate-200">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
                     <span>10 à 200 utilisateurs</span>
