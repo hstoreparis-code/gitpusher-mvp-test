@@ -2258,7 +2258,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
 
           {/* Section "Ce qui rend la plateforme unique" avec 3 barres dépliantes */}
           <section className="space-y-4">
-            <h2 className="text-lg font-semibold">Ce qui rend GitPusher unique</h2>
+            <h2 className="text-lg font-semibold">Ce qui rend Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span> unique</h2>
             <div className="space-y-3">
               <details
                 className="group rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-3 cursor-pointer transition-colors"
