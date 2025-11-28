@@ -716,7 +716,7 @@ function AuthCard({ t, onSuccess }) {
           <div className="grid grid-cols-2 gap-2 text-[11px] sm:text-xs">
             <Button
               variant="outline"
-              className="w-full justify-center rounded-full border-slate-700 bg-slate-900 hover:bg-slate-800"
+              className="w-full justify-center rounded-full border-slate-700 bg-slate-900 hover:bg-slate-800 shadow-[0_0_16px_rgba(15,23,42,0.9)]"
               onClick={() => startOAuth("google")}
               data-testid="google-oauth-button"
             >
