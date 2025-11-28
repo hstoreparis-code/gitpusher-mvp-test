@@ -227,6 +227,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
   const navigate = useNavigate();
   const [authOpen, setAuthOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeStep, setActiveStep] = useState(null);
 
   const handleGetStarted = () => {
     if (token) {
