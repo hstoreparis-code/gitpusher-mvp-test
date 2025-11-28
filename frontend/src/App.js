@@ -1821,7 +1821,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     </div>
 
                     {/* Étape 1 : Upload */}
-                    <div className="space-y-3 p-4 sm:p-6 bg-slate-950/40 rounded-xl border border-slate-800/50">
+                    <div className="space-y-3 p-4 sm:p-6 bg-slate-950/60 rounded-2xl border border-cyan-500/25 shadow-[0_0_32px_rgba(34,211,238,0.35)]">
                       <h3 className="font-semibold text-slate-100 text-base sm:text-lg flex items-center gap-2">
                         <span className="h-6 w-6 rounded-full bg-violet-500/20 flex items-center justify-center text-xs text-violet-400 font-bold">1</span>
                         Uploade tes fichiers
