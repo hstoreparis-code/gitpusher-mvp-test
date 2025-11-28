@@ -1190,26 +1190,26 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           </Card>
         </div>
 
-        <div className="grid md:grid-cols-[1.1fr,1.4fr] gap-3 sm:gap-6">
+        <div className="grid md:grid-cols-[1fr,1.5fr] gap-3 sm:gap-6 lg:gap-8">
           {/* Projects List */}
-          <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm">
-            <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3">
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center">
-                  <GitBranch className="h-4 w-4 text-slate-950" />
+          <Card className="bg-slate-900/70 border-slate-800 backdrop-blur-sm flex flex-col shadow-xl text-sm hover:border-slate-700 transition-colors">
+            <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 sm:pb-6">
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                  <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-slate-950" />
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <CardTitle className="text-sm sm:text-lg leading-snug truncate">
+                  <CardTitle className="text-sm sm:text-xl leading-snug truncate font-bold">
                     {t("dashboardTitle")}
                   </CardTitle>
-                  <p className="hidden sm:block text-xs text-slate-400">
+                  <p className="hidden sm:block text-sm text-slate-400 mt-1">
                     Clique sur un workflow puis renomme le repo avant de lancer.
                   </p>
                 </div>
               </div>
               <Button
                 size="sm"
-                className="w-full sm:w-auto justify-center rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 text-xs sm:text-xs px-3 py-2 shadow-lg"
+                className="w-full sm:w-auto justify-center rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-3 shadow-lg hover:shadow-xl transition-all"
                 onClick={newProject}
                 disabled={creating}
                 data-testid="new-workflow-button"
