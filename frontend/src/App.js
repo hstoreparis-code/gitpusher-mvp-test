@@ -1011,7 +1011,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       }`}
     >
       <header className="w-full border-b border-white/5 backdrop-blur-sm sticky top-0 z-20 bg-slate-950/80 overflow-x-hidden">
-        <div className="w-full max-w-full px-4 py-3 md:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="w-full max-w-full px-4 py-3 md:py-4 flex items-center justify-between gap-3">
           <button
             type="button"
             onClick={() => navigate("/")}
