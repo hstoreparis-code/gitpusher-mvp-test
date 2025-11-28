@@ -612,6 +612,7 @@ function AuthCard({ t, onSuccess }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [oauthProvider, setOauthProvider] = useState(null);
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
