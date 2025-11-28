@@ -16,12 +16,6 @@ import httpx
 import json
 from pathlib import Path
 
-# Import v1 routes
-from routes import v1_auth, v1_uploads, v1_jobs, v1_repos, v1_billing, v1_autopush, v1_partner, v1_webhooks
-from services.credits_service import CreditsService
-from services.storage_service import StorageService
-from services.git_service import GitService
-
 # Setup logging
 logger = logging.getLogger(__name__)
 
