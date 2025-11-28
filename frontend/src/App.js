@@ -1128,68 +1128,64 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
 
         {/* Stats Cards - Desktop/Tablet */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {/* Total Projects */}
-          <Card className="bg-gradient-to-br from-cyan-500/10 via-slate-900/70 to-slate-900/70 border-cyan-500/20 backdrop-blur-sm">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm text-slate-300 mb-1">Total Projects</p>
-                  <p className="text-2xl font-bold text-cyan-300">{projects.length}</p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                  <GitBranch className="h-5 w-5 sm:h-6 sm:w-6 text-cyan-400" />
+          <Card className="bg-gradient-to-br from-cyan-500/10 via-slate-900/70 to-slate-900/70 border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-xl bg-cyan-500/20 flex items-center justify-center ring-2 ring-cyan-500/30">
+                  <GitBranch className="h-6 w-6 text-cyan-400" />
                 </div>
               </div>
+              <p className="text-sm text-slate-400 mb-2">Total Projects</p>
+              <p className="text-3xl font-bold text-cyan-300">{projects.length}</p>
+              <p className="text-xs text-slate-500 mt-2">Workflows créés avec l'IA</p>
             </CardContent>
           </Card>
 
           {/* Completed Projects */}
-          <Card className="bg-gradient-to-br from-emerald-500/10 via-slate-900/70 to-slate-900/70 border-emerald-500/20 backdrop-blur-sm">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm text-slate-300 mb-1">Completed</p>
-                  <p className="text-2xl font-bold text-emerald-300">
-                    {projects.filter(p => p.status === "done").length}
-                  </p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                  <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
+          <Card className="bg-gradient-to-br from-emerald-500/10 via-slate-900/70 to-slate-900/70 border-emerald-500/20 backdrop-blur-sm hover:border-emerald-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-xl bg-emerald-500/20 flex items-center justify-center ring-2 ring-emerald-500/30">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-400" />
                 </div>
               </div>
+              <p className="text-sm text-slate-400 mb-2">Completed</p>
+              <p className="text-3xl font-bold text-emerald-300">
+                {projects.filter(p => p.status === "done").length}
+              </p>
+              <p className="text-xs text-slate-500 mt-2">Workflows terminés avec succès</p>
             </CardContent>
           </Card>
 
           {/* Pending Projects */}
-          <Card className="bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-900/70 border-amber-500/20 backdrop-blur-sm">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm text-slate-300 mb-1">Pending</p>
-                  <p className="text-2xl font-bold text-amber-300">
-                    {projects.filter(p => p.status !== "done").length}
-                  </p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-amber-500/20 flex items-center justify-center">
-                  <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-amber-400" />
+          <Card className="bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-900/70 border-amber-500/20 backdrop-blur-sm hover:border-amber-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-xl bg-amber-500/20 flex items-center justify-center ring-2 ring-amber-500/30">
+                  <Clock className="h-6 w-6 text-amber-400" />
                 </div>
               </div>
+              <p className="text-sm text-slate-400 mb-2">Pending</p>
+              <p className="text-3xl font-bold text-amber-300">
+                {projects.filter(p => p.status !== "done").length}
+              </p>
+              <p className="text-xs text-slate-500 mt-2">En attente de traitement</p>
             </CardContent>
           </Card>
 
           {/* Total Jobs */}
-          <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/20 backdrop-blur-sm">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs sm:text-sm text-slate-300 mb-1">Total Jobs</p>
-                  <p className="text-2xl font-bold text-violet-300">{jobs.length}</p>
-                </div>
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-violet-500/20 flex items-center justify-center">
-                  <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-violet-400" />
+          <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900/70 to-slate-900/70 border-violet-500/20 backdrop-blur-sm hover:border-violet-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-xl bg-violet-500/20 flex items-center justify-center ring-2 ring-violet-500/30">
+                  <Activity className="h-6 w-6 text-violet-400" />
                 </div>
               </div>
+              <p className="text-sm text-slate-400 mb-2">Total Jobs</p>
+              <p className="text-3xl font-bold text-violet-300">{jobs.length}</p>
+              <p className="text-xs text-slate-500 mt-2">Exécutions IA effectuées</p>
             </CardContent>
           </Card>
         </div>
