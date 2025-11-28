@@ -779,45 +779,6 @@ function AuthCard({ t, onSuccess }) {
             </form>
           </TabsContent>
         </Tabs>
-
-        <div className="my-4 flex items-center gap-2 text-[11px] text-slate-400">
-          <div className="flex-1 h-px bg-slate-700" />
-          <span>{t("orContinueWith")}</span>
-          <div className="flex-1 h-px bg-slate-700" />
-        </div>
-
-        {/* Autres providers actifs (placeholder UI pour l'instant) */}
-        <div className="grid grid-cols-2 gap-2 text-[11px] sm:text-xs mt-2">
-          <Button
-            variant="outline"
-            className="w-full justify-center rounded-full border-slate-700 bg-slate-900 hover:bg-slate-800"
-            onClick={() => startOAuth("google")}
-            data-testid="google-oauth-button"
-          >
-            Google
-          </Button>
-          <Button
-            variant="outline"
-            disabled
-            className="w-full justify-center rounded-full border-slate-800 bg-slate-900/60 text-slate-500"
-          >
-            GitLab (bientôt)
-          </Button>
-          <Button
-            variant="outline"
-            disabled
-            className="w-full justify-center rounded-full border-slate-800 bg-slate-900/60 text-slate-500"
-          >
-            Bitbucket (bientôt)
-          </Button>
-          <Button
-            variant="outline"
-            disabled
-            className="w-full justify-center rounded-full border-slate-800 bg-slate-900/60 text-slate-500"
-          >
-            Gitea / Codeberg (bientôt)
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );
