@@ -1028,7 +1028,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center">
                   <GitBranch className="h-4 w-4 text-slate-950" />
                 </div>
-                <CardTitle className="text-sm sm:text-base">{t("dashboardTitle")}</CardTitle>
+                <div className="flex flex-col">
+                  <CardTitle className="text-sm sm:text-base">{t("dashboardTitle")}</CardTitle>
+                  <p className="text-[11px] text-slate-400">Clique sur un workflow puis renomme le repo avant de lancer.</p>
+                </div>
               </div>
               <Button
                 size="sm"
