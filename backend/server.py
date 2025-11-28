@@ -1628,6 +1628,16 @@ async def v1_get_upload_status(upload_id: str):
 
 
 @v1_router.post("/uploads/complete")
+
+
+
+# ---------- V1 PROVIDERS ENDPOINT ----------
+
+@v1_router.get("/providers")
+async def v1_list_providers():
+    """List all supported Git providers."""
+    return {"providers": git_service.get_all_providers()}
+
 async def v1_complete_upload(payload: UploadCompleteRequest, authorization: str = Header(None)):
     """Complete upload and create job."""
     user = await get_user_from_token(authorization)
