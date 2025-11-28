@@ -1956,31 +1956,13 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
             <div className="space-y-3">
               <div>
                 <p className="font-semibold text-emerald-300 mb-2">✅ Providers Actifs (API Complète)</p>
-                <div className="grid sm:grid-cols-2 gap-2 text-xs">
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/50">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    <span>GitHub - Leader mondial</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/50">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    <span>GitLab - DevOps intégré</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/50">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    <span>Bitbucket - Atlassian suite</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/50">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    <span>Gitea - Self-hosted</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/50">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    <span>Codeberg - Privacy-first EU</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/50">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                    <span>Gitee - Marché chinois</span>
-                  </div>
+                <div className="p-4 rounded-xl bg-slate-950/50 border border-cyan-500/20 text-center">
+                  <p className="text-base">
+                    <span className="text-cyan-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.9)] neon-flicker font-semibold">
+                      GitHub, GitLab, Bitbucket, Gitea, Codeberg, Gitee
+                    </span>
+                  </p>
+                  <p className="text-xs text-slate-400 mt-2">6 plateformes Git entièrement opérationnelles</p>
                 </div>
               </div>
               
