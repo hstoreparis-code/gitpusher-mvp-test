@@ -649,20 +649,24 @@ function AuthCard({ t, onSuccess }) {
   const startOAuth = async (provider) => {
     try {
       setLoading(true);
+      setOauthProvider(provider);
       setError("");
       
-      // Fetch the OAuth URL from the backend
+      // Récupère l'URL OAuth côté backend
       const response = await axios.get(`${API}/auth/oauth/${provider}/url`);
       const oauthUrl = response.data.url;
       
-      // Redirect to the OAuth provider
-      window.location.href = oauthUrl;
+      // Laisse une micro-pause visuelle avant la redirection (feedback utilisateur)
+      setTimeout(() => {
+        window.location.href = oauthUrl;
+      }, 150);
     } catch (err) {
       setError(
         err?.response?.data?.detail || 
         `OAuth ${provider} n'est pas encore configuré. Veuillez contacter l'administrateur.`
       );
       setLoading(false);
+      setOauthProvider(null);
     }
   };
 
