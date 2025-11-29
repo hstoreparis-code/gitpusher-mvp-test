@@ -50,6 +50,25 @@ const baseTranslations = {
     linkRepo: "Open repo",
     theme: "Dark mode",
     language: "Français",
+    // Landing specific
+    landingHeroBadge: "AI Git Automation",
+    landingDropLabel: "Drag & Drop",
+    landingDropTitle: "Drop your files here",
+    landingDropDescription:
+      "Zip, PDFs, code folders… GitPusher organizes everything and pushes to Git for you.",
+    landingDropTagline: "No Git, no CLI, just your browser.",
+    landingDemoCta: "Access the demo",
+    landingPrimaryCta: "Start for free",
+    navPricing: "Pricing",
+    navWhitepaper: "White Paper",
+    navForAIAssistants: "For AI Assistants",
+    // Pricing specific
+    pricingBadge: "PLANS & PRICING",
+    pricingHeroTitle: "Pay only for what you use",
+    pricingHeroSubtitle:
+      "Flexible credit system. 2 credits = 1 upload with full AI generation (README, .gitignore, LICENSE, CHANGELOG) + push to your favorite Git platforms.",
+    pricingMonthlyTitle: "Or choose a monthly subscription",
+    pricingMonthlySubtitle: "Unlimited uploads every month",
   },
   fr: {
     heroTitle: "Workflow Git No-Code",
@@ -82,6 +101,25 @@ const baseTranslations = {
     linkRepo: "Ouvrir le repo GitHub",
     theme: "Mode sombre",
     language: "English",
+    // Landing specific
+    landingHeroBadge: "Automatisation Git par IA",
+    landingDropLabel: "Drag & Drop",
+    landingDropTitle: "Dépose tes fichiers ici",
+    landingDropDescription:
+      "Zip, PDF, dossiers de code… GitPusher s’occupe de tout organiser et pousser sur Git.",
+    landingDropTagline: "No Git, no CLI, juste ton navigateur.",
+    landingDemoCta: "Accéder à la démo",
+    landingPrimaryCta: "Commencer gratuitement",
+    navPricing: "Tarifs",
+    navWhitepaper: "Livre Blanc",
+    navForAIAssistants: "Pour les assistants IA",
+    // Pricing specific
+    pricingBadge: "PLANS & TARIFS",
+    pricingHeroTitle: "Payez uniquement pour ce que vous utilisez",
+    pricingHeroSubtitle:
+      "Système de crédits flexible. 2 crédits = 1 upload avec génération IA complète (README, .gitignore, LICENSE, CHANGELOG) + push vers vos plateformes Git préférées.",
+    pricingMonthlyTitle: "Ou choisissez un abonnement mensuel",
+    pricingMonthlySubtitle: "Uploads illimités chaque mois",
   },
 };
 
