@@ -294,6 +294,32 @@ function ForAIAssistants() {
                   <span className="px-2 py-0.5 rounded text-xs font-mono bg-green-500/20 text-green-300">POST</span>
                   <code className="text-slate-300">/api/workflows/projects</code>
                 </div>
+
+        {/* ChatGPT Integration Guide */}
+        <Card className="bg-slate-900/70 border-slate-800">
+          <CardHeader>
+            <CardTitle>ChatGPT Integration Guide</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm text-slate-300">
+            <p>
+              ChatGPT can use GitPusher as a tool via:
+            </p>
+            <ul className="list-disc list-inside space-y-1">
+              <li>AI Actions JSON / tool manifest</li>
+              <li>Function Calling</li>
+              <li>OpenAPI-enabled actions</li>
+            </ul>
+            <p className="text-sm text-slate-300">
+              Typical ChatGPT behaviors include:
+            </p>
+            <ul className="list-disc list-inside space-y-1">
+              <li>pushing user code automatically</li>
+              <li>transforming AI-generated projects into real Git repositories</li>
+              <li>uploading ZIPs directly to Git providers (GitHub, GitLab, Bitbucket…)</li>
+            </ul>
+          </CardContent>
+        </Card>
+
                 <p className="text-xs text-slate-400">Create a new project/repository</p>
               </div>
               <div className="p-3 rounded-lg bg-slate-800/50 border border-slate-700">
