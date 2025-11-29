@@ -1682,13 +1682,48 @@ async def get_project(project_id: str, authorization: Optional[str] = Header(def
 
 @api_router.patch("/workflows/projects/{project_id}", response_model=ProjectDetail)
 async def update_project(project_id: str, payload: ProjectUpdate, authorization: Optional[str] = Header(default=None)):
-    """Met à jour les métadonnées du projet (nom du repo, description, langue)."""
+    """Met à jour les métadonnées du projet (nom du repo, description, langue).
+
+    En plus de mettre à jour le document projet dans MongoDB, cette route tente
+    aussi de renommer le dépôt distant (GitHub/GitLab) si possible.
+    """
     user = await get_user_from_token(authorization)
     doc = await db.projects.find_one({"_id": project_id, "user_id": user["_id"]})
     if not doc:
         raise HTTPException(status_code=404, detail="Project not found")
 
     updates: Dict[str, Any] = {}
+    new_name = payload.name if payload.name is not None else None
+    new_description = payload.description if payload.description is not None else None
+
+    # D'abord, tenter la mise à jour côté provider si le repo a déjà été créé
+    provider = (doc.get("provider") or "github").lower()
+    remote_full_name = doc.get("github_repo_name") or doc.get("remote_repo_full_name")
+
+    if remote_full_name and (new_name or new_description):
+        # Choisir le bon token suivant le provider
+        git_token = None
+        if provider == "github":
+            git_token = user.get("github_access_token")
+        elif provider == "gitlab":
+            git_token = user.get("gitlab_access_token")
+        elif provider == "bitbucket":
+            git_token = user.get("bitbucket_access_token")
+
+        remote_updates = await update_remote_repo_metadata(
+            provider=provider,
+            token=git_token,
+            repo_full_name=remote_full_name,
+            new_name=new_name,
+            new_description=new_description,
+        )
+        # Si le full_name a changé côté provider (cas rename GitHub/GitLab), on le stocke
+        if remote_updates.get("full_name") and remote_updates["full_name"] != remote_full_name:
+            updates["github_repo_name"] = remote_updates["full_name"]
+        if remote_updates.get("url") and not doc.get("github_repo_url"):
+            updates["github_repo_url"] = remote_updates["url"]
+
+    # Ensuite, mettre à jour les champs locaux
     if payload.name is not None:
         updates["name"] = payload.name
     if payload.description is not None:
