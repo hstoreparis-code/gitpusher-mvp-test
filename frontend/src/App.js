@@ -910,6 +910,35 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       } finally {
     // Met à jour le champ de renommage quand on change de projet sélectionné
     if (projectsRes.data && projectsRes.data.length && !selected) {
+  useEffect(() => {
+    if (selected) {
+      setEditName(selected.name || "");
+    }
+  }, [selected]);
+
+  const renameProject = async () => {
+    if (!selected) return;
+    const newName = editName.trim();
+    if (!newName || newName === (selected.name || "")) return;
+
+    setRenaming(true);
+    try {
+      const res = await axios.patch(
+        `${API}/workflows/projects/${selected.id}`,
+        { name: newName },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      const updated = res.data;
+      setSelected(updated);
+      setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+    } catch (err) {
+      console.error("Rename failed", err);
+      alert("Erreur lors du renommage du dépôt");
+    } finally {
+      setRenaming(false);
+    }
+  };
+
       // si aucun projet sélectionné, on ne touche pas encore à editName
     }
 
