@@ -284,19 +284,135 @@ class GitHubProvider(GitProviderBase):
 # Placeholders pour d'autres providers (GitLab, Bitbucket, Gitea, Azure DevOps)
 # Ces classes peuvent être implémentées plus tard pour supporter d'autres plateformes.
 class GitLabProvider(GitProviderBase):
+    """GitLab provider implementation."""
+    
     async def create_repo(self, token: str, name: str, description: Optional[str]) -> GitRepoInfo:
-        raise HTTPException(status_code=501, detail="GitLab provider not implemented yet")
+        """Create a GitLab project."""
+        async with httpx.AsyncClient() as client:
+            res = await client.post(
+                "https://gitlab.com/api/v4/projects",
+                headers={"Authorization": f"Bearer {token}"},
+                json={
+                    "name": name,
+                    "description": description or f"Repository {name}",
+                    "visibility": "public",
+                    "initialize_with_readme": False
+                },
+                timeout=30
+            )
+            
+            if res.status_code not in [200, 201]:
+                logger.error(f"GitLab create repo failed: {res.text}")
+                raise HTTPException(status_code=400, detail=f"Failed to create GitLab repo: {res.text}")
+            
+            data = res.json()
+            return GitRepoInfo(
+                url=data["web_url"],
+                full_name=data["path_with_namespace"],
+                owner=data["namespace"]["path"],
+                name=data["name"],
+                clone_url=data["http_url_to_repo"],
+                default_branch=data.get("default_branch", "main")
+            )
 
     async def put_file(self, token: str, repo: GitRepoInfo, path: str, content_bytes: bytes, message: str):
-        raise HTTPException(status_code=501, detail="GitLab provider not implemented yet")
+        """Upload a file to GitLab project."""
+        import base64
+        content_b64 = base64.b64encode(content_bytes).decode("utf-8")
+        project_id = repo.full_name.replace("/", "%2F")
+        file_path = path.lstrip("/")
+        
+        async with httpx.AsyncClient() as client:
+            # Try to create file first
+            res = await client.post(
+                f"https://gitlab.com/api/v4/projects/{project_id}/repository/files/{file_path.replace('/', '%2F')}",
+                headers={"Authorization": f"Bearer {token}"},
+                json={
+                    "branch": repo.default_branch or "main",
+                    "content": content_b64,
+                    "encoding": "base64",
+                    "commit_message": message
+                },
+                timeout=30
+            )
+            
+            if res.status_code not in [200, 201]:
+                logger.error(f"GitLab put file {path} failed: {res.text}")
+                raise HTTPException(status_code=400, detail=f"Failed to upload file {path} to GitLab")
 
 
 class BitbucketProvider(GitProviderBase):
+    """Bitbucket provider implementation."""
+    
     async def create_repo(self, token: str, name: str, description: Optional[str]) -> GitRepoInfo:
-        raise HTTPException(status_code=501, detail="Bitbucket provider not implemented yet")
+        """Create a Bitbucket repository."""
+        async with httpx.AsyncClient() as client:
+            # First get the current user to know the workspace
+            user_res = await client.get(
+                "https://api.bitbucket.org/2.0/user",
+                headers={"Authorization": f"Bearer {token}"},
+                timeout=20
+            )
+            if user_res.status_code != 200:
+                raise HTTPException(status_code=400, detail="Failed to get Bitbucket user info")
+            
+            username = user_res.json().get("username") or user_res.json().get("nickname")
+            
+            # Create repo
+            res = await client.post(
+                f"https://api.bitbucket.org/2.0/repositories/{username}/{name}",
+                headers={"Authorization": f"Bearer {token}"},
+                json={
+                    "scm": "git",
+                    "is_private": False,
+                    "description": description or f"Repository {name}"
+                },
+                timeout=30
+            )
+            
+            if res.status_code not in [200, 201]:
+                logger.error(f"Bitbucket create repo failed: {res.text}")
+                raise HTTPException(status_code=400, detail=f"Failed to create Bitbucket repo: {res.text}")
+            
+            data = res.json()
+            clone_url = next(
+                (link["href"] for link in data.get("links", {}).get("clone", []) if link.get("name") == "https"),
+                data.get("links", {}).get("html", {}).get("href", "")
+            )
+            
+            return GitRepoInfo(
+                url=data["links"]["html"]["href"],
+                full_name=data["full_name"],
+                owner=username,
+                name=data["name"],
+                clone_url=clone_url,
+                default_branch=data.get("mainbranch", {}).get("name", "main")
+            )
 
     async def put_file(self, token: str, repo: GitRepoInfo, path: str, content_bytes: bytes, message: str):
-        raise HTTPException(status_code=501, detail="Bitbucket provider not implemented yet")
+        """Upload a file to Bitbucket repository using the src endpoint."""
+        import io
+        
+        async with httpx.AsyncClient() as client:
+            # Bitbucket uses multipart form data for file uploads
+            files = {
+                path.lstrip("/"): content_bytes
+            }
+            
+            res = await client.post(
+                f"https://api.bitbucket.org/2.0/repositories/{repo.full_name}/src",
+                headers={"Authorization": f"Bearer {token}"},
+                data={
+                    "message": message,
+                    "branch": repo.default_branch or "main"
+                },
+                files={path.lstrip("/"): (path.lstrip("/"), io.BytesIO(content_bytes))},
+                timeout=30
+            )
+            
+            if res.status_code not in [200, 201, 204]:
+                logger.error(f"Bitbucket put file {path} failed: {res.text}")
+                raise HTTPException(status_code=400, detail=f"Failed to upload file {path} to Bitbucket")
 
 
 class GiteaProvider(GitProviderBase):
