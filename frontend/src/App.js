@@ -192,22 +192,17 @@ function useI18n() {
     key;
 
   const changeLang = async (code) => {
+    // Si on clique sur la langue déjà active, on ne fait rien
     if (code === lang) return;
 
-    // For EN/FR we use local translations only
+    // EN / FR : on reste sur les traductions locales stables
     if (code === "en" || code === "fr") {
       setLangState(code);
       if (typeof window !== "undefined") window.localStorage.setItem("ui_lang", code);
       return;
     }
 
-    // Already loaded once
-    if (dynamicTranslations[code]) {
-      setLangState(code);
-      if (typeof window !== "undefined") window.localStorage.setItem("ui_lang", code);
-      return;
-    }
-
+    // Autres langues : on force un appel LLM à chaque clic pour un effet direct / test
     try {
       setIsLoadingLang(true);
       const res = await axios.post(`${API}/i18n/translate`, {
