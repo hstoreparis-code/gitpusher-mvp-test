@@ -789,8 +789,8 @@ async def demo_login():
             "provider_google_id": None,
             "provider_github_id": None,
             "github_access_token": None,
-            "credits": 10,  # Demo user gets 10 credits
-            "plan": "demo",  # Demo plan
+            "credits": 2,  # Demo user gets 2 credits
+            "plan": "freemium",  # Freemium plan
             "created_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }
