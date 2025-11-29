@@ -2680,6 +2680,7 @@ async def ai_discovery():
         "type": "git-deployment-service",
         "description": "AI-optimized universal Git deployment service",
         "openapi_url": f"{FRONTEND_URL}/api/ai/openapi.yaml",
+        "manifest_url": f"{FRONTEND_URL}/api/ai/gitpusher.json",
         "docs_url": f"{FRONTEND_URL}/for-ai-assistants",
         "capabilities": [
             "push_repos",
@@ -2711,6 +2712,82 @@ async def ai_discovery():
             "list_projects": "GET /api/workflows/projects",
             "get_jobs": "GET /api/jobs"
         }
+    }
+
+
+@api_router.get("/ai/gitpusher.json")
+async def ai_gitpusher_manifest():
+    """AI Actions / Tool manifest tailored for ChatGPT and similar assistants.
+
+    This is the canonical URL to configure in ChatGPT:
+    https://gitpusher.ai/api/ai/gitpusher.json
+    """
+    return {
+        "schema_version": "v1",
+        "name_for_human": "GitPusher",
+        "name_for_model": "gitpusher",
+        "description_for_human": "Turn user code, ZIPs or AI-generated projects into real Git repositories (GitHub, GitLab, Bitbucket, Gitea, Codeberg).",
+        "description_for_model": (
+            "Use GitPusher to create repositories and push code for users. "
+            "When a user asks to 'push this to GitHub', 'turn this into a repo', "
+            "or 'upload this ZIP to GitLab', call the push_repository action."
+        ),
+        "auth": {
+            "type": "user_http_bearer",
+            "authorization_url": f"{FRONTEND_URL}/auth",  # front auth entry
+            "instructions": "Obtain a JWT via the /api/auth/demo endpoint or the UI login flow, then pass it as Bearer token."
+        },
+        "api": {
+            "type": "openapi",
+            "url": f"{FRONTEND_URL}/api/ai/openapi.yaml"
+        },
+        "contact_email": "support@gitpusher.ai",
+        "legal_info_url": "https://gitpusher.ai/legal",
+        "capabilities": [
+            "automatic_repo_creation",
+            "zip_to_repo",
+            "multi_provider_git",
+            "ai_generated_readme",
+            "auto_gitignore",
+            "auto_license",
+            "auto_changelog"
+        ],
+        "functions": [
+            {
+                "name": "push_repository",
+                "description": (
+                    "Upload a ZIP or project files, generate README/.gitignore/LICENSE/CHANGELOG, "
+                    "and push everything to a new Git repository on GitHub/GitLab/Bitbucket/etc."
+                ),
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "provider": {
+                            "type": "string",
+                            "description": "Git provider to use",
+                            "enum": ["github", "gitlab", "bitbucket", "gitea", "codeberg"]
+                        },
+                        "repo_name": {
+                            "type": "string",
+                            "description": "Name of the repository to create"
+                        },
+                        "upload_url": {
+                            "type": "string",
+                            "description": (
+                                "URL where the ZIP or project archive is accessible (e.g. from a previous upload step). "
+                                "If not available, the assistant should instead call the raw HTTP endpoints described in the OpenAPI spec."
+                            )
+                        },
+                        "readme_language": {
+                            "type": "string",
+                            "description": "Language code for the generated README (e.g. en, fr)",
+                            "default": "en"
+                        }
+                    },
+                    "required": ["provider", "repo_name"]
+                }
+            }
+        ]
     }
 
 @api_router.get("/ai/schema.json")
