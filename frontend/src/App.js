@@ -443,7 +443,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
           <div className="space-y-4 sm:space-y-8 text-center lg:text-left">
             <p className="inline-flex items-center justify-center gap-2 text-[12px] sm:text-[11px] uppercase tracking-[0.25em] text-cyan-300 bg-cyan-500/10 border border-cyan-400/30 px-4 py-1.5 rounded-full mx-auto lg:mx-0 w-fit">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
-              AI Git Automation
+              {t("landingHeroBadge")}
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight max-w-2xl mx-auto lg:mx-0">
               {lang === "fr" ? (
@@ -581,16 +581,16 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
               >
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-[12px] lg:text-[14px] uppercase tracking-[0.22em] text-cyan-300">
-                    Drag &amp; Drop
+                    {t("landingDropLabel")}
                   </span>
-                  <span className="text-base lg:text-lg font-medium">Dépose tes fichiers ici</span>
+                  <span className="text-base lg:text-lg font-medium">{t("landingDropTitle")}</span>
                 </div>
                 <p className="text-[12px] lg:text-[13px] text-slate-400 max-w-[80%] text-center">
-                  Zip, PDF, dossiers de code… PUSH IN se charge de tout organiser et pousser sur GitHub.
+                  {t("landingDropDescription")}
                 </p>
                 <div className="mt-2 inline-flex items-center gap-2 text-[12px] lg:text-[13px] text-slate-300">
                   <div className="h-7 w-7 lg:h-8 lg:w-8 rounded-full bg-gradient-to-tr from-emerald-400 to-cyan-500" />
-                  <span>No Git, no CLI, just drop.</span>
+                  <span>{t("landingDropTagline")}</span>
                 </div>
                 <input
                   type="file"
@@ -614,7 +614,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                 onClick={() => navigate("/pricing#freemium")}
                 data-testid="get-started-button"
               >
-                {lang === "fr" ? "Commencer gratuitement" : t("getStarted")}
+                {t("landingPrimaryCta")}
               </Button>
               <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-400">
                 <span>No Git, no CLI, juste ton navigateur.</span>
