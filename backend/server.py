@@ -1393,6 +1393,96 @@ async def admin_autofix_create_incident(payload: AutofixIncidentCreate, authoriz
         "executed_actions": executed_actions,
         "diagnosis": diagnosis,
         "alert_payload": payload.alert_payload or {},
+
+
+@api_router.post("/autofix/webhook/alert", response_model=AutofixIncident)
+async def autofix_webhook_alert(request: Request):
+    """Public webhook endpoint used by external alerting systems.
+
+    Security:
+    - If a webhook_secret is configured in Autofix settings, the caller must
+      send it in the `X-Autofix-Secret` header. If it does not match, we
+      return 401.
+    - If no secret is configured, the endpoint is open (for demo only).
+    """
+    settings = await _get_autofix_settings()
+    configured_secret = settings.webhook_secret
+
+    if configured_secret:
+        provided = request.headers.get("X-Autofix-Secret") or request.headers.get("x-autofix-secret")
+        if not provided or provided != configured_secret:
+            raise HTTPException(status_code=401, detail="Invalid webhook secret")
+
+    try:
+        payload = await request.json()
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Invalid JSON body for autofix webhook: %s", exc)
+        raise HTTPException(status_code=400, detail="Invalid JSON body")
+
+    alert_name = payload.get("alert_name") or payload.get("alertname") or payload.get("title") or "External Alert"
+    severity = payload.get("severity") or payload.get("level") or "info"
+    description = payload.get("description") or payload.get("message") or ""
+
+    incident_create = AutofixIncidentCreate(
+        alert_name=alert_name,
+        severity=severity,
+        description=description,
+        alert_payload=payload,
+    )
+
+    # Re-use the same pipeline as admin-created incidents
+    dummy_auth = None  # admin_autofix_create_incident requires an Authorization header but internally uses require_admin
+    # Instead of calling that route directly, we duplicate the minimal logic here
+    settings = await _get_autofix_settings()
+    llm_result = await _run_autofix_llm(incident_create)
+    diagnosis = llm_result.get("diagnosis") or ""
+    actions = llm_result.get("actions") or []
+    requires_human = bool(llm_result.get("requires_human_approval", False))
+
+    suggested_texts: List[str] = []
+    low_risk_only = True
+    for a in actions:
+        atype = a.get("action_type", "action")
+        risk = (a.get("risk") or "low").lower()
+        desc = a.get("description") or ""
+        suggested_texts.append(f"[{risk.upper()}] {atype}: {desc}")
+        if risk != "low":
+            low_risk_only = False
+
+    now = datetime.now(timezone.utc)
+    executed_actions: List[str] = []
+    status = "investigating"
+    resolved_at: Optional[str] = None
+
+    if not actions:
+        status = "investigating"
+    elif requires_human or not settings.auto_mode or not low_risk_only:
+        status = "pending_approval"
+    else:
+        status = "resolved"
+        executed_actions = [
+            "Auto-exécution des actions approuvées par la policy (low risk)",
+        ]
+        resolved_at = now.isoformat()
+
+    incident_id = str(uuid.uuid4())
+    doc = {
+        "_id": incident_id,
+        "alert_name": incident_create.alert_name,
+        "severity": incident_create.severity,
+        "status": status,
+        "description": incident_create.description,
+        "suggested_actions": suggested_texts,
+        "executed_actions": executed_actions,
+        "diagnosis": diagnosis,
+        "alert_payload": incident_create.alert_payload or {},
+        "created_at": now.isoformat(),
+        "resolved_at": resolved_at,
+    }
+    await db.autofix_incidents.insert_one(doc)
+
+    return _serialize_incident(doc)
+
         "created_at": now.isoformat(),
         "resolved_at": resolved_at,
     }
