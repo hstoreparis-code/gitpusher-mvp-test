@@ -533,14 +533,14 @@ export function AdminDashboardPage() {
             </div>
 
             {/* Plan Distribution */}
-            <Card className="bg-slate-900/80 border-slate-800">
+            <Card className="bg-slate-900/80 border-white/10 shadow-[0_0_20px_rgba(56,189,248,0.15)]">
               <CardHeader>
-                <CardTitle className="text-base">Distribution des Plans</CardTitle>
+                <CardTitle className="text-base text-slate-100">Distribution des Plans</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                   {Object.entries(stats.planDistribution).map(([plan, count]) => (
-                    <div key={plan} className="bg-slate-950/60 border border-slate-800 rounded-lg p-3">
+                    <div key={plan} className="bg-slate-950/60 border border-slate-800 rounded-lg p-3 hover:border-cyan-500/30 hover:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all">
                       <p className="text-xs text-slate-400 uppercase tracking-wider">{plan}</p>
                       <p className="text-2xl font-bold text-slate-100 mt-1">{count}</p>
                       <p className="text-[10px] text-slate-500 mt-1">
