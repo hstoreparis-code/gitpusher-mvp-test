@@ -1330,7 +1330,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   size="sm"
                   onClick={() => {
                     const currentUser = testUser || authUser;
-                    const plans = ["Free", "Starter", "Pro", "Enterprise"];
+                    const plans = ["Free", "Starter", "Pro", "Premium"];
                     const currentIndex = plans.indexOf(currentUser?.plan || "Free");
                     const nextPlan = plans[(currentIndex + 1) % plans.length];
                     
@@ -1340,9 +1340,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                       newCredits = 2;
                     } else if (nextPlan === "Starter") {
                       newCredits = 10;
-                    } else if (nextPlan === "Pro" || nextPlan === "Enterprise") {
-                      // Pour Pro et Enterprise, on garde les crédits actuels (affichage illimité dans l'UI)
-                      newCredits = currentUser?.credits || 50;
+                    } else if (nextPlan === "Pro") {
+                      newCredits = 50;
+                    } else if (nextPlan === "Premium") {
+                      // Premium a un accès illimité
+                      newCredits = 999999;
                     }
                     
                     setTestUser({ ...currentUser, plan: nextPlan, credits: newCredits });
