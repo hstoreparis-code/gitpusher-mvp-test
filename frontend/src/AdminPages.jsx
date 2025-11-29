@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Users, Activity, CreditCard, TrendingUp, Search, Filter, Download, BarChart3, Calendar, DollarSign, CreditCard as CreditCardIcon, Bell, Mail, MessageCircle, Zap, Settings } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
-import { AdminSettingsPanel } from "../components/AdminSettingsPanel";
+import { AdminSettingsPanel } from "./components/AdminSettingsPanel";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
