@@ -389,8 +389,12 @@ export function AdminDashboardPage() {
             </Card>
 
             {/* Main Content Tabs */}
-            <Tabs defaultValue="users" className="mt-4">
+            <Tabs defaultValue="overview" className="mt-4">
               <TabsList className="bg-slate-900/80 border border-slate-700/80">
+                <TabsTrigger value="overview">
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Statistiques
+                </TabsTrigger>
                 <TabsTrigger value="users">
                   <Users className="w-4 h-4 mr-2" />
                   Utilisateurs
@@ -400,6 +404,178 @@ export function AdminDashboardPage() {
                   Jobs
                 </TabsTrigger>
               </TabsList>
+
+              {/* Onglet Statistiques */}
+              <TabsContent value="overview" className="mt-4 space-y-4">
+                {/* Graphique: Nouveaux abonnés par jour */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Calendar className="w-5 h-5 text-cyan-400" />
+                      Nouveaux abonnés par jour (30 derniers jours)
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={chartData.newUsersByDay}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis 
+                          dataKey="label" 
+                          stroke="#94a3b8"
+                          style={{ fontSize: '12px' }}
+                        />
+                        <YAxis 
+                          stroke="#94a3b8"
+                          style={{ fontSize: '12px' }}
+                        />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: '#0f172a', 
+                            border: '1px solid #334155',
+                            borderRadius: '8px'
+                          }}
+                          labelStyle={{ color: '#e2e8f0' }}
+                        />
+                        <Legend />
+                        <Bar dataKey="free" stackId="a" fill="#64748b" name="Free" />
+                        <Bar dataKey="starter" stackId="a" fill="#10b981" name="Starter" />
+                        <Bar dataKey="pro" stackId="a" fill="#3b82f6" name="Pro" />
+                        <Bar dataKey="premium" stackId="a" fill="#8b5cf6" name="Premium" />
+                        <Bar dataKey="business" stackId="a" fill="#f59e0b" name="Business" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Graphique: Croissance cumulative */}
+                  <Card className="bg-slate-900/80 border-slate-800">
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <TrendingUp className="w-5 h-5 text-emerald-400" />
+                        Croissance cumulative des abonnements
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={chartData.subscriptionHistory}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                          <XAxis 
+                            dataKey="label" 
+                            stroke="#94a3b8"
+                            style={{ fontSize: '11px' }}
+                          />
+                          <YAxis 
+                            stroke="#94a3b8"
+                            style={{ fontSize: '12px' }}
+                          />
+                          <Tooltip 
+                            contentStyle={{ 
+                              backgroundColor: '#0f172a', 
+                              border: '1px solid #334155',
+                              borderRadius: '8px'
+                            }}
+                            labelStyle={{ color: '#e2e8f0' }}
+                          />
+                          <Line 
+                            type="monotone" 
+                            dataKey="total" 
+                            stroke="#10b981" 
+                            strokeWidth={2}
+                            dot={{ fill: '#10b981', r: 3 }}
+                            name="Total utilisateurs"
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+
+                  {/* Graphique: Répartition des plans */}
+                  <Card className="bg-slate-900/80 border-slate-800">
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <Activity className="w-5 h-5 text-violet-400" />
+                        Répartition des plans
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie
+                            data={chartData.planBreakdown}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                          >
+                            {chartData.planBreakdown.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <Tooltip 
+                            contentStyle={{ 
+                              backgroundColor: '#0f172a', 
+                              border: '1px solid #334155',
+                              borderRadius: '8px'
+                            }}
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Tableau: Historique détaillé jour par jour */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Calendar className="w-5 h-5 text-cyan-400" />
+                      Historique détaillé des abonnements
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse text-sm">
+                        <thead className="text-xs text-slate-400 border-b border-slate-800">
+                          <tr>
+                            <th className="py-3 pr-4 text-left font-medium">Date</th>
+                            <th className="py-3 px-3 text-center font-medium">Nouveaux</th>
+                            <th className="py-3 px-3 text-center font-medium">Free</th>
+                            <th className="py-3 px-3 text-center font-medium">Starter</th>
+                            <th className="py-3 px-3 text-center font-medium">Pro</th>
+                            <th className="py-3 px-3 text-center font-medium">Premium</th>
+                            <th className="py-3 px-3 text-center font-medium">Business</th>
+                            <th className="py-3 pl-4 text-right font-medium">Total cumulé</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {chartData.subscriptionHistory.slice().reverse().map((day, index) => (
+                            <tr key={index} className="border-b border-slate-800/60 hover:bg-slate-800/20">
+                              <td className="py-2.5 pr-4 text-slate-200">{day.label}</td>
+                              <td className="py-2.5 px-3 text-center">
+                                <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${
+                                  day.count > 0 ? 'bg-cyan-500/10 text-cyan-300' : 'text-slate-500'
+                                }`}>
+                                  {day.count > 0 ? `+${day.count}` : '0'}
+                                </span>
+                              </td>
+                              <td className="py-2.5 px-3 text-center text-slate-400">{day.free || '-'}</td>
+                              <td className="py-2.5 px-3 text-center text-emerald-400">{day.starter || '-'}</td>
+                              <td className="py-2.5 px-3 text-center text-blue-400">{day.pro || '-'}</td>
+                              <td className="py-2.5 px-3 text-center text-violet-400">{day.premium || '-'}</td>
+                              <td className="py-2.5 px-3 text-center text-amber-400">{day.business || '-'}</td>
+                              <td className="py-2.5 pl-4 text-right font-semibold text-slate-200">{day.total}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
               <TabsContent value="users" className="mt-4 space-y-3">
                 {/* Search and Filters */}
