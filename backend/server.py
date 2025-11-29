@@ -2319,6 +2319,324 @@ api_router.include_router(v1_router)
 # ---------- BASIC ROOT & HEALTH ----------
 
 
+# =============================================
+# AI Discovery & Integration Endpoints
+# =============================================
+
+@api_router.get("/ai/discovery")
+async def ai_discovery():
+    """
+    AI Discovery endpoint - Returns service capabilities and integration info.
+    This endpoint is designed for AI assistants to discover GitPusher's capabilities.
+    """
+    return {
+        "name": "GitPusher",
+        "version": "1.0.0",
+        "type": "git-deployment-service",
+        "description": "AI-optimized universal Git deployment service",
+        "openapi_url": f"{FRONTEND_URL}/api/ai/openapi.yaml",
+        "docs_url": f"{FRONTEND_URL}/for-ai-assistants",
+        "capabilities": [
+            "push_repos",
+            "multi_provider",
+            "zip_uploads",
+            "ai_generated_code",
+            "semantic_commits",
+            "file_analysis",
+            "auto_readme",
+            "auto_gitignore",
+            "auto_license",
+            "auto_changelog"
+        ],
+        "supported_providers": [
+            "github",
+            "gitlab",
+            "bitbucket",
+            "gitea",
+            "codeberg"
+        ],
+        "auth": {
+            "type": "bearer_token",
+            "demo_endpoint": "/api/auth/demo"
+        },
+        "endpoints": {
+            "create_project": "POST /api/workflows/projects",
+            "upload_files": "POST /api/workflows/projects/{project_id}/upload",
+            "process_project": "POST /api/workflows/projects/{project_id}/process",
+            "list_projects": "GET /api/workflows/projects",
+            "get_jobs": "GET /api/jobs"
+        }
+    }
+
+@api_router.get("/ai/schema.json")
+async def ai_schema():
+    """
+    Returns JSON Schema for GitPusher's main data models.
+    """
+    return {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "GitPusher API Schema",
+        "description": "JSON Schema for GitPusher API data models",
+        "definitions": {
+            "Project": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string", "description": "Unique project ID"},
+                    "name": {"type": "string", "description": "Repository name"},
+                    "description": {"type": "string", "description": "Project description"},
+                    "language": {"type": "string", "description": "README language code", "default": "en"},
+                    "status": {"type": "string", "enum": ["pending", "processing", "done", "error"]},
+                    "github_repo_url": {"type": "string", "description": "URL of created repository"}
+                },
+                "required": ["name"]
+            },
+            "CreateProjectRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string", "description": "Repository name (auto-generated if null)"},
+                    "description": {"type": "string", "description": "Project description"},
+                    "language": {"type": "string", "default": "en"}
+                }
+            },
+            "Job": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "project_id": {"type": "string"},
+                    "status": {"type": "string", "enum": ["pending", "processing", "done", "error"]},
+                    "result_url": {"type": "string"},
+                    "created_at": {"type": "string", "format": "date-time"}
+                }
+            }
+        }
+    }
+
+@api_router.get("/ai/openapi.yaml")
+async def ai_openapi():
+    """
+    Returns OpenAPI specification for GitPusher API.
+    Content-Type: text/yaml
+    """
+    from fastapi.responses import Response
+    
+    openapi_yaml = """openapi: 3.0.3
+info:
+  title: GitPusher API
+  description: |
+    GitPusher is an AI-optimized service that enables assistants and agents to 
+    programmatically create and push repositories to all Git platforms.
+    
+    ## Quick Start
+    1. Get a token via POST /api/auth/demo
+    2. Create a project via POST /api/workflows/projects
+    3. Upload files via POST /api/workflows/projects/{id}/upload
+    4. Process & push via POST /api/workflows/projects/{id}/process
+  version: 1.0.0
+  contact:
+    name: GitPusher Support
+    url: https://gitpusher.com
+servers:
+  - url: {frontend_url}/api
+    description: Production server
+
+paths:
+  /auth/demo:
+    post:
+      summary: Get demo access token
+      description: Returns a demo access token for testing the API
+      operationId: getDemoToken
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                    default: bearer
+
+  /workflows/projects:
+    post:
+      summary: Create a new project
+      description: Creates a new project/repository
+      operationId: createProject
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Repository name (auto-generated if null)
+                description:
+                  type: string
+                language:
+                  type: string
+                  default: en
+      responses:
+        '200':
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+    get:
+      summary: List all projects
+      operationId: listProjects
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+
+  /workflows/projects/{{project_id}}/upload:
+    post:
+      summary: Upload files to project
+      description: Upload ZIP, PDF, or code files to a project
+      operationId: uploadFiles
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Files uploaded
+
+  /workflows/projects/{{project_id}}/process:
+    post:
+      summary: Process and push to Git
+      description: Processes uploaded files and pushes to the configured Git provider
+      operationId: processProject
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  /jobs:
+    get:
+      summary: List all jobs
+      operationId: listJobs
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+
+  /ai/discovery:
+    get:
+      summary: AI Discovery endpoint
+      description: Returns service capabilities for AI assistants
+      operationId: aiDiscovery
+      responses:
+        '200':
+          description: Service capabilities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  version:
+                    type: string
+                  capabilities:
+                    type: array
+                    items:
+                      type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        language:
+          type: string
+        status:
+          type: string
+          enum: [pending, processing, done, error]
+        github_repo_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    Job:
+      type: object
+      properties:
+        id:
+          type: string
+        project_id:
+          type: string
+        status:
+          type: string
+          enum: [pending, processing, done, error]
+        result_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+""".replace("{frontend_url}", FRONTEND_URL)
+    
+    return Response(content=openapi_yaml, media_type="text/yaml")
+
 @api_router.get("/")
 async def root():
     return {"message": "GitPusher API"}
