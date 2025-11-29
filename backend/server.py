@@ -1103,6 +1103,7 @@ class AutofixIncident(BaseModel):
 
 class AutofixSettings(BaseModel):
     auto_mode: bool = False
+    webhook_secret: Optional[str] = None
 
 
 async def _seed_mock_autofix_incidents() -> List[AutofixIncident]:
@@ -1274,8 +1275,11 @@ class AutofixIncidentCreate(BaseModel):
 async def _get_autofix_settings() -> AutofixSettings:
     doc = await db.admin_settings.find_one({"_id": "autofix_settings"})
     if not doc:
-        return AutofixSettings(auto_mode=False)
-    return AutofixSettings(auto_mode=bool(doc.get("auto_mode", False)))
+        return AutofixSettings(auto_mode=False, webhook_secret=None)
+    return AutofixSettings(
+        auto_mode=bool(doc.get("auto_mode", False)),
+        webhook_secret=doc.get("webhook_secret"),
+    )
 
 
 async def _run_autofix_llm(incident: AutofixIncidentCreate) -> Dict[str, Any]:
