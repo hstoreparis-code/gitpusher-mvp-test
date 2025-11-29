@@ -16,6 +16,34 @@ export function AdminSupportPanel() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [messageInput, setMessageInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [scenarios, setScenarios] = useState([
+    {
+      id: 1,
+      trigger: "créer un dépôt",
+      response: "Pour créer un dépôt, cliquez sur 'Nouveau workflow', uploadez vos fichiers, configurez les paramètres et lancez l'automatisation !",
+      active: true
+    },
+    {
+      id: 2,
+      trigger: "crédits",
+      response: "Consultez votre dashboard pour voir vos crédits disponibles. Vous pouvez acheter plus de crédits dans la section Pricing.",
+      active: true
+    },
+    {
+      id: 3,
+      trigger: "connexion",
+      response: "Si vous avez des problèmes de connexion, essayez de vous reconnecter via GitHub, GitLab ou Bitbucket.",
+      active: true
+    }
+  ]);
+  const [editingScenario, setEditingScenario] = useState(null);
+  const [newScenario, setNewScenario] = useState({ trigger: "", response: "" });
+  const [botSettings, setBotSettings] = useState({
+    auto_response: true,
+    greeting_message: "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
+    offline_message: "Notre équipe est actuellement hors ligne. Laissez un message et nous vous répondrons dès que possible.",
+    response_delay: 1000
+  });
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
   useEffect(() => {
