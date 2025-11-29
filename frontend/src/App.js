@@ -911,8 +911,13 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         setProjects(projectsRes.data);
         setJobs(jobsRes.data);
       } finally {
-    // Met à jour le champ de renommage quand on change de projet sélectionné
-    if (projectsRes.data && projectsRes.data.length && !selected) {
+        setLoading(false);
+        setJobsLoading(false);
+      }
+    };
+    fetchAll();
+  }, [token]);
+
   useEffect(() => {
     if (selected) {
       setEditName(selected.name || "");
@@ -935,6 +940,14 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       const updated = res.data;
       setSelected(updated);
       setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+    } catch (err) {
+      console.error("Rename failed", err);
+      alert("Erreur lors du renommage du dépôt");
+    } finally {
+      setRenaming(false);
+    }
+  };
+
   const updateDescription = async () => {
     if (!selected) return;
     const newDesc = editDescription;
@@ -958,23 +971,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     }
   };
 
-    } catch (err) {
-      console.error("Rename failed", err);
-      alert("Erreur lors du renommage du dépôt");
-    } finally {
-      setRenaming(false);
-    }
-  };
-
-      // si aucun projet sélectionné, on ne touche pas encore à editName
-    }
-
-        setLoading(false);
-        setJobsLoading(false);
-      }
-    };
-    fetchAll();
-  }, [token]);
 
   const newProject = async () => {
     setCreating(true);
