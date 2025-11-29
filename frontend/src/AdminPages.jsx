@@ -610,6 +610,230 @@ export function AdminDashboardPage() {
                 </Card>
               </TabsContent>
 
+              {/* Onglet Finances */}
+              <TabsContent value="finances" className="mt-4 space-y-4">
+                {/* Financial Statistics Cards */}
+                {financialData.stats && (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border-emerald-500/20">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Revenus Total</p>
+                              <p className="text-3xl font-bold text-emerald-300">{financialData.stats.total_revenue.toFixed(2)}€</p>
+                            </div>
+                            <DollarSign className="w-10 h-10 text-emerald-400/40" />
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 border-cyan-500/20">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Revenus Mensuels</p>
+                              <p className="text-3xl font-bold text-cyan-300">{financialData.stats.monthly_revenue.toFixed(2)}€</p>
+                            </div>
+                            <TrendingUp className="w-10 h-10 text-cyan-400/40" />
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-violet-500/10 to-violet-500/5 border-violet-500/20">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Transactions</p>
+                              <p className="text-3xl font-bold text-violet-300">{financialData.stats.successful_transactions}</p>
+                              <p className="text-[10px] text-slate-500 mt-1">
+                                {financialData.stats.pending_transactions} en attente, {financialData.stats.failed_transactions} échouées
+                              </p>
+                            </div>
+                            <CreditCardIcon className="w-10 h-10 text-violet-400/40" />
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20">
+                        <CardContent className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Transaction Moy.</p>
+                              <p className="text-3xl font-bold text-amber-300">{financialData.stats.average_transaction.toFixed(2)}€</p>
+                            </div>
+                            <Activity className="w-10 h-10 text-amber-400/40" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Revenue Charts */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                      {/* Revenue over time */}
+                      <Card className="bg-slate-900/80 border-slate-800">
+                        <CardHeader>
+                          <CardTitle className="text-base flex items-center gap-2">
+                            <TrendingUp className="w-5 h-5 text-emerald-400" />
+                            Revenus par jour (30 derniers jours)
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ResponsiveContainer width="100%" height={300}>
+                            <AreaChart data={financialData.revenueChart}>
+                              <defs>
+                                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                                </linearGradient>
+                              </defs>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                              <XAxis 
+                                dataKey="label" 
+                                stroke="#94a3b8"
+                                style={{ fontSize: '11px' }}
+                              />
+                              <YAxis 
+                                stroke="#94a3b8"
+                                style={{ fontSize: '12px' }}
+                              />
+                              <Tooltip 
+                                contentStyle={{ 
+                                  backgroundColor: '#0f172a', 
+                                  border: '1px solid #334155',
+                                  borderRadius: '8px'
+                                }}
+                                labelStyle={{ color: '#e2e8f0' }}
+                                formatter={(value) => [`${value}€`, 'Revenus']}
+                              />
+                              <Area 
+                                type="monotone" 
+                                dataKey="revenue" 
+                                stroke="#10b981" 
+                                fillOpacity={1} 
+                                fill="url(#colorRevenue)"
+                                strokeWidth={2}
+                              />
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </CardContent>
+                      </Card>
+
+                      {/* Revenue by plan */}
+                      <Card className="bg-slate-900/80 border-slate-800">
+                        <CardHeader>
+                          <CardTitle className="text-base flex items-center gap-2">
+                            <Activity className="w-5 h-5 text-violet-400" />
+                            Revenus par plan
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                              <Pie
+                                data={financialData.planRevenue}
+                                cx="50%"
+                                cy="50%"
+                                labelLine={false}
+                                label={({ name, value }) => `${name}: ${value.toFixed(2)}€`}
+                                outerRadius={80}
+                                fill="#8884d8"
+                                dataKey="value"
+                              >
+                                {financialData.planRevenue.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.color} />
+                                ))}
+                              </Pie>
+                              <Tooltip 
+                                contentStyle={{ 
+                                  backgroundColor: '#0f172a', 
+                                  border: '1px solid #334155',
+                                  borderRadius: '8px'
+                                }}
+                                formatter={(value) => `${value.toFixed(2)}€`}
+                              />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Transactions Table */}
+                    <Card className="bg-slate-900/80 border-slate-800">
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-base flex items-center gap-2">
+                            <CreditCardIcon className="w-5 h-5 text-cyan-400" />
+                            Transactions récentes
+                            <span className="text-xs text-slate-500 ml-2">(connecté à Stripe en temps réel)</span>
+                          </CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse text-sm">
+                            <thead className="text-xs text-slate-400 border-b border-slate-800">
+                              <tr>
+                                <th className="py-3 pr-4 text-left font-medium">ID</th>
+                                <th className="py-3 px-3 text-left font-medium">Utilisateur</th>
+                                <th className="py-3 px-3 text-left font-medium">Plan</th>
+                                <th className="py-3 px-3 text-right font-medium">Montant</th>
+                                <th className="py-3 px-3 text-center font-medium">Statut</th>
+                                <th className="py-3 px-3 text-left font-medium">Méthode</th>
+                                <th className="py-3 pl-4 text-left font-medium">Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {financialData.transactions.slice(0, 20).map((t, index) => (
+                                <tr key={index} className="border-b border-slate-800/60 hover:bg-slate-800/20">
+                                  <td className="py-2.5 pr-4 font-mono text-xs text-cyan-300">{t.id.substring(0, 12)}...</td>
+                                  <td className="py-2.5 px-3 text-xs text-slate-300">{t.user_email}</td>
+                                  <td className="py-2.5 px-3">
+                                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                                      t.plan === 'business' ? 'bg-amber-500/10 text-amber-300 border border-amber-500/20' :
+                                      t.plan === 'premium' ? 'bg-violet-500/10 text-violet-300 border border-violet-500/20' :
+                                      t.plan === 'pro' ? 'bg-blue-500/10 text-blue-300 border border-blue-500/20' :
+                                      'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
+                                    }`}>
+                                      {t.plan}
+                                    </span>
+                                  </td>
+                                  <td className="py-2.5 px-3 text-right font-semibold text-emerald-300">{t.amount.toFixed(2)}€</td>
+                                  <td className="py-2.5 px-3 text-center">
+                                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                                      t.status === 'succeeded' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20' :
+                                      t.status === 'pending' ? 'bg-amber-500/10 text-amber-300 border border-amber-500/20' :
+                                      'bg-red-500/10 text-red-300 border border-red-500/20'
+                                    }`}>
+                                      {t.status === 'succeeded' ? '✓ Réussi' : t.status === 'pending' ? '⏳ En attente' : '✗ Échoué'}
+                                    </span>
+                                  </td>
+                                  <td className="py-2.5 px-3 text-xs text-slate-400">{t.payment_method || '-'}</td>
+                                  <td className="py-2.5 pl-4 text-xs text-slate-400">
+                                    {new Date(t.created_at).toLocaleDateString('fr-FR', {
+                                      day: '2-digit',
+                                      month: '2-digit',
+                                      year: 'numeric',
+                                      hour: '2-digit',
+                                      minute: '2-digit'
+                                    })}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                          {financialData.transactions.length === 0 && (
+                            <div className="text-center py-8">
+                              <p className="text-sm text-slate-400">Aucune transaction trouvée</p>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </>
+                )}
+              </TabsContent>
+
               <TabsContent value="users" className="mt-4 space-y-3">
                 {/* Search and Filters */}
                 <Card className="bg-slate-900/80 border-slate-800">
