@@ -1388,13 +1388,29 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 <>
                   <div className="space-y-2">
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <div className="flex-1">
+                      <div className="flex-1 flex flex-col gap-1">
                         <Label className="text-[11px] text-slate-300">Nom du dépôt</Label>
-                        <Input
-                          value={selected.name || ""}
-                          disabled
-                          className="h-8 text-xs bg-slate-950/60 border-slate-700/80"
-                        />
+                        <div className="flex flex-col xs:flex-row gap-1.5 items-stretch">
+                          <Input
+                            value={editName}
+                            onChange={(e) => setEditName(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                renameProject();
+                              }
+                            }}
+                            className="h-8 text-xs bg-slate-950/60 border-slate-700/80 flex-1"
+                          />
+                          <Button
+                            size="xs"
+                            className="h-8 px-3 rounded-full text-[11px] bg-cyan-500 hover:bg-cyan-400 text-slate-950 whitespace-nowrap"
+                            onClick={renameProject}
+                            disabled={renaming || !editName.trim() || editName === (selected.name || "")}
+                          >
+                            {renaming ? "..." : "Valider"}
+                          </Button>
+                        </div>
                       </div>
                       <div className="flex-1">
                         <Label className="text-[11px] text-slate-300">Langue du README</Label>
