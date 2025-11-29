@@ -3734,10 +3734,57 @@ function AppShell() {
 // ---- Support Chatbot Component ----
 function SupportChatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { type: 'bot', text: 'Bonjour ! Comment puis-je vous aider aujourd\'hui ?' }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [adminOnline, setAdminOnline] = useState(false);
+  const [adminName, setAdminName] = useState('');
+  const token = localStorage.getItem('token');
+
+  // Check admin online status
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        const res = await axios.get(`${API}/support/admin-online`);
+        setAdminOnline(res.data.online);
+        setAdminName(res.data.admin_name || 'Support');
+      } catch (err) {
+        setAdminOnline(false);
+      }
+    };
+    checkStatus();
+    const interval = setInterval(checkStatus, 30000); // Check every 30s
+    return () => clearInterval(interval);
+  }, []);
+
+  // Load existing messages if user is logged in
+  useEffect(() => {
+    if (token && isOpen) {
+      loadMessages();
+      const interval = setInterval(loadMessages, 5000); // Refresh every 5s
+      return () => clearInterval(interval);
+    }
+  }, [token, isOpen]);
+
+  const loadMessages = async () => {
+    if (!token) return;
+    try {
+      const res = await axios.get(`${API}/support/my-messages`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const formattedMessages = res.data.map(msg => ({
+        type: msg.is_admin ? 'bot' : 'user',
+        text: msg.message,
+        timestamp: msg.created_at
+      }));
+      if (formattedMessages.length === 0) {
+        setMessages([{ type: 'bot', text: 'Bonjour ! Comment puis-je vous aider aujourd\'hui ?' }]);
+      } else {
+        setMessages(formattedMessages);
+      }
+    } catch (err) {
+      console.error("Failed to load messages", err);
+    }
+  };
 
   const quickReplies = [
     { text: 'Comment créer un dépôt ?', response: 'Pour créer un dépôt, cliquez sur "Nouveau workflow", uploadez vos fichiers, configurez les paramètres et lancez l\'automatisation !' },
@@ -3746,18 +3793,33 @@ function SupportChatbot() {
     { text: 'Contacter le support', response: 'Vous pouvez nous contacter par email à support@gitpusher.ai ou utiliser le formulaire de contact sur notre site.' }
   ];
 
-  const handleSendMessage = (text) => {
+  const handleSendMessage = async (text) => {
     if (!text.trim()) return;
     
     // Ajouter le message de l'utilisateur
     setMessages(prev => [...prev, { type: 'user', text }]);
     setInputMessage('');
-    
-    // Simuler une réponse du bot
-    setTimeout(() => {
-      const reply = quickReplies.find(q => text.toLowerCase().includes(q.text.toLowerCase()));
-      const botResponse = reply?.response || 'Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais. Pour une assistance immédiate, écrivez-nous à support@gitpusher.ai';
-      setMessages(prev => [...prev, { type: 'bot', text: botResponse }]);
+
+    // If logged in, send to backend
+    if (token) {
+      try {
+        await axios.post(
+          `${API}/support/messages`,
+          { message: text },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      } catch (err) {
+        console.error("Failed to send message", err);
+      }
+    } else {
+      // Simuler une réponse du bot pour utilisateurs non connectés
+      setTimeout(() => {
+        const reply = quickReplies.find(q => text.toLowerCase().includes(q.text.toLowerCase()));
+        const botResponse = reply?.response || 'Merci pour votre message. Pour une assistance personnalisée, veuillez vous connecter ou écrivez-nous à support@gitpusher.ai';
+        setMessages(prev => [...prev, { type: 'bot', text: botResponse }]);
+      }, 1000);
+    }
+  };
     }, 1000);
   };
 
