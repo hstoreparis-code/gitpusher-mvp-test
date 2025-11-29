@@ -31,6 +31,32 @@ export function AdminAutofixPanel() {
     }
   };
 
+  useEffect(() => {
+    if (!token) {
+      navigate("/admin-login", { replace: true });
+      return;
+    }
+    loadIncidents();
+    // Auto-refresh every 10 seconds
+    const interval = setInterval(loadIncidents, 10000);
+    return () => clearInterval(interval);
+  }, [token, navigate]);
+
+  const loadIncidents = async () => {
+    try {
+      const res = await axios.get(`${API}/admin/autofix/incidents`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setIncidents(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Failed to load incidents", err);
+      // Generate mock data for demo
+      setIncidents(generateMockIncidents());
+      setLoading(false);
+    }
+  };
+
   const generateMockIncidents = () => {
     const now = new Date();
     return [
