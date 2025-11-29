@@ -426,6 +426,17 @@ export function AdminDashboardPage() {
               )}
             </div>
 
+            {/* Bouton Support Chat */}
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs flex items-center gap-2"
+              onClick={() => navigate("/admin/support")}
+            >
+              <MessageCircle className="w-4 h-4" />
+              Support Chat
+            </Button>
+
             {/* Bouton Déconnexion */}
             <Button
               variant="outline"
