@@ -691,6 +691,30 @@ class AdminFinancialStats(BaseModel):
     transactions_by_day: List[Dict[str, Any]]
 
 
+class SupportMessage(BaseModel):
+    id: str
+    user_id: str
+    user_email: Optional[str] = None
+    user_name: Optional[str] = None
+    message: str
+    is_admin: bool = False
+    created_at: datetime
+
+
+class SupportConversation(BaseModel):
+    user_id: str
+    user_email: str
+    user_name: Optional[str] = None
+    messages: List[SupportMessage]
+    unread_count: int = 0
+    last_message_at: datetime
+
+
+class SendMessageRequest(BaseModel):
+    message: str
+    user_id: Optional[str] = None  # Only for admin sending to specific user
+
+
 @api_router.get("/admin/users", response_model=List[AdminUserSummary])
 async def admin_list_users(authorization: Optional[str] = Header(default=None)):
     admin = await require_admin(authorization)
