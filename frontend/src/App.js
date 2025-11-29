@@ -1437,8 +1437,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           : (user.plan || '').toLowerCase() === 'starter'
                           ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border border-emerald-400/40'
                           : (user.plan || '').toLowerCase() === 'pro'
+                          ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 border border-blue-400/40'
+                          : (user.plan || '').toLowerCase() === 'premium'
                           ? 'bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-300 border border-violet-400/40'
-                          : (user.plan || '').toLowerCase() === 'enterprise'
+                          : (user.plan || '').toLowerCase() === 'business'
                           ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-400/40'
                           : 'bg-slate-700/50 text-slate-300 border border-slate-600'
                       }`}>
