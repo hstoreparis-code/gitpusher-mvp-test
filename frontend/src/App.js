@@ -1333,7 +1333,19 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     const plans = ["Free", "Starter", "Pro", "Enterprise"];
                     const currentIndex = plans.indexOf(currentUser?.plan || "Free");
                     const nextPlan = plans[(currentIndex + 1) % plans.length];
-                    setTestUser({ ...currentUser, plan: nextPlan });
+                    
+                    // Attribuer les crédits selon le plan
+                    let newCredits = currentUser?.credits || 2;
+                    if (nextPlan === "Free") {
+                      newCredits = 2;
+                    } else if (nextPlan === "Starter") {
+                      newCredits = 10;
+                    } else if (nextPlan === "Pro" || nextPlan === "Enterprise") {
+                      // Pour Pro et Enterprise, on garde les crédits actuels (affichage illimité dans l'UI)
+                      newCredits = currentUser?.credits || 50;
+                    }
+                    
+                    setTestUser({ ...currentUser, plan: nextPlan, credits: newCredits });
                   }}
                   variant="outline"
                   className="text-xs border-violet-500/50 text-violet-300 hover:bg-violet-500/20"
