@@ -229,6 +229,10 @@ export function AdminDashboardPage() {
           activeJobs,
           planDistribution: planDist
         });
+
+        // Préparer les données pour les graphiques
+        const charts = prepareChartData(fetchedUsers);
+        setChartData(charts);
         
         setLoading(false);
       } catch (err) {
