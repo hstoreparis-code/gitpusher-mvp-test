@@ -113,7 +113,21 @@ export function AdminSupportPanel() {
             <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[700px]">
+          <Tabs defaultValue="conversations" className="w-full">
+            <TabsList className="bg-slate-900/80 border border-slate-700/80 mb-4">
+              <TabsTrigger value="conversations">
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Conversations
+              </TabsTrigger>
+              <TabsTrigger value="settings">
+                <Settings className="w-4 h-4 mr-2" />
+                Paramètres Chatbot
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Onglet Conversations */}
+            <TabsContent value="conversations">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[700px]">
             {/* Liste des conversations */}
             <Card className="bg-slate-900/80 border-slate-800 overflow-hidden">
               <CardHeader className="border-b border-slate-800">
