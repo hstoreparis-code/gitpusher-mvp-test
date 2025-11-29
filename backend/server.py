@@ -1526,6 +1526,84 @@ async def put_file_for_provider(
     return await git_provider.put_file(token, repo, path, content_bytes, message)
 
 
+
+async def update_remote_repo_metadata(
+    provider: str,
+    token: str,
+    repo_full_name: str,
+    new_name: Optional[str] = None,
+    new_description: Optional[str] = None,
+) -> Dict[str, str]:
+    """Update remote repository metadata (name/description) on supported providers.
+
+    Best-effort: if provider is not supported or no changes, this is a no-op.
+    Returns a dict with optional updated "full_name" and "url" keys.
+    """
+    if not token or not repo_full_name or not (new_name or new_description):
+        return {}
+
+    # Normalise provider name
+    provider = (provider or "github").lower()
+
+    try:
+        async with httpx.AsyncClient() as client:
+            if provider == "github":
+                payload: Dict[str, Any] = {}
+                if new_name:
+                    payload["name"] = new_name
+                if new_description is not None:
+                    payload["description"] = new_description
+                if not payload:
+                    return {}
+
+                res = await client.patch(
+                    f"https://api.github.com/repos/{repo_full_name}",
+                    headers={
+                        "Authorization": f"Bearer {token}",
+                        "Accept": "application/vnd.github.v3+json",
+                    },
+                    json=payload,
+                    timeout=30,
+                )
+                if res.status_code not in (200, 201):
+                    logger.error("GitHub rename API error %s: %s", res.status_code, res.text)
+                    return {}
+                data = res.json()
+                return {
+                    "full_name": data.get("full_name", repo_full_name),
+                    "url": data.get("html_url"),
+                }
+
+            if provider == "gitlab":
+                payload = {}
+                if new_name:
+                    payload["name"] = new_name
+                if new_description is not None:
+                    payload["description"] = new_description
+                if not payload:
+                    return {}
+
+                project_id = repo_full_name.replace("/", "%2F")
+                res = await client.put(
+                    f"https://gitlab.com/api/v4/projects/{project_id}",
+                    headers={"Authorization": f"Bearer {token}"},
+                    json=payload,
+                    timeout=30,
+                )
+                if res.status_code not in (200, 201):
+                    logger.error("GitLab rename API error %s: %s", res.status_code, res.text)
+                    return {}
+                data = res.json()
+                return {
+                    "full_name": data.get("path_with_namespace", repo_full_name),
+                    "url": data.get("web_url"),
+                }
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Remote repo metadata update failed for %s: %s", provider, exc)
+
+    return {}
+
+
 # ---------- WORKFLOWS: PROJECTS & UPLOADS ----------
 
 
