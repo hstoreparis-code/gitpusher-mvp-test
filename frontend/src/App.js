@@ -1569,7 +1569,7 @@ function ProDashboard({ t, lang, setLang, dark, setDark, currentLang, languages,
             </div>
             <div className="flex flex-col leading-tight truncate text-left">
               <span className="text-[17px] md:text-[19px] font-semibold tracking-tight truncate">
-                Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span>
+                Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span><span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent text-[10px] md:text-[11px] ml-0.5">.AI</span>
                 <span className="ml-1 text-xs align-middle px-2 py-0.5 rounded-full border border-cyan-400/60 text-cyan-200 bg-cyan-500/10">
                   Pro
                 </span>
