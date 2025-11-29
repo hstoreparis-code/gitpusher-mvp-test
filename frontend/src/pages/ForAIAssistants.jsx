@@ -68,7 +68,7 @@ function ForAIAssistants() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-lg font-semibold tracking-tight">
-                Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span><span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent text-[13px] ml-0.5">.AI</span>
+                Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">Pusher</span><span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent text-[13px]">.AI</span>
               </span>
               <span className="text-xs text-slate-400">For AI Assistants</span>
             </div>
