@@ -1433,7 +1433,13 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    {credits != null && credits <= 2 ? (
+                    {(user?.plan || '').toLowerCase() === 'pro' || (user?.plan || '').toLowerCase() === 'enterprise' ? (
+                      // Statut premium pour plans illimités
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-400/40">
+                        <span className="text-lg">✨</span>
+                        <span className="text-xs font-semibold text-violet-300">Accès illimité</span>
+                      </div>
+                    ) : credits != null && credits <= 2 ? (
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/40 animate-pulse">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
