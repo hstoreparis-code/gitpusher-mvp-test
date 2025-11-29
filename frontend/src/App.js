@@ -916,6 +916,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   useEffect(() => {
     if (selected) {
       setEditName(selected.name || "");
+      setEditDescription(selected.description || "");
     }
   }, [selected]);
 
