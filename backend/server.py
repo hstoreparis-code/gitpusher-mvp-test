@@ -967,45 +967,32 @@ async def github_callback(code: str):
 
 
 async def call_llm(prompt: str, language: str = "en") -> str:
-    """Call Emergent LLM (OpenAI GPT under the hood) to generate text."""
+    """Call Emergent LLM (OpenAI GPT under the hood) to generate text using emergentintegrations."""
     if not EMERGENT_LLM_KEY:
         # For environments without key, return a mocked response
         return f"[LLM MOCKED RESPONSE] {prompt[:200]}..."
 
-    async with httpx.AsyncClient() as client_http:
-        try:
-            res = await client_http.post(
-                f"{EMERGENT_API_URL}/v1/chat/completions",
-                headers={
-                    "x-api-key": EMERGENT_LLM_KEY,
-                    "Content-Type": "application/json",
-                },
-                json={
-                    "model": "gpt-4o-mini",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are an assistant that helps structure software projects, "
-                                "generate README files and logical git commit messages. "
-                                "Respond in French if language=fr, otherwise English."
-                            ),
-                        },
-                        {
-                            "role": "user",
-                            "content": f"language={language}\n{prompt}",
-                        },
-                    ],
-                    "temperature": 0.6,
-                },
-                timeout=40,
-            )
-            res.raise_for_status()
-            data = res.json()
-            return data["choices"][0]["message"]["content"]
-        except Exception as exc:  # noqa: BLE001
-            logger.error("LLM call failed: %s", exc)
-            return f"[LLM ERROR] {prompt[:200]}..."
+    try:
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        
+        system_message = (
+            "You are an assistant that helps structure software projects, "
+            "generate README files and logical git commit messages. "
+            f"Respond in {'French' if language == 'fr' else 'English'}."
+        )
+        
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=f"gitpusher-{uuid.uuid4().hex[:8]}",
+            system_message=system_message
+        ).with_model("openai", "gpt-4o-mini")
+        
+        user_message = UserMessage(text=prompt)
+        response = await chat.send_message(user_message)
+        return response
+    except Exception as exc:  # noqa: BLE001
+        logger.error("LLM call failed: %s", exc)
+        return f"[LLM ERROR] {prompt[:200]}..."
 
 
 async def generate_readme(file_list: List[Dict], language: str, project_name: str, description: Optional[str]) -> str:
