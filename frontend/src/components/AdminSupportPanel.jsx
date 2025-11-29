@@ -61,11 +61,21 @@ export function AdminSupportPanel() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 px-4 py-6">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
-            Support Client - Chat en Direct
-          </h1>
-          <p className="text-sm text-slate-400 mt-1">Répondez aux utilisateurs en temps réel</p>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
+              Support Client - Chat en Direct
+            </h1>
+            <p className="text-sm text-slate-400 mt-1">Répondez aux utilisateurs en temps réel</p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full border-slate-700 text-xs"
+            onClick={() => window.history.back()}
+          >
+            ← Retour
+          </Button>
         </div>
 
         {loading ? (
