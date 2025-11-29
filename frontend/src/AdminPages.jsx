@@ -489,15 +489,22 @@ export function AdminDashboardPage() {
             </Button>
 
             {/* Bouton Support Chat */}
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 hover:shadow-[0_0_18px_rgba(16,185,129,0.5)] text-xs flex items-center gap-2 transition-all"
-              onClick={() => navigate("/admin/support")}
-            >
-              <MessageCircle className="w-4 h-4" />
-              Support Chat
-            </Button>
+            <div className="relative">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 hover:shadow-[0_0_18px_rgba(16,185,129,0.5)] text-xs flex items-center gap-2 transition-all"
+                onClick={() => navigate("/admin/support")}
+              >
+                <MessageCircle className="w-4 h-4" />
+                Support Chat
+                {supportUnreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse shadow-[0_0_12px_rgba(239,68,68,0.8)]">
+                    {supportUnreadCount}
+                  </span>
+                )}
+              </Button>
+            </div>
 
             {/* Bouton Déconnexion */}
             <Button
