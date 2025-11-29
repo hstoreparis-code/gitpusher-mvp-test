@@ -110,6 +110,12 @@ export function AdminDashboardPage() {
     subscriptionHistory: [],
     planBreakdown: []
   });
+  const [financialData, setFinancialData] = useState({
+    stats: null,
+    transactions: [],
+    revenueChart: [],
+    planRevenue: []
+  });
 
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
