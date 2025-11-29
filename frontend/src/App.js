@@ -908,6 +908,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         setProjects(projectsRes.data);
         setJobs(jobsRes.data);
       } finally {
+    // Met à jour le champ de renommage quand on change de projet sélectionné
+    if (projectsRes.data && projectsRes.data.length && !selected) {
+      // si aucun projet sélectionné, on ne touche pas encore à editName
+    }
+
         setLoading(false);
         setJobsLoading(false);
       }
