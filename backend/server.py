@@ -1018,12 +1018,6 @@ async def get_my_support_messages(authorization: Optional[str] = Header(default=
     return messages
 
 
-@api_router.get("/support/admin-online")
-async def check_admin_online():
-    """Check if an admin is currently online (simplified version)"""
-    # For now, return mock status
-
-
 @api_router.get("/support/unread-count")
 async def get_unread_support_messages(authorization: Optional[str] = Header(default=None)):
     """Admin: Get count of unread support messages"""
