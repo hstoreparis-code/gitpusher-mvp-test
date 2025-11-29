@@ -42,6 +42,16 @@ GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID", "")
 GITHUB_CLIENT_SECRET = os.environ.get("GITHUB_CLIENT_SECRET", "")
 GITHUB_REDIRECT_URI = os.environ.get("GITHUB_REDIRECT_URI", "")
 
+# GitLab OAuth
+GITLAB_CLIENT_ID = os.environ.get("GITLAB_CLIENT_ID", "")
+GITLAB_CLIENT_SECRET = os.environ.get("GITLAB_CLIENT_SECRET", "")
+GITLAB_REDIRECT_URI = os.environ.get("GITLAB_REDIRECT_URI", "")
+
+# Bitbucket OAuth
+BITBUCKET_CLIENT_ID = os.environ.get("BITBUCKET_CLIENT_ID", "")
+BITBUCKET_CLIENT_SECRET = os.environ.get("BITBUCKET_CLIENT_SECRET", "")
+BITBUCKET_REDIRECT_URI = os.environ.get("BITBUCKET_REDIRECT_URI", "")
+
 # Frontend URL for OAuth redirects
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
