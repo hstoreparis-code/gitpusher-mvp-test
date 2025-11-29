@@ -1175,6 +1175,7 @@ def _serialize_incident(doc: dict) -> AutofixIncident:
         description=doc.get("description", ""),
         suggested_actions=list(doc.get("suggested_actions", [])),
         executed_actions=list(doc.get("executed_actions", [])),
+        diagnosis=doc.get("diagnosis"),
         created_at=datetime.fromisoformat(doc["created_at"]) if doc.get("created_at") else datetime.now(timezone.utc),
         resolved_at=datetime.fromisoformat(doc["resolved_at"]) if doc.get("resolved_at") else None,
     )
