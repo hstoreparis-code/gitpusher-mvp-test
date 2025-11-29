@@ -1489,13 +1489,6 @@ async def autofix_webhook_alert(request: Request):
 
     return _serialize_incident(doc)
 
-        "created_at": now.isoformat(),
-        "resolved_at": resolved_at,
-    }
-    await db.autofix_incidents.insert_one(doc)
-
-    return _serialize_incident(doc)
-
 
 @api_router.get("/auth/admin-status", response_model=AdminStatus)
 async def admin_status(authorization: Optional[str] = Header(default=None)):
