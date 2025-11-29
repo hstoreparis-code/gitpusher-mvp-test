@@ -2409,10 +2409,10 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
               {t("pricingBadge")}
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-              Payez uniquement pour ce que vous utilisez
+              {t("pricingHeroTitle")}
             </h1>
             <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
-              Système de crédits flexible. <strong className="text-cyan-300">2 crédits = 1 upload</strong> avec génération IA complète (README, .gitignore, LICENSE, CHANGELOG) + push vers vos plateformes Git préférées.
+              {t("pricingHeroSubtitle")}
             </p>
           </section>
 
