@@ -235,6 +235,46 @@ function ForAIAssistants() {
                   <span className="text-xs text-slate-400">{cap.desc}</span>
                 </div>
               ))}
+
+        {/* AI Agent Manifest & OpenAPI links */}
+        <Card className="bg-slate-900/70 border-slate-800">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Globe className="h-5 w-5 text-cyan-400" />
+              AI Agent Manifests
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-slate-300">
+            <p>
+              AI assistants should fetch these public descriptors to configure GitPusher as a tool:
+            </p>
+            <ul className="space-y-1 text-xs sm:text-sm">
+              <li>
+                <span className="font-mono text-cyan-300">AI Agent Manifest:</span>{" "}
+                <a
+                  href={`${BACKEND_URL}/api/ai/discovery`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-300 hover:text-cyan-200 underline"
+                >
+                  {`${BACKEND_URL}/api/ai/discovery`}
+                </a>
+              </li>
+              <li>
+                <span className="font-mono text-cyan-300">OpenAPI Spec:</span>{" "}
+                <a
+                  href={`${BACKEND_URL}/api/ai/openapi.yaml`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-300 hover:text-cyan-200 underline"
+                >
+                  {`${BACKEND_URL}/api/ai/openapi.yaml`}
+                </a>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+
             </div>
           </CardContent>
         </Card>
