@@ -96,6 +96,14 @@ export function AdminDashboardPage() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterPlan, setFilterPlan] = useState("all");
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalCredits: 0,
+    activeJobs: 0,
+    planDistribution: {}
+  });
 
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
@@ -117,8 +125,28 @@ export function AdminDashboardPage() {
           axios.get(`${API}/admin/users`, { headers: { Authorization: `Bearer ${token}` } }),
           axios.get(`${API}/admin/jobs`, { headers: { Authorization: `Bearer ${token}` } }),
         ]);
-        setUsers(usersRes.data || []);
-        setJobs(jobsRes.data || []);
+        const fetchedUsers = usersRes.data || [];
+        const fetchedJobs = jobsRes.data || [];
+        
+        setUsers(fetchedUsers);
+        setJobs(fetchedJobs);
+        
+        // Calculate statistics
+        const totalCredits = fetchedUsers.reduce((sum, u) => sum + (u.credits || 0), 0);
+        const activeJobs = fetchedJobs.filter(j => j.status === 'processing' || j.status === 'pending').length;
+        const planDist = fetchedUsers.reduce((acc, u) => {
+          const plan = u.plan || 'free';
+          acc[plan] = (acc[plan] || 0) + 1;
+          return acc;
+        }, {});
+        
+        setStats({
+          totalUsers: fetchedUsers.length,
+          totalCredits,
+          activeJobs,
+          planDistribution: planDist
+        });
+        
         setLoading(false);
       } catch (err) {
         setError(err?.response?.data?.detail || "Erreur lors du chargement des données admin.");
@@ -139,10 +167,29 @@ export function AdminDashboardPage() {
       setUsers((prev) =>
         prev.map((u) => (u.id === userId ? { ...u, plan: plan || u.plan, credits: credits !== "" ? Number(credits) : u.credits } : u)),
       );
+      
+      // Recalculate stats
+      const updatedUsers = users.map((u) => (u.id === userId ? { ...u, plan: plan || u.plan, credits: credits !== "" ? Number(credits) : u.credits } : u));
+      const totalCredits = updatedUsers.reduce((sum, u) => sum + (u.credits || 0), 0);
+      const planDist = updatedUsers.reduce((acc, u) => {
+        const p = u.plan || 'free';
+        acc[p] = (acc[p] || 0) + 1;
+        return acc;
+      }, {});
+      setStats(prev => ({ ...prev, totalCredits, planDistribution: planDist }));
+      
     } catch (err) {
       alert(err?.response?.data?.detail || "Échec de la mise à jour de l'utilisateur.");
     }
   };
+
+  // Filter users
+  const filteredUsers = users.filter(u => {
+    const matchesSearch = u.email?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         u.display_name?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesPlan = filterPlan === 'all' || (u.plan || 'free').toLowerCase() === filterPlan;
+    return matchesSearch && matchesPlan;
+  });
 
   if (!token) {
     return null;
@@ -150,9 +197,15 @@ export function AdminDashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 px-4 py-6">
-      <div className="max-w-6xl mx-auto space-y-4">
+      <div className="max-w-7xl mx-auto space-y-6">
+        {/* Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">Admin Dashboard</h1>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
+              Manager Dashboard
+            </h1>
+            <p className="text-sm text-slate-400 mt-1">Gérez l'intégralité de votre plateforme</p>
+          </div>
           <Button
             variant="outline"
             size="sm"
@@ -162,96 +215,235 @@ export function AdminDashboardPage() {
               navigate("/", { replace: true });
             }}
           >
-            Logout admin
+            Déconnexion
           </Button>
         </div>
 
-        {error && <p className="text-xs text-red-400">{error}</p>}
+        {error && <p className="text-xs text-red-400 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">{error}</p>}
 
         {loading ? (
-          <p className="text-sm text-slate-300">Chargement…</p>
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-sm text-slate-300">Chargement des données...</p>
+            </div>
+          </div>
         ) : (
-          <Tabs defaultValue="users" className="mt-4">
-            <TabsList className="bg-slate-900/80 border border-slate-700/80">
-              <TabsTrigger value="users">Utilisateurs</TabsTrigger>
-              <TabsTrigger value="jobs">Jobs</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="users" className="mt-4 space-y-3">
-              <Card className="bg-slate-900/80 border-slate-800">
-                <CardHeader>
-                  <CardTitle className="text-sm sm:text-base">Utilisateurs</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto text-xs sm:text-sm">
-                    <table className="w-full border-collapse">
-                      <thead className="text-[11px] text-slate-400">
-                        <tr className="border-b border-slate-800">
-                          <th className="py-2 pr-2 text-left">Email</th>
-                          <th className="py-2 px-2 text-left">Nom</th>
-                          <th className="py-2 px-2 text-left">Plan</th>
-                          <th className="py-2 px-2 text-left">Crédits</th>
-                          <th className="py-2 px-2 text-left">Créé le</th>
-                          <th className="py-2 pl-2 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {users.map((u) => (
-                          <AdminUserRow key={u.id} user={u} onUpdate={handleUpdateUser} />
-                        ))}
-                      </tbody>
-                    </table>
-                    {users.length === 0 && <p className="text-xs text-slate-400 mt-2">Aucun utilisateur.</p>}
+          <>
+            {/* Statistics Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 border-cyan-500/20">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Utilisateurs</p>
+                      <p className="text-3xl font-bold text-cyan-300">{stats.totalUsers}</p>
+                    </div>
+                    <Users className="w-10 h-10 text-cyan-400/40" />
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
 
-            <TabsContent value="jobs" className="mt-4 space-y-3">
-              <Card className="bg-slate-900/80 border-slate-800">
-                <CardHeader>
-                  <CardTitle className="text-sm sm:text-base">Jobs</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto text-xs sm:text-sm">
-                    <table className="w-full border-collapse">
-                      <thead className="text-[11px] text-slate-400">
-                        <tr className="border-b border-slate-800">
-                          <th className="py-2 pr-2 text-left">Job ID</th>
-                          <th className="py-2 px-2 text-left">User ID</th>
-                          <th className="py-2 px-2 text-left">Project ID</th>
-                          <th className="py-2 px-2 text-left">Statut</th>
-                          <th className="py-2 px-2 text-left">Erreur</th>
-                          <th className="py-2 pl-2 text-left">Créé le</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {jobs.map((j) => (
-                          <tr key={j.id} className="border-b border-slate-800/60">
-                            <td className="py-1.5 pr-2 font-mono text-[11px] text-slate-300">{j.id}</td>
-                            <td className="py-1.5 px-2 font-mono text-[11px] text-slate-400">{j.user_id}</td>
-                            <td className="py-1.5 px-2 font-mono text-[11px] text-slate-400">{j.project_id || "-"}</td>
-                            <td className="py-1.5 px-2 text-xs">
-                              <span className="inline-flex px-2 py-0.5 rounded-full bg-slate-800 text-slate-200">
-                                {j.status}
-                              </span>
-                            </td>
-                            <td className="py-1.5 px-2 text-[11px] text-red-300 max-w-xs truncate" title={j.error || ""}>
-                              {j.error || ""}
-                            </td>
-                            <td className="py-1.5 pl-2 text-[11px] text-slate-400">
-                              {new Date(j.created_at).toLocaleString()}
-                            </td>
+              <Card className="bg-gradient-to-br from-violet-500/10 to-violet-500/5 border-violet-500/20">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Crédits Total</p>
+                      <p className="text-3xl font-bold text-violet-300">{stats.totalCredits}</p>
+                    </div>
+                    <CreditCard className="w-10 h-10 text-violet-400/40" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border-emerald-500/20">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Jobs Actifs</p>
+                      <p className="text-3xl font-bold text-emerald-300">{stats.activeJobs}</p>
+                    </div>
+                    <Activity className="w-10 h-10 text-emerald-400/40" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Total Jobs</p>
+                      <p className="text-3xl font-bold text-amber-300">{jobs.length}</p>
+                    </div>
+                    <TrendingUp className="w-10 h-10 text-amber-400/40" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Plan Distribution */}
+            <Card className="bg-slate-900/80 border-slate-800">
+              <CardHeader>
+                <CardTitle className="text-base">Distribution des Plans</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                  {Object.entries(stats.planDistribution).map(([plan, count]) => (
+                    <div key={plan} className="bg-slate-950/60 border border-slate-800 rounded-lg p-3">
+                      <p className="text-xs text-slate-400 uppercase tracking-wider">{plan}</p>
+                      <p className="text-2xl font-bold text-slate-100 mt-1">{count}</p>
+                      <p className="text-[10px] text-slate-500 mt-1">
+                        {((count / stats.totalUsers) * 100).toFixed(1)}%
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Main Content Tabs */}
+            <Tabs defaultValue="users" className="mt-4">
+              <TabsList className="bg-slate-900/80 border border-slate-700/80">
+                <TabsTrigger value="users">
+                  <Users className="w-4 h-4 mr-2" />
+                  Utilisateurs
+                </TabsTrigger>
+                <TabsTrigger value="jobs">
+                  <Activity className="w-4 h-4 mr-2" />
+                  Jobs
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="users" className="mt-4 space-y-3">
+                {/* Search and Filters */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="flex-1 relative">
+                        <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                        <Input
+                          placeholder="Rechercher par email ou nom..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="pl-10 bg-slate-950/60 border-slate-700"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <select
+                          value={filterPlan}
+                          onChange={(e) => setFilterPlan(e.target.value)}
+                          className="px-3 py-2 bg-slate-950/60 border border-slate-700 rounded-md text-sm text-slate-100"
+                        >
+                          <option value="all">Tous les plans</option>
+                          <option value="free">Free</option>
+                          <option value="freemium">Freemium</option>
+                          <option value="starter">Starter</option>
+                          <option value="pro">Pro</option>
+                          <option value="premium">Premium</option>
+                          <option value="business">Business</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between text-xs text-slate-400">
+                      <p>{filteredUsers.length} utilisateur{filteredUsers.length > 1 ? 's' : ''} trouvé{filteredUsers.length > 1 ? 's' : ''}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Users Table */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-sm sm:text-base">Gestion des Utilisateurs</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto text-xs sm:text-sm">
+                      <table className="w-full border-collapse">
+                        <thead className="text-[11px] text-slate-400 border-b border-slate-800">
+                          <tr>
+                            <th className="py-3 pr-2 text-left font-medium">Email</th>
+                            <th className="py-3 px-2 text-left font-medium">Nom</th>
+                            <th className="py-3 px-2 text-left font-medium">Plan</th>
+                            <th className="py-3 px-2 text-left font-medium">Crédits</th>
+                            <th className="py-3 px-2 text-left font-medium">Créé le</th>
+                            <th className="py-3 pl-2 text-right font-medium">Actions</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    {jobs.length === 0 && <p className="text-xs text-slate-400 mt-2">Aucun job.</p>}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                        </thead>
+                        <tbody>
+                          {filteredUsers.map((u) => (
+                            <AdminUserRow key={u.id} user={u} onUpdate={handleUpdateUser} />
+                          ))}
+                        </tbody>
+                      </table>
+                      {filteredUsers.length === 0 && (
+                        <div className="text-center py-8">
+                          <p className="text-sm text-slate-400">Aucun utilisateur trouvé</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="jobs" className="mt-4 space-y-3">
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-sm sm:text-base">Historique des Jobs</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto text-xs sm:text-sm">
+                      <table className="w-full border-collapse">
+                        <thead className="text-[11px] text-slate-400 border-b border-slate-800">
+                          <tr>
+                            <th className="py-3 pr-2 text-left font-medium">Job ID</th>
+                            <th className="py-3 px-2 text-left font-medium">User ID</th>
+                            <th className="py-3 px-2 text-left font-medium">Project ID</th>
+                            <th className="py-3 px-2 text-left font-medium">Statut</th>
+                            <th className="py-3 px-2 text-left font-medium">Erreur</th>
+                            <th className="py-3 pl-2 text-left font-medium">Créé le</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {jobs.map((j) => (
+                            <tr key={j.id} className="border-b border-slate-800/60 hover:bg-slate-800/20">
+                              <td className="py-2 pr-2 font-mono text-[11px] text-cyan-300">{j.id.substring(0, 8)}...</td>
+                              <td className="py-2 px-2 font-mono text-[11px] text-slate-400">{j.user_id?.substring(0, 8)}...</td>
+                              <td className="py-2 px-2 font-mono text-[11px] text-slate-400">{j.project_id?.substring(0, 8) || "-"}</td>
+                              <td className="py-2 px-2 text-xs">
+                                <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                                  j.status === 'completed' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20' :
+                                  j.status === 'processing' || j.status === 'pending' ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20' :
+                                  'bg-red-500/10 text-red-300 border border-red-500/20'
+                                }`}>
+                                  {j.status}
+                                </span>
+                              </td>
+                              <td className="py-2 px-2 text-[11px] text-red-300 max-w-xs truncate" title={j.error || ""}>
+                                {j.error || "-"}
+                              </td>
+                              <td className="py-2 pl-2 text-[11px] text-slate-400">
+                                {new Date(j.created_at).toLocaleString('fr-FR', { 
+                                  day: '2-digit', 
+                                  month: '2-digit', 
+                                  year: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      {jobs.length === 0 && (
+                        <div className="text-center py-8">
+                          <p className="text-sm text-slate-400">Aucun job trouvé</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </>
         )}
       </div>
     </div>
