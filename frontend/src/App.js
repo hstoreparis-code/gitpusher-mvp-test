@@ -3624,8 +3624,9 @@ function AppShell() {
   };
 
   return (
-    <Routes>
-      <Route
+    <>
+      <Routes>
+        <Route
         path="/"
         element={
           <Landing
