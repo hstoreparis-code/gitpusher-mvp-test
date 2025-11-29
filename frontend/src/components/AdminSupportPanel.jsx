@@ -244,6 +244,242 @@ export function AdminSupportPanel() {
               )}
             </Card>
           </div>
+            </TabsContent>
+
+            {/* Onglet Paramètres Chatbot */}
+            <TabsContent value="settings">
+              <div className="space-y-6">
+                {/* Paramètres Généraux */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-base text-slate-100 flex items-center gap-2">
+                      <Settings className="w-5 h-5 text-violet-400" />
+                      Paramètres Généraux
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <label className="text-sm text-slate-300 mb-2 block">Message de bienvenue</label>
+                      <Input
+                        value={botSettings.greeting_message}
+                        onChange={(e) => setBotSettings({...botSettings, greeting_message: e.target.value})}
+                        className="bg-slate-950/60 border-slate-700 text-slate-100"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-slate-300 mb-2 block">Message hors ligne</label>
+                      <Input
+                        value={botSettings.offline_message}
+                        onChange={(e) => setBotSettings({...botSettings, offline_message: e.target.value})}
+                        className="bg-slate-950/60 border-slate-700 text-slate-100"
+                      />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-slate-950/60 border border-slate-800 rounded-lg">
+                      <div>
+                        <p className="text-sm text-slate-200">Réponses automatiques</p>
+                        <p className="text-xs text-slate-400 mt-1">Activer les réponses IA automatiques</p>
+                      </div>
+                      <button
+                        onClick={() => setBotSettings({...botSettings, auto_response: !botSettings.auto_response})}
+                        className={`relative w-12 h-6 rounded-full transition-colors ${
+                          botSettings.auto_response ? 'bg-emerald-500' : 'bg-slate-600'
+                        }`}
+                      >
+                        <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
+                          botSettings.auto_response ? 'translate-x-[26px]' : 'translate-x-0.5'
+                        }`} />
+                      </button>
+                    </div>
+                    <Button
+                      className="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950"
+                      onClick={() => alert('Paramètres sauvegardés !')}
+                    >
+                      <Save className="w-4 h-4 mr-2" />
+                      Sauvegarder les paramètres
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Scénarios de Conversation */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base text-slate-100">Scénarios de Conversation</CardTitle>
+                      <Button
+                        size="sm"
+                        className="bg-violet-500 hover:bg-violet-400 text-white text-xs"
+                        onClick={() => {
+                          const newId = Math.max(...scenarios.map(s => s.id), 0) + 1;
+                          setScenarios([...scenarios, {
+                            id: newId,
+                            trigger: newScenario.trigger,
+                            response: newScenario.response,
+                            active: true
+                          }]);
+                          setNewScenario({ trigger: "", response: "" });
+                        }}
+                        disabled={!newScenario.trigger || !newScenario.response}
+                      >
+                        <Plus className="w-4 h-4 mr-1" />
+                        Ajouter
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {/* Nouveau scénario */}
+                    <div className="p-4 bg-violet-500/5 border border-violet-500/20 rounded-lg space-y-3">
+                      <div>
+                        <label className="text-xs text-slate-400 mb-1 block">Mot-clé déclencheur</label>
+                        <Input
+                          placeholder="Ex: prix, tarif, coût..."
+                          value={newScenario.trigger}
+                          onChange={(e) => setNewScenario({...newScenario, trigger: e.target.value})}
+                          className="bg-slate-950/60 border-slate-700 text-slate-100 text-sm"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-slate-400 mb-1 block">Réponse automatique</label>
+                        <textarea
+                          placeholder="La réponse que le bot donnera..."
+                          value={newScenario.response}
+                          onChange={(e) => setNewScenario({...newScenario, response: e.target.value})}
+                          className="w-full bg-slate-950/60 border border-slate-700 text-slate-100 text-sm p-2 rounded-md resize-none"
+                          rows={3}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Liste des scénarios */}
+                    <div className="space-y-2">
+                      <p className="text-xs text-slate-400 uppercase tracking-wider mb-2">Scénarios actifs ({scenarios.filter(s => s.active).length})</p>
+                      {scenarios.map((scenario) => (
+                        <div key={scenario.id} className="p-4 bg-slate-950/60 border border-slate-800 rounded-lg">
+                          {editingScenario?.id === scenario.id ? (
+                            <div className="space-y-3">
+                              <div>
+                                <label className="text-xs text-slate-400 mb-1 block">Déclencheur</label>
+                                <Input
+                                  value={editingScenario.trigger}
+                                  onChange={(e) => setEditingScenario({...editingScenario, trigger: e.target.value})}
+                                  className="bg-slate-900 border-slate-700 text-slate-100 text-sm"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-slate-400 mb-1 block">Réponse</label>
+                                <textarea
+                                  value={editingScenario.response}
+                                  onChange={(e) => setEditingScenario({...editingScenario, response: e.target.value})}
+                                  className="w-full bg-slate-900 border border-slate-700 text-slate-100 text-sm p-2 rounded-md resize-none"
+                                  rows={3}
+                                />
+                              </div>
+                              <div className="flex gap-2">
+                                <Button
+                                  size="sm"
+                                  className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-white text-xs"
+                                  onClick={() => {
+                                    setScenarios(scenarios.map(s => 
+                                      s.id === editingScenario.id ? editingScenario : s
+                                    ));
+                                    setEditingScenario(null);
+                                  }}
+                                >
+                                  <Save className="w-3 h-3 mr-1" />
+                                  Sauvegarder
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-slate-700 text-xs"
+                                  onClick={() => setEditingScenario(null)}
+                                >
+                                  Annuler
+                                </Button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div>
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                                      {scenario.trigger}
+                                    </span>
+                                    {scenario.active ? (
+                                      <span className="text-xs text-emerald-400">● Actif</span>
+                                    ) : (
+                                      <span className="text-xs text-slate-500">○ Inactif</span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm text-slate-300 mt-2">{scenario.response}</p>
+                                </div>
+                                <div className="flex gap-1 ml-2">
+                                  <button
+                                    onClick={() => setEditingScenario(scenario)}
+                                    className="p-1.5 hover:bg-slate-800 rounded text-cyan-400 hover:text-cyan-300"
+                                  >
+                                    <Edit className="w-4 h-4" />
+                                  </button>
+                                  <button
+                                    onClick={() => setScenarios(scenarios.map(s =>
+                                      s.id === scenario.id ? {...s, active: !s.active} : s
+                                    ))}
+                                    className={`p-1.5 hover:bg-slate-800 rounded ${
+                                      scenario.active ? 'text-amber-400' : 'text-emerald-400'
+                                    }`}
+                                  >
+                                    {scenario.active ? '⏸' : '▶'}
+                                  </button>
+                                  <button
+                                    onClick={() => setScenarios(scenarios.filter(s => s.id !== scenario.id))}
+                                    className="p-1.5 hover:bg-slate-800 rounded text-red-400 hover:text-red-300"
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Scripts Personnalisés */}
+                <Card className="bg-slate-900/80 border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-base text-slate-100">Scripts & Prompts IA</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <label className="text-sm text-slate-300 mb-2 block">Prompt système pour le chatbot IA</label>
+                      <textarea
+                        placeholder="Vous êtes un assistant support pour GitPusher. Soyez professionnel, courtois et précis..."
+                        className="w-full bg-slate-950/60 border border-slate-700 text-slate-100 text-sm p-3 rounded-md resize-none"
+                        rows={6}
+                        defaultValue="Vous êtes un assistant support pour GitPusher, une plateforme d'automatisation Git No-Code. Votre rôle est d'aider les utilisateurs avec :\n- La création de dépôts Git automatisés\n- La gestion des crédits et abonnements\n- Les problèmes de connexion OAuth\n- Les questions sur les fonctionnalités\n\nSoyez professionnel, courtois et concis dans vos réponses."
+                      />
+                    </div>
+                    <div className="p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
+                      <p className="text-xs text-cyan-300 mb-2">💡 Astuce</p>
+                      <p className="text-xs text-slate-400">
+                        Les prompts personnalisés permettent d'adapter le ton et le comportement du chatbot IA. 
+                        Incluez des exemples de conversations pour améliorer la qualité des réponses.
+                      </p>
+                    </div>
+                    <Button
+                      className="w-full bg-violet-500 hover:bg-violet-400 text-white"
+                      onClick={() => alert('Script IA sauvegardé !')}
+                    >
+                      <Save className="w-4 h-4 mr-2" />
+                      Sauvegarder le script IA
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
         )}
       </div>
     </div>
