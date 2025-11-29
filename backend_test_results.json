@@ -1,6 +1,6 @@
 {
-  "total_tests": 12,
-  "passed_tests": 12,
+  "total_tests": 19,
+  "passed_tests": 19,
   "success_rate": 100.0,
   "test_results": [
     {
@@ -13,7 +13,7 @@
     {
       "name": "User Registration",
       "success": true,
-      "details": "Email: test_fab133a6@example.com",
+      "details": "Email: test_df5b8625@example.com",
       "expected_status": 200,
       "actual_status": 200
     },
@@ -27,14 +27,14 @@
     {
       "name": "User Profile",
       "success": true,
-      "details": "User ID: f00318ca-3884-4ac4-a0e4-668f677f91c9, Email: test_fab133a6@example.com",
+      "details": "User ID: 4629f23a-6699-49f1-b0b7-a716d9bb6d28, Email: test_df5b8625@example.com",
       "expected_status": 200,
       "actual_status": 200
     },
     {
       "name": "Create Project",
       "success": true,
-      "details": "Project ID: dd53f00d-70e1-4a77-ad9f-412aba41f393",
+      "details": "Project ID: af404c0b-1acd-4a08-92ab-70e5dc8dab2e",
       "expected_status": 200,
       "actual_status": 200
     },
@@ -55,7 +55,7 @@
     {
       "name": "Process Project (No GitHub)",
       "success": true,
-      "details": "Error message: Git provider token not linked for this user",
+      "details": "Error message: Git provider token not linked for this user (provider: github)",
       "expected_status": 400,
       "actual_status": 400
     },
@@ -76,7 +76,7 @@
     {
       "name": "Admin Users Endpoint",
       "success": true,
-      "details": "Successfully retrieved 9 users, sample email: test_dc00fa07@example.com",
+      "details": "Successfully retrieved 11 users, sample email: test_dc00fa07@example.com",
       "expected_status": 200,
       "actual_status": 200
     },
@@ -86,6 +86,55 @@
       "details": "Should reject invalid tokens",
       "expected_status": 401,
       "actual_status": 401
+    },
+    {
+      "name": "Support Chat - Demo Login",
+      "success": true,
+      "details": "Demo user successfully logged in",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Support Chat - User Send Message",
+      "success": true,
+      "details": "Message sent successfully, ID: fc2ae3e1-20bc-4bb5-af75-4ff306f68b36",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - Admin Login",
+      "success": true,
+      "details": "Admin successfully logged in",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Support Chat - Admin Get Conversations",
+      "success": true,
+      "details": "Retrieved 1 conversation(s), found demo user message",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - Admin Send Response",
+      "success": true,
+      "details": "Admin response sent successfully, ID: fceb5cbd-97de-4838-bbae-c756fc178a93",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - User Get Messages",
+      "success": true,
+      "details": "Retrieved 3 message(s), both user and admin messages found",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - Admin Online Status",
+      "success": true,
+      "details": "Admin online status: True, Name: Support Team",
+      "expected_status": 200,
+      "actual_status": 200
     }
   ]
 }
