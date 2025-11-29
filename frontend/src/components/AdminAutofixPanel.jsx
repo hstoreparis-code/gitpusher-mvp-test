@@ -42,21 +42,6 @@ export function AdminAutofixPanel() {
     return () => clearInterval(interval);
   }, [token, navigate]);
 
-  const loadIncidents = async () => {
-    try {
-      const res = await axios.get(`${API}/admin/autofix/incidents`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setIncidents(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.error("Failed to load incidents", err);
-      // Generate mock data for demo
-      setIncidents(generateMockIncidents());
-      setLoading(false);
-    }
-  };
-
   const generateMockIncidents = () => {
     const now = new Date();
     return [
