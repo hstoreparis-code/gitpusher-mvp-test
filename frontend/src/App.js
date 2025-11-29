@@ -2406,7 +2406,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
           <section className="text-center space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-xs text-cyan-300 mb-2">
               <span className="h-2 w-2 rounded-full bg-cyan-300 animate-pulse" />
-              PLANS &amp; TARIFS
+              {t("pricingBadge")}
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
               Payez uniquement pour ce que vous utilisez
