@@ -278,6 +278,12 @@ export function AdminDashboardPage() {
         
         setLoading(false);
       } catch (err) {
+        // Si erreur 401, le token est invalide -> rediriger vers login
+        if (err?.response?.status === 401) {
+          localStorage.removeItem("admin_token");
+          navigate("/admin-login", { replace: true });
+          return;
+        }
         setError(err?.response?.data?.detail || "Erreur lors du chargement des données admin.");
         setLoading(false);
       }
