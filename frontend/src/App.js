@@ -1599,6 +1599,29 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         </p>
                       </div>
                     ) : null}
+
+                    {/* Feedback d'automatisation + bouton pour ouvrir le repo */}
+                    {lastAutomationStatus && (
+                      <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <p
+                          className={`text-[10px] ${
+                            lastAutomationStatus.type === "success" ? "text-emerald-300" : "text-amber-300"
+                          }`}
+                        >
+                          {lastAutomationStatus.message}
+                        </p>
+                        {lastAutomationStatus.type === "success" && selected?.github_repo_url && (
+                          <a
+                            href={selected.github_repo_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-medium bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 shadow-[0_0_12px_rgba(16,185,129,0.7)] animate-pulse hover:animate-none"
+                          >
+                            <span>✨ Vérifier le dépôt</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Jobs récents pour ce projet */}
