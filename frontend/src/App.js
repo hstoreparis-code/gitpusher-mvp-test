@@ -13,6 +13,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { DownloadCloud, Menu, GitBranch, Rocket, Clock, CheckCircle2, XCircle, AlertCircle, TrendingUp, Activity, Github, ArrowLeft } from "lucide-react";
 import { AdminLoginPage, AdminDashboardPage } from "./AdminPages";
 import { AdminSupportPanel } from "./components/AdminSupportPanel";
+import { AdminAutofixPanel } from "./components/AdminAutofixPanel";
 import ForAIAssistants from "./pages/ForAIAssistants";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
