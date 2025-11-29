@@ -397,6 +397,290 @@ class BackendAPITester:
         except Exception as e:
             return self.log_test("Invalid Auth Handling", False, f"Error: {str(e)}")
 
+    def test_support_chat_system(self):
+        """Test complete support chat system flow"""
+        print("\n🔧 Testing Support Chat System...")
+        
+        # Step 1: Login as demo user
+        try:
+            response = requests.post(
+                f"{self.api_url}/auth/demo",
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                return self.log_test(
+                    "Support Chat - Demo Login",
+                    False,
+                    f"Demo login failed: {response.text}",
+                    200,
+                    response.status_code
+                )
+            
+            demo_token = response.json().get("access_token")
+            if not demo_token:
+                return self.log_test("Support Chat - Demo Login", False, "No access token received")
+            
+            self.log_test("Support Chat - Demo Login", True, "Demo user successfully logged in")
+            
+        except Exception as e:
+            return self.log_test("Support Chat - Demo Login", False, f"Error: {str(e)}")
+        
+        # Step 2: Demo user sends a support message
+        try:
+            user_message = "J'ai un problème avec mes crédits"
+            response = requests.post(
+                f"{self.api_url}/support/messages",
+                json={"message": user_message},
+                headers={"Authorization": f"Bearer {demo_token}"},
+                timeout=10
+            )
+            
+            success = response.status_code == 200
+            details = ""
+            if success:
+                data = response.json()
+                if data.get("ok"):
+                    details = f"Message sent successfully, ID: {data.get('message_id', 'N/A')}"
+                else:
+                    success = False
+                    details = "Response missing 'ok' field"
+            else:
+                details = f"Failed to send message: {response.text}"
+            
+            if not self.log_test(
+                "Support Chat - User Send Message",
+                success,
+                details,
+                200,
+                response.status_code
+            ):
+                return False
+                
+        except Exception as e:
+            return self.log_test("Support Chat - User Send Message", False, f"Error: {str(e)}")
+        
+        # Step 3: Login as admin
+        try:
+            admin_email = "admin@pushin.app"
+            admin_password = "Admin1234!"
+            
+            response = requests.post(
+                f"{self.api_url}/auth/login",
+                json={
+                    "email": admin_email,
+                    "password": admin_password
+                },
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                return self.log_test(
+                    "Support Chat - Admin Login",
+                    False,
+                    f"Admin login failed: {response.text}",
+                    200,
+                    response.status_code
+                )
+            
+            admin_token = response.json().get("access_token")
+            if not admin_token:
+                return self.log_test("Support Chat - Admin Login", False, "No access token received")
+            
+            self.log_test("Support Chat - Admin Login", True, "Admin successfully logged in")
+            
+        except Exception as e:
+            return self.log_test("Support Chat - Admin Login", False, f"Error: {str(e)}")
+        
+        # Step 4: Admin retrieves all conversations
+        try:
+            response = requests.get(
+                f"{self.api_url}/support/conversations",
+                headers={"Authorization": f"Bearer {admin_token}"},
+                timeout=10
+            )
+            
+            success = response.status_code == 200
+            details = ""
+            demo_user_id = None
+            
+            if success:
+                conversations = response.json()
+                if isinstance(conversations, list):
+                    details = f"Retrieved {len(conversations)} conversation(s)"
+                    
+                    # Find the demo user's conversation
+                    demo_conversation = None
+                    for conv in conversations:
+                        if conv.get("user_email") == "demo@pushin.app":
+                            demo_conversation = conv
+                            demo_user_id = conv.get("user_id")
+                            break
+                    
+                    if demo_conversation:
+                        messages = demo_conversation.get("messages", [])
+                        user_msg_found = any(
+                            msg.get("message") == user_message and not msg.get("is_admin")
+                            for msg in messages
+                        )
+                        if user_msg_found:
+                            details += f", found demo user message"
+                        else:
+                            success = False
+                            details += f", demo user message NOT found in conversation"
+                    else:
+                        success = False
+                        details += f", demo user conversation NOT found"
+                else:
+                    success = False
+                    details = f"Expected list, got: {type(conversations)}"
+            else:
+                details = f"Failed to retrieve conversations: {response.text}"
+            
+            if not self.log_test(
+                "Support Chat - Admin Get Conversations",
+                success,
+                details,
+                200,
+                response.status_code
+            ):
+                return False
+                
+        except Exception as e:
+            return self.log_test("Support Chat - Admin Get Conversations", False, f"Error: {str(e)}")
+        
+        # Step 5: Admin sends a response to the user
+        try:
+            if not demo_user_id:
+                return self.log_test(
+                    "Support Chat - Admin Send Response",
+                    False,
+                    "Demo user ID not found from conversations"
+                )
+            
+            admin_response = "Bonjour, je peux vous aider. Quel est le problème exact ?"
+            response = requests.post(
+                f"{self.api_url}/support/messages",
+                json={
+                    "message": admin_response,
+                    "user_id": demo_user_id
+                },
+                headers={"Authorization": f"Bearer {admin_token}"},
+                timeout=10
+            )
+            
+            success = response.status_code == 200
+            details = ""
+            if success:
+                data = response.json()
+                if data.get("ok"):
+                    details = f"Admin response sent successfully, ID: {data.get('message_id', 'N/A')}"
+                else:
+                    success = False
+                    details = "Response missing 'ok' field"
+            else:
+                details = f"Failed to send admin response: {response.text}"
+            
+            if not self.log_test(
+                "Support Chat - Admin Send Response",
+                success,
+                details,
+                200,
+                response.status_code
+            ):
+                return False
+                
+        except Exception as e:
+            return self.log_test("Support Chat - Admin Send Response", False, f"Error: {str(e)}")
+        
+        # Step 6: User retrieves their messages and sees admin response
+        try:
+            response = requests.get(
+                f"{self.api_url}/support/my-messages",
+                headers={"Authorization": f"Bearer {demo_token}"},
+                timeout=10
+            )
+            
+            success = response.status_code == 200
+            details = ""
+            
+            if success:
+                messages = response.json()
+                if isinstance(messages, list):
+                    details = f"Retrieved {len(messages)} message(s)"
+                    
+                    # Check if user message exists
+                    user_msg_found = any(
+                        msg.get("message") == user_message and not msg.get("is_admin")
+                        for msg in messages
+                    )
+                    
+                    # Check if admin response exists
+                    admin_msg_found = any(
+                        msg.get("message") == admin_response and msg.get("is_admin")
+                        for msg in messages
+                    )
+                    
+                    if user_msg_found and admin_msg_found:
+                        details += f", both user and admin messages found"
+                    elif user_msg_found:
+                        success = False
+                        details += f", user message found but admin response NOT found"
+                    elif admin_msg_found:
+                        success = False
+                        details += f", admin response found but user message NOT found"
+                    else:
+                        success = False
+                        details += f", neither user nor admin messages found"
+                else:
+                    success = False
+                    details = f"Expected list, got: {type(messages)}"
+            else:
+                details = f"Failed to retrieve user messages: {response.text}"
+            
+            if not self.log_test(
+                "Support Chat - User Get Messages",
+                success,
+                details,
+                200,
+                response.status_code
+            ):
+                return False
+                
+        except Exception as e:
+            return self.log_test("Support Chat - User Get Messages", False, f"Error: {str(e)}")
+        
+        # Step 7: Check admin online status
+        try:
+            response = requests.get(
+                f"{self.api_url}/support/admin-online",
+                timeout=10
+            )
+            
+            success = response.status_code == 200
+            details = ""
+            
+            if success:
+                data = response.json()
+                if "online" in data:
+                    details = f"Admin online status: {data.get('online')}, Name: {data.get('admin_name', 'N/A')}"
+                else:
+                    success = False
+                    details = "Response missing 'online' field"
+            else:
+                details = f"Failed to check admin status: {response.text}"
+            
+            return self.log_test(
+                "Support Chat - Admin Online Status",
+                success,
+                details,
+                200,
+                response.status_code
+            )
+                
+        except Exception as e:
+            return self.log_test("Support Chat - Admin Online Status", False, f"Error: {str(e)}")
+
     def run_all_tests(self):
         """Run all backend tests"""
         print("🚀 Starting Backend API Tests")
