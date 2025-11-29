@@ -699,6 +699,7 @@ class BackendAPITester:
             self.test_project_process_without_github,
             self.test_admin_login_and_users_endpoint,
             self.test_invalid_auth,
+            self.test_support_chat_system,
         ]
         
         for test in tests:
