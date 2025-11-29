@@ -3723,6 +3723,9 @@ function AppShell() {
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    {/* Chatbot Support visible sur toutes les pages */}
+    <SupportChatbot />
+  </>
   );
 }
 
