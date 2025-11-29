@@ -1485,6 +1485,15 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                             {renaming ? "..." : "Valider"}
                           </Button>
                         </div>
+                        {renameStatus && (
+                          <p
+                            className={`mt-1 text-[10px] ${
+                              renameStatus.type === "success" ? "text-emerald-300" : "text-amber-300"
+                            }`}
+                          >
+                            {renameStatus.message}
+                          </p>
+                        )}
                       </div>
                       <div className="flex-1">
                         <Label className="text-[11px] text-slate-300">Langue du README</Label>
