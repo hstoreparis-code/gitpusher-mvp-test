@@ -1393,6 +1393,12 @@ async def admin_autofix_create_incident(payload: AutofixIncidentCreate, authoriz
         "executed_actions": executed_actions,
         "diagnosis": diagnosis,
         "alert_payload": payload.alert_payload or {},
+        "created_at": now.isoformat(),
+        "resolved_at": resolved_at,
+    }
+    await db.autofix_incidents.insert_one(doc)
+
+    return _serialize_incident(doc)
 
 
 @api_router.post("/autofix/webhook/alert", response_model=AutofixIncident)
