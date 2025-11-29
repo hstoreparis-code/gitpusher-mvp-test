@@ -53,11 +53,24 @@ export function AdminSupportPanel() {
       navigate("/admin-login", { replace: true });
       return;
     }
+    
+    // Load initial admin status
+    loadAdminStatus();
+    
     loadConversations();
     // Auto-refresh every 5 seconds
     const interval = setInterval(loadConversations, 5000);
     return () => clearInterval(interval);
   }, [token, navigate]);
+
+  const loadAdminStatus = async () => {
+    try {
+      const res = await axios.get(`${API}/support/admin-online`);
+      setAdminOnline(res.data.online || false);
+    } catch (err) {
+      console.error("Failed to load admin status", err);
+    }
+  };
 
   const loadConversations = async () => {
     try {
