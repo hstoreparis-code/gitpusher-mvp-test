@@ -1365,8 +1365,79 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           </CardContent>
         </Card>
 
+        {/* BLOC CRÉATIF CRÉDITS */}
+        <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-[0_0_30px_rgba(56,189,248,0.15)] overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-violet-500/5 pointer-events-none" />
+          <CardContent className="p-6 relative z-10">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+              {/* Partie gauche - Compteur principal */}
+              <div className="flex items-center gap-6">
+                {/* Icône circulaire avec animation */}
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-full blur-xl opacity-40 animate-pulse" />
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border-2 border-cyan-400/30 flex flex-col items-center justify-center backdrop-blur-sm">
+                    <span className="text-3xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 to-violet-300 bg-clip-text text-transparent">
+                      {credits == null ? "—" : credits}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-400 mt-0.5">
+                      {credits === 1 ? "crédit" : "crédits"}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Texte et statut */}
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-slate-100">
+                    Crédits disponibles
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    {credits != null && credits <= 2 ? (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/40 animate-pulse">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                        </span>
+                        <span className="text-xs font-semibold text-amber-300">⚠️ Crédits faibles</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-400/30">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+                        <span className="text-xs font-medium text-emerald-300">✓ Solde sain</span>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-400 max-w-xs">
+                    2 crédits = 1 automatisation complète (README, .gitignore, LICENSE, push Git)
+                  </p>
+                </div>
+              </div>
+              
+              {/* Partie droite - Actions rapides */}
+              <div className="flex flex-col gap-2 min-w-[140px]">
+                <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">Actions rapides</div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
+                  onClick={() => navigate("/pricing")}
+                >
+                  <span className="mr-2">💳</span> Acheter des crédits
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                  onClick={() => navigate("/pricing")}
+                >
+                  <span className="mr-2">⭐</span> Passer au Premium
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* CONTENU PRINCIPAL DU DASHBOARD USER */}
-        <div className="grid gap-4 lg:grid-cols-[2fr,3fr]">
+        <div className="grid gap-4 lg:grid-cols-[2fr,3fr] mt-4">
           {/* Colonne projets */}
           <Card className="bg-slate-900/80 border-slate-800/80">
             <CardHeader>
