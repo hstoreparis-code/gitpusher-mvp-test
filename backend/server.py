@@ -665,6 +665,32 @@ class AdminUserPlanUpdate(BaseModel):
     credits: Optional[int] = None
 
 
+class AdminTransactionSummary(BaseModel):
+    id: str
+    user_id: str
+    user_email: Optional[str] = None
+    amount: float
+    currency: str = "EUR"
+    plan: Optional[str] = None
+    credits: Optional[int] = None
+    status: str  # succeeded, pending, failed
+    payment_method: Optional[str] = None
+    stripe_payment_id: Optional[str] = None
+    created_at: datetime
+
+
+class AdminFinancialStats(BaseModel):
+    total_revenue: float
+    monthly_revenue: float
+    total_transactions: int
+    successful_transactions: int
+    pending_transactions: int
+    failed_transactions: int
+    average_transaction: float
+    revenue_by_plan: Dict[str, float]
+    transactions_by_day: List[Dict[str, Any]]
+
+
 @api_router.get("/admin/users", response_model=List[AdminUserSummary])
 async def admin_list_users(authorization: Optional[str] = Header(default=None)):
     admin = await require_admin(authorization)
