@@ -878,6 +878,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   const [authOpen, setAuthOpen] = useState(false);
   const [lastAutomationStatus, setLastAutomationStatus] = useState(null);
 
+  const credits = typeof user?.credits === "number" ? user.credits : null;
+
   const currentPlan = (user?.plan || "freemium").toLowerCase();
 
   
