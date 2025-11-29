@@ -7,18 +7,24 @@ import { MessageCircle, Send, Circle } from "lucide-react";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-export function AdminSupportPanel({ token }) {
+export function AdminSupportPanel() {
+  const navigate = useNavigate();
   const [conversations, setConversations] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [messageInput, setMessageInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
   useEffect(() => {
+    if (!token) {
+      navigate("/admin-login", { replace: true });
+      return;
+    }
     loadConversations();
     // Auto-refresh every 5 seconds
     const interval = setInterval(loadConversations, 5000);
     return () => clearInterval(interval);
-  }, [token]);
+  }, [token, navigate]);
 
   const loadConversations = async () => {
     try {
