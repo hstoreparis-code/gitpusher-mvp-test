@@ -1258,6 +1258,7 @@ async def admin_autofix_update_settings(payload: AutofixSettings, authorization:
         {
             "$set": {
                 "auto_mode": payload.auto_mode,
+                "webhook_secret": payload.webhook_secret,
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
         },
