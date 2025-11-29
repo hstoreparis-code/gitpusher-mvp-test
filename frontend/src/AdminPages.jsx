@@ -448,7 +448,6 @@ export function AdminDashboardPage() {
                 navigate("/", { replace: true });
               }}
             >
-          >
             Déconnexion
           </Button>
         </div>
