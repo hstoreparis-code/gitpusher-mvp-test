@@ -3771,7 +3771,7 @@ function SupportChatbot() {
   const [adminName, setAdminName] = useState('');
   const token = localStorage.getItem('token');
 
-  // Check admin online status
+  // Check admin online status - TEMPS RÉEL
   useEffect(() => {
     const checkStatus = async () => {
       try {
@@ -3783,7 +3783,7 @@ function SupportChatbot() {
       }
     };
     checkStatus();
-    const interval = setInterval(checkStatus, 30000); // Check every 30s
+    const interval = setInterval(checkStatus, 3000); // Check every 3s for real-time effect
     return () => clearInterval(interval);
   }, []);
 
