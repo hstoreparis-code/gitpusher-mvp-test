@@ -3850,7 +3850,12 @@ function SupportChatbot() {
           </div>
           <div>
             <h3 className="text-white font-semibold text-sm">Support GitPusher</h3>
-            <p className="text-white/80 text-xs">En ligne - Réponse immédiate</p>
+            <div className="flex items-center gap-1.5">
+              <div className={`w-2 h-2 rounded-full ${adminOnline ? 'bg-emerald-400' : 'bg-red-400'}`}></div>
+              <p className="text-white/80 text-xs">
+                {adminOnline ? `${adminName} en ligne` : 'Hors ligne - Email uniquement'}
+              </p>
+            </div>
           </div>
         </div>
         <button
