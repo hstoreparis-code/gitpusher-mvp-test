@@ -965,6 +965,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     if (newDesc === (selected.description || "")) return;
 
     setUpdatingDescription(true);
+    setDescriptionStatus(null);
     try {
       const res = await axios.patch(
         `${API}/workflows/projects/${selected.id}`,
@@ -974,9 +975,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       const updated = res.data;
       setSelected(updated);
       setProjects((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+
+      setDescriptionStatus({ type: "success", message: "Description mise à jour." });
     } catch (err) {
       console.error("Update description failed", err);
-      alert("Erreur lors de la mise à jour de la description");
+      setDescriptionStatus({ type: "error", message: "Erreur lors de la mise à jour de la description." });
     } finally {
       setUpdatingDescription(false);
     }
