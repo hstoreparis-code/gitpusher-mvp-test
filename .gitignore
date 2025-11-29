@@ -1,0 +1,8 @@
+[LLM ERROR] 
+Generate a comprehensive .gitignore file for a project using: Python
+
+File extensions detected: py, txt
+
+Include common ignores for:
+- IDE files (VSCode, IntelliJ, etc.)
+- OS files (macOS, Windows, L...
