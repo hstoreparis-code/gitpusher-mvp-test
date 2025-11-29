@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Users, Activity, CreditCard, TrendingUp, Search, Filter, Download, BarChart3, Calendar, DollarSign, CreditCard as CreditCardIcon, Bell, Mail, MessageCircle } from "lucide-react";
+import { Users, Activity, CreditCard, TrendingUp, Search, Filter, Download, BarChart3, Calendar, DollarSign, CreditCard as CreditCardIcon } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -116,9 +116,6 @@ export function AdminDashboardPage() {
     revenueChart: [],
     planRevenue: []
   });
-  const [newSubscribers, setNewSubscribers] = useState([]);
-  const [showAlerts, setShowAlerts] = useState(false);
-  const [unreadAlerts, setUnreadAlerts] = useState(0);
 
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
@@ -265,16 +262,6 @@ export function AdminDashboardPage() {
           revenueChart: financialStats.transactions_by_day || [],
           planRevenue: planRevenueData
         });
-
-        // Détecter les nouveaux abonnés (dernières 24h)
-        const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        const recentUsers = fetchedUsers.filter(u => {
-          if (!u.created_at) return false;
-          const createdDate = new Date(u.created_at);
-          return createdDate >= last24Hours;
-        });
-        setNewSubscribers(recentUsers);
-        setUnreadAlerts(recentUsers.length);
         
         setLoading(false);
       } catch (err) {
@@ -335,119 +322,15 @@ export function AdminDashboardPage() {
             </h1>
             <p className="text-sm text-slate-400 mt-1">Gérez l'intégralité de votre plateforme</p>
           </div>
-          <div className="flex items-center gap-3">
-            {/* Bouton Alertes Nouveaux Abonnés */}
-            <div className="relative">
-              <Button
-                variant="outline"
-                size="sm"
-                className={`rounded-full border-slate-700 text-xs flex items-center gap-2 ${
-                  unreadAlerts > 0 ? 'border-amber-500/50 bg-amber-500/10' : ''
-                }`}
-                onClick={() => setShowAlerts(!showAlerts)}
-              >
-                <Bell className={`w-4 h-4 ${unreadAlerts > 0 ? 'text-amber-400 animate-pulse' : ''}`} />
-                Nouveaux abonnés
-                {unreadAlerts > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
-                    {unreadAlerts}
-                  </span>
-                )}
-              </Button>
-              
-              {/* Popup Alertes */}
-              {showAlerts && (
-                <div className="absolute right-0 top-12 w-96 bg-slate-900 border border-slate-700 rounded-lg shadow-2xl z-50 max-h-96 overflow-auto">
-                  <div className="p-4 border-b border-slate-800">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-slate-100">Nouveaux abonnés (24h)</h3>
-                      <button 
-                        onClick={() => {
-                          setUnreadAlerts(0);
-                          setShowAlerts(false);
-                        }}
-                        className="text-xs text-cyan-400 hover:text-cyan-300"
-                      >
-                        Tout marquer comme lu
-                      </button>
-                    </div>
-                  </div>
-                  <div className="divide-y divide-slate-800">
-                    {newSubscribers.length === 0 ? (
-                      <div className="p-4 text-center text-sm text-slate-400">
-                        Aucun nouvel abonné dans les dernières 24h
-                      </div>
-                    ) : (
-                      newSubscribers.map((user, index) => (
-                        <div key={index} className="p-3 hover:bg-slate-800/50 transition-colors">
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium text-slate-200">{user.email}</p>
-                              <p className="text-xs text-slate-400 mt-1">{user.display_name || 'Sans nom'}</p>
-                              <div className="flex items-center gap-2 mt-2">
-                                <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                                  (user.plan || '').toLowerCase() === 'premium' || (user.plan || '').toLowerCase() === 'business'
-                                    ? 'bg-violet-500/10 text-violet-300 border border-violet-500/20'
-                                    : (user.plan || '').toLowerCase() === 'pro'
-                                    ? 'bg-blue-500/10 text-blue-300 border border-blue-500/20'
-                                    : (user.plan || '').toLowerCase() === 'starter'
-                                    ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
-                                    : 'bg-slate-700/50 text-slate-300 border border-slate-600'
-                                }`}>
-                                  {user.plan || 'free'}
-                                </span>
-                                <span className="text-[10px] text-slate-500">
-                                  {new Date(user.created_at).toLocaleString('fr-FR', { 
-                                    day: '2-digit', 
-                                    month: 'short',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                  })}
-                                </span>
-                              </div>
-                            </div>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-7 px-2 text-xs text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10"
-                              onClick={() => {
-                                // Envoyer un email de bienvenue
-                                window.location.href = `mailto:${user.email}?subject=Bienvenue sur GitPusher&body=Bonjour,\n\nMerci de vous être inscrit sur GitPusher !`;
-                              }}
-                            >
-                              <Mail className="w-3 h-3 mr-1" />
-                              Email
-                            </Button>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Bouton Service Client */}
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full border-slate-700 text-xs flex items-center gap-2"
-              onClick={() => navigate("/admin/support")}
-            >
-              <MessageCircle className="w-4 h-4" />
-              Support
-            </Button>
-
-            {/* Bouton Déconnexion */}
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full border-slate-700 text-xs"
-              onClick={() => {
-                localStorage.removeItem("admin_token");
-                navigate("/", { replace: true });
-              }}
-            >
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full border-slate-700 text-xs"
+            onClick={() => {
+              localStorage.removeItem("admin_token");
+              navigate("/", { replace: true });
+            }}
+          >
             Déconnexion
           </Button>
         </div>
@@ -517,7 +400,7 @@ export function AdminDashboardPage() {
             {/* Plan Distribution */}
             <Card className="bg-slate-900/80 border-slate-800">
               <CardHeader>
-                <CardTitle className="text-base text-slate-100">Distribution des Plans</CardTitle>
+                <CardTitle className="text-base">Distribution des Plans</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
@@ -560,7 +443,7 @@ export function AdminDashboardPage() {
                 {/* Graphique: Nouveaux abonnés par jour */}
                 <Card className="bg-slate-900/80 border-slate-800">
                   <CardHeader>
-                    <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                    <CardTitle className="text-base flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-cyan-400" />
                       Nouveaux abonnés par jour (30 derniers jours)
                     </CardTitle>
@@ -601,7 +484,7 @@ export function AdminDashboardPage() {
                   {/* Graphique: Croissance cumulative */}
                   <Card className="bg-slate-900/80 border-slate-800">
                     <CardHeader>
-                      <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <TrendingUp className="w-5 h-5 text-emerald-400" />
                         Croissance cumulative des abonnements
                       </CardTitle>
@@ -643,7 +526,7 @@ export function AdminDashboardPage() {
                   {/* Graphique: Répartition des plans */}
                   <Card className="bg-slate-900/80 border-slate-800">
                     <CardHeader>
-                      <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <Activity className="w-5 h-5 text-violet-400" />
                         Répartition des plans
                       </CardTitle>
@@ -681,7 +564,7 @@ export function AdminDashboardPage() {
                 {/* Tableau: Historique détaillé jour par jour */}
                 <Card className="bg-slate-900/80 border-slate-800">
                   <CardHeader>
-                    <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                    <CardTitle className="text-base flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-cyan-400" />
                       Historique détaillé des abonnements
                     </CardTitle>
@@ -790,7 +673,7 @@ export function AdminDashboardPage() {
                       {/* Revenue over time */}
                       <Card className="bg-slate-900/80 border-slate-800">
                         <CardHeader>
-                          <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                          <CardTitle className="text-base flex items-center gap-2">
                             <TrendingUp className="w-5 h-5 text-emerald-400" />
                             Revenus par jour (30 derniers jours)
                           </CardTitle>
@@ -839,7 +722,7 @@ export function AdminDashboardPage() {
                       {/* Revenue by plan */}
                       <Card className="bg-slate-900/80 border-slate-800">
                         <CardHeader>
-                          <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                          <CardTitle className="text-base flex items-center gap-2">
                             <Activity className="w-5 h-5 text-violet-400" />
                             Revenus par plan
                           </CardTitle>
@@ -879,7 +762,7 @@ export function AdminDashboardPage() {
                     <Card className="bg-slate-900/80 border-slate-800">
                       <CardHeader>
                         <div className="flex items-center justify-between">
-                          <CardTitle className="text-base flex items-center gap-2 text-slate-100">
+                          <CardTitle className="text-base flex items-center gap-2">
                             <CreditCardIcon className="w-5 h-5 text-cyan-400" />
                             Transactions récentes
                             <span className="text-xs text-slate-500 ml-2">(connecté à Stripe en temps réel)</span>
@@ -990,7 +873,7 @@ export function AdminDashboardPage() {
                 {/* Users Table */}
                 <Card className="bg-slate-900/80 border-slate-800">
                   <CardHeader>
-                    <CardTitle className="text-sm sm:text-base text-slate-100">Gestion des Utilisateurs</CardTitle>
+                    <CardTitle className="text-sm sm:text-base">Gestion des Utilisateurs</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto text-xs sm:text-sm">
@@ -1024,7 +907,7 @@ export function AdminDashboardPage() {
               <TabsContent value="jobs" className="mt-4 space-y-3">
                 <Card className="bg-slate-900/80 border-slate-800">
                   <CardHeader>
-                    <CardTitle className="text-sm sm:text-base text-slate-100">Historique des Jobs</CardTitle>
+                    <CardTitle className="text-sm sm:text-base">Historique des Jobs</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto text-xs sm:text-sm">
