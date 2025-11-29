@@ -1639,7 +1639,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <div className="flex flex-col sm:flex-row gap-2">
                       <div className="flex-1 flex flex-col gap-1">
                         <Label className="text-[11px] text-slate-300">Nom du dépôt</Label>
-                        <div className="flex flex-col xs:flex-row gap-1.5 items-stretch">
+                        <div className="flex flex-col sm:flex-row gap-1.5 items-stretch">
                           <Input
                             value={editName}
                             onChange={(e) => setEditName(e.target.value)}
@@ -1653,7 +1653,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           />
                           <Button
                             size="xs"
-                            className="h-8 px-3 rounded-full text-[11px] bg-cyan-500 hover:bg-cyan-400 text-slate-950 whitespace-nowrap"
+                            className="h-8 px-3 rounded-full text-[11px] bg-cyan-500 hover:bg-cyan-400 text-slate-950 whitespace-nowrap w-full sm:w-auto"
                             onClick={renameProject}
                             disabled={renaming || !editName.trim() || editName === (selected.name || "")}
                           >
