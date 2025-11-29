@@ -16,17 +16,6 @@ export function AdminAutofixPanel() {
   const [autoMode, setAutoMode] = useState(false);
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/admin-login", { replace: true });
-      return;
-    }
-    loadIncidents();
-    // Auto-refresh every 10 seconds
-    const interval = setInterval(loadIncidents, 10000);
-    return () => clearInterval(interval);
-  }, [token, navigate]);
-
   const loadIncidents = async () => {
     try {
       const res = await axios.get(`${API}/admin/autofix/incidents`, {
