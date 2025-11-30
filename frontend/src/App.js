@@ -1429,48 +1429,29 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
       </header>
 
       <main className="flex-1 w-full max-w-full sm:max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-8 space-y-3 sm:space-y-8 overflow-x-hidden">
-        {/* Bannière discrète de mise en avant des offres (uniquement pour les plans Free/Freemium/Demo) */}
-        {(currentPlan === "free" || currentPlan === "freemium" || currentPlan === "demo") && (
-          <Card className="mb-4 bg-slate-900/70 border border-cyan-500/20 shadow-[0_0_32px_rgba(34,211,238,0.25)]">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div className="space-y-1">
-                  <p className="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-cyan-300/80">
-                    Offre en avant-première
-                  </p>
-                  <p className="text-sm sm:text-base font-medium text-slate-50">
-                    Passez en <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Premium</span> et laissez l&apos;IA gérer tous vos dépôts sans limite.
-                  </p>
-                  <p className="text-[11px] sm:text-xs text-slate-400 max-w-xl">
-                    Uploads illimités, génération avancée de README, gestion multi-providers Git et support prioritaire. Sans engagement, annulation en un clic.
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 self-stretch sm:self-auto">
-                  <Button
-                    size="sm"
-                    className="rounded-full bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 text-xs sm:text-sm font-semibold shadow-[0_0_22px_rgba(34,211,238,0.8)] hover:shadow-[0_0_30px_rgba(34,211,238,1)]"
-                    onClick={() => navigate("/pricing#premium")}
-                    data-testid="dashboard-banner-premium-cta"
-                  >
-                    Découvrir Premium
-                  </Button>
-                  <button
-                    type="button"
-                    onClick={() => navigate("/pricing#credit-packs")}
-                    className="hidden sm:inline-flex text-[11px] text-slate-400 hover:text-cyan-200 underline underline-offset-4"
-                  >
-                    Voir les packs de crédits
-                  </button>
-                </div>
+        {/* Dashboard Title + bannière pub compacte (desktop) + Toggle Free/Premium (mobile) */}
+        <div className="flex flex-col gap-2 mb-2 sm:mb-3">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Dashboard</h1>
+            {/* Bannière discrète de mise en avant des offres (uniquement pour Free/Freemium/Demo, desktop) */}
+            {(currentPlan === "free" || currentPlan === "freemium" || currentPlan === "demo") && (
+              <div className="hidden lg:flex items-center gap-3 px-3 py-2 rounded-full bg-slate-900/80 border border-cyan-500/30 shadow-[0_0_18px_rgba(34,211,238,0.5)] text-[11px]">
+                <span className="text-cyan-300/90 font-medium whitespace-nowrap">Offre Premium</span>
+                <span className="text-slate-400 hidden xl:inline">
+                  Uploads illimités & génération IA avancée pour tous vos dépôts.
+                </span>
+                <Button
+                  size="sm"
+                  className="h-7 px-3 rounded-full bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 text-[11px] font-semibold shadow-[0_0_18px_rgba(34,211,238,0.8)] hover:shadow-[0_0_24px_rgba(34,211,238,1)]"
+                  onClick={() => navigate("/pricing#premium")}
+                  data-testid="dashboard-banner-premium-cta"
+                >
+                  Découvrir
+                </Button>
               </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Dashboard Title + Toggle Free/Premium (mobile à droite du titre) */}
-        <div className="flex items-center justify-between mb-2 sm:mb-3">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Dashboard</h1>
-          {/* Toggle Free / Premium (mobile, à droite du titre) */}
+            )}
+          </div>
+          {/* Toggle Free / Premium (mobile, sous le titre) */}
           <div className="flex sm:hidden items-center gap-2 text-[11px]">
             <div className="px-2 py-1 rounded-full bg-slate-900/80 border border-slate-700/80 flex items-center gap-2">
               <span className="text-[10px] font-medium text-slate-50">Free</span>
