@@ -964,33 +964,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   // State for auth modal
   const [authOpen, setAuthOpen] = useState(false);
   const [lastAutomationStatus, setLastAutomationStatus] = useState(null);
-  const [showNewsPanel, setShowNewsPanel] = useState(false);
-  const [newsIndex, setNewsIndex] = useState(0);
-
-  const credits = typeof user?.credits === "number" ? user.credits : null;
-
-  const newsItems = [
-    {
-      title: "Gitea & Codeberg",
-      tag: "En développement",
-      body: "Connexion OAuth + création de dépôts Gitea et Codeberg en cours d'intégration.",
-    },
-    {
-      title: "Gitee & Azure DevOps",
-      tag: "En développement",
-      body: "Support push automatique vers Gitee et Azure DevOps, avec génération complète de README.",
-    },
-    {
-      title: "AWS CodeCommit & Google Cloud Source",
-      tag: "À venir",
-      body: "Ajout de nouveaux connecteurs pour les clouds développeurs : AWS CodeCommit et Google Cloud Source.",
-    },
-    {
-      title: "Alibaba Cloud & Tencent Cloud",
-      tag: "Bientôt",
-      body: "Préparation des providers Git chinois pour les déploiements internationaux.",
-    },
-  ];
 
   const currentPlan = (user?.plan || "freemium").toLowerCase();
 
