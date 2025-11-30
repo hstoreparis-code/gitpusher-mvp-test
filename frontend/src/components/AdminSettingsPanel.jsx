@@ -244,6 +244,23 @@ export function AdminSettingsPanel() {
                     className="bg-slate-950/60 border-slate-700 text-slate-100"
                   />
                 </div>
+                <div>
+                  <label className="text-sm text-slate-300 mb-2 block">Projets max - Free</label>
+                  <Input
+                    type="number"
+                    value={creditSettings.free_max_projects}
+                    onChange={(e) => setCreditSettings({...creditSettings, free_max_projects: parseInt(e.target.value)})}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-slate-950/60 border border-slate-800 rounded-lg">
+                <div>
+                  <p className="text-sm text-slate-200">Premium & Business - Illimité</p>
+                  <p className="text-xs text-slate-400 mt-1">Crédits et projets illimités pour ces plans</p>
+                </div>
+                <span className="text-sm font-bold text-violet-300">✓ Activé</span>
               </div>
 
               <Button
