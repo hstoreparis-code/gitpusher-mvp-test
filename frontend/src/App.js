@@ -1854,30 +1854,35 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                       </div>
                       <div className="flex-1 flex flex-col gap-1">
                         <Label className="text-[11px] text-slate-300">Provider Git</Label>
-                        <select
-                          className="h-8 rounded-md bg-slate-950/60 border border-slate-700/80 text-xs text-slate-200 px-2"
-                          value={selectedProvider}
-                          onChange={(e) => setSelectedProvider(e.target.value)}
-                        >
-                          <optgroup label="Disponibles">
-                            <option value="github">GitHub</option>
-                            <option value="gitlab">GitLab</option>
-                            <option value="bitbucket">Bitbucket</option>
-                          </optgroup>
-                          <optgroup
-                            label="À venir"
-                            title="Ces providers sont en cours d'intégration et seront bientôt disponibles dans GitPusher.AI"
+                        <div className="relative">
+                          <select
+                            className="h-8 w-full rounded-md border text-xs px-2 bg-gradient-to-r from-cyan-600 via-sky-500 to-cyan-400 text-slate-950 font-medium shadow-[0_0_18px_rgba(34,211,238,0.9)] focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                            value={selectedProvider}
+                            onChange={(e) => setSelectedProvider(e.target.value)}
                           >
-                            <option value="gitea" disabled>Gitea (à venir)</option>
-                            <option value="codeberg" disabled>Codeberg (à venir)</option>
-                            <option value="gitee" disabled>Gitee (à venir)</option>
-                            <option value="azure-devops" disabled>Azure DevOps (à venir)</option>
-                            <option value="aws-codecommit" disabled>AWS CodeCommit (à venir)</option>
-                            <option value="google-cloud-source" disabled>Google Cloud Source (à venir)</option>
-                            <option value="alibaba-cloud" disabled>Alibaba Cloud (à venir)</option>
-                            <option value="tencent-cloud" disabled>Tencent Cloud (à venir)</option>
-                          </optgroup>
-                        </select>
+                            <optgroup label="Disponibles">
+                              <option className="bg-slate-950 text-cyan-200" value="github">GitHub</option>
+                              <option className="bg-slate-950 text-cyan-200" value="gitlab">GitLab</option>
+                              <option className="bg-slate-950 text-cyan-200" value="bitbucket">Bitbucket</option>
+                            </optgroup>
+                            <optgroup
+                              label="À venir"
+                              title="Ces providers sont en cours d'intégration et seront bientôt disponibles dans GitPusher.AI"
+                            >
+                              <option className="bg-slate-950 text-cyan-200" value="gitea">Gitea (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="codeberg">Codeberg (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="gitee">Gitee (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="azure-devops">Azure DevOps (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="aws-codecommit">AWS CodeCommit (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="google-cloud-source">Google Cloud Source (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="alibaba-cloud">Alibaba Cloud (à venir)</option>
+                              <option className="bg-slate-950 text-cyan-200" value="tencent-cloud">Tencent Cloud (à venir)</option>
+                            </optgroup>
+                          </select>
+                          <p className="mt-1 text-[10px] text-cyan-300/80">
+                            Les providers marqués "à venir" sont en cours d'intégration et ne sont pas encore disponibles.
+                          </p>
+                        </div>
                       </div>
                       <div className="flex-1">
                         <Label className="text-[11px] text-slate-300">Langue du README</Label>
