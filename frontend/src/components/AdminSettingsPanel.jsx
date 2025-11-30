@@ -342,10 +342,14 @@ export function AdminSettingsPanel() {
           </Card>
         </TabsContent>
 
-
-                    className="bg-slate-950/60 border-slate-700 text-slate-100"
-                  />
-                </div>
+        {/* Onglet Crédits & Plans - Suite */}
+        <TabsContent value="credits" className="mt-4 space-y-4">
+          <Card className="bg-slate-900/80 border-white/10 shadow-[0_0_20px_rgba(56,189,248,0.15)]">
+            <CardHeader>
+              <CardTitle className="text-base text-slate-100">Limites par Plan</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm text-slate-300 mb-2 block">Projets max - Free</label>
                   <Input
