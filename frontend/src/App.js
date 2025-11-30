@@ -1859,9 +1859,16 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           value={selectedProvider}
                           onChange={(e) => setSelectedProvider(e.target.value)}
                         >
-                          <option value="github">GitHub</option>
-                          <option value="gitlab">GitLab</option>
-                          <option value="bitbucket">Bitbucket</option>
+                          <optgroup label="Disponibles">
+                            <option value="github">GitHub</option>
+                            <option value="gitlab">GitLab</option>
+                            <option value="bitbucket">Bitbucket</option>
+                          </optgroup>
+                          <optgroup label="À venir">
+                            <option value="gitea" disabled>Gitea (à venir)</option>
+                            <option value="codeberg" disabled>Codeberg (à venir)</option>
+                            <option value="gitee" disabled>Gitee (à venir)</option>
+                          </optgroup>
                         </select>
                       </div>
                       <div className="flex-1">
