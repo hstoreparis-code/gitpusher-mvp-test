@@ -48,21 +48,6 @@ export function AdminSupportPanel() {
   });
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/admin-login", { replace: true });
-      return;
-    }
-    
-    // Load initial admin status
-    loadAdminStatus();
-    
-    loadConversations();
-    // Auto-refresh every 5 seconds
-    const interval = setInterval(loadConversations, 5000);
-    return () => clearInterval(interval);
-  }, [token, navigate]);
-
   const loadAdminStatus = async () => {
     try {
       const res = await axios.get(`${API}/support/admin-online`);
