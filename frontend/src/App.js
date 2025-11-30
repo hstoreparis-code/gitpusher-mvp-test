@@ -781,7 +781,14 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
       </button>
       <CardHeader>
         <CardTitle className="text-base font-semibold text-center">
-          Bienvenue sur GitPusher.AI
+          Bienvenue sur
+          {" "}
+          <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">
+            GitPusher
+          </span>
+          <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent text-[11px] align-top ml-0.5">
+            .AI
+          </span>
         </CardTitle>
         <p className="text-xs text-slate-400 text-center mt-2">Choisissez une option pour continuer</p>
       </CardHeader>
