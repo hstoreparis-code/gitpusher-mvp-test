@@ -1739,8 +1739,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           {/* Colonne principale: détails projet + drag & drop + jobs */}
           <Card className="bg-slate-900/80 border-slate-800/80">
             <CardHeader>
-              <CardTitle className="text-sm sm:text-base flex items-center justify-between gap-2">
-                <span>Détails du projet</span>
+              <CardTitle className="text-base sm:text-lg flex items-center justify-between gap-2">
+                <span className="font-semibold">Détails du projet</span>
                 {selected && (
                   <div className="flex items-center gap-2">
                     <Button
