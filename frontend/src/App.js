@@ -1847,6 +1847,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                             className={`mt-1 text-[10px] ${
                               renameStatus.type === "success" ? "text-emerald-300" : "text-amber-300"
                             }`}
+                          >
+                            {renameStatus.message}
+                          </p>
+                        )}
+                      </div>
                       <div className="flex-1 flex flex-col gap-1">
                         <Label className="text-[11px] text-slate-300">Provider Git</Label>
                         <select
@@ -1858,12 +1863,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           <option value="gitlab">GitLab</option>
                           <option value="bitbucket">Bitbucket</option>
                         </select>
-                      </div>
-
-                          >
-                            {renameStatus.message}
-                          </p>
-                        )}
                       </div>
                       <div className="flex-1">
                         <Label className="text-[11px] text-slate-300">Langue du README</Label>
