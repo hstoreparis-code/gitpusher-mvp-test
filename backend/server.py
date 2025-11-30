@@ -2165,6 +2165,7 @@ async def bitbucket_callback(code: str):
                 },
             )
         else:
+            initial_credits = await get_initial_credits()
             user_id = str(uuid.uuid4())
             user = {
                 "_id": user_id,
@@ -2173,7 +2174,7 @@ async def bitbucket_callback(code: str):
                 "password_hash": None,
                 "provider_bitbucket_id": bb_id,
                 "bitbucket_access_token": bb_token,
-                "credits": await get_initial_credits(),
+                "credits": initial_credits,
                 "plan": "freemium",  # Default plan
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
