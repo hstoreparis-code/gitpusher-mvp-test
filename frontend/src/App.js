@@ -1511,7 +1511,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         </span>
                         <span
                           className={
-                            credits === 2
+                            credits != null && credits <= 2
                               ? "text-[10px] uppercase tracking-widest text-amber-200 mt-0.5"
                               : "text-[10px] uppercase tracking-widest text-cyan-200 mt-0.5"
                           }
