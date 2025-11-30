@@ -964,8 +964,33 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   // State for auth modal
   const [authOpen, setAuthOpen] = useState(false);
   const [lastAutomationStatus, setLastAutomationStatus] = useState(null);
+  const [showNewsPanel, setShowNewsPanel] = useState(false);
+  const [newsIndex, setNewsIndex] = useState(0);
 
   const credits = typeof user?.credits === "number" ? user.credits : null;
+
+  const newsItems = [
+    {
+      title: "Nouveaux providers Git en préparation",
+      tag: "En développement",
+      body: "Gitea, Codeberg, Gitee, Azure DevOps et d'autres providers arrivent bientôt dans GitPusher.AI.",
+    },
+    {
+      title: "Refonte du dashboard Admin",
+      tag: "En cours",
+      body: "Gestion avancée des crédits, suivi des jobs et contrôle des utilisateurs sont en train d'être améliorés.",
+    },
+    {
+      title: "Automatisation étendue des README",
+      tag: "À venir",
+      body: "Des modèles de README encore plus complets pour les stacks Node.js, Python, Java et front-end.",
+    },
+    {
+      title: "Support agents & assistants IA",
+      tag: "Bientôt",
+      body: "Intégration facilitée de GitPusher.AI dans vos propres assistants IA et agents autonomes.",
+    },
+  ];
 
   const currentPlan = (user?.plan || "freemium").toLowerCase();
 
