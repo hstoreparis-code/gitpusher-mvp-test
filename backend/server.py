@@ -2443,6 +2443,7 @@ async def list_projects(authorization: Optional[str] = Header(default=None)):
                 id=doc["_id"],
                 name=doc["name"],
                 status=doc.get("status", "pending"),
+                provider=doc.get("provider", "github"),
                 github_repo_url=doc.get("github_repo_url"),
                 created_at=datetime.fromisoformat(doc["created_at"]),
             )
