@@ -1476,10 +1476,12 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
 
         {/* BLOC CRÉATIF CRÉDITS */}
-        <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-[0_24px_70px_rgba(15,23,42,0.95)] overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-violet-500/5 pointer-events-none" />
-          <CardContent className="p-6 relative z-10">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="relative">
+          <div className="pointer-events-none absolute -inset-x-4 -inset-y-3 rounded-3xl bg-gradient-to-r from-cyan-500/35 via-sky-500/30 to-violet-500/35 blur-2xl opacity-80" />
+          <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-none overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-violet-500/5 pointer-events-none" />
+            <CardContent className="p-6 relative z-10">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
               {/* Partie gauche - Compteur principal */}
               <div className="flex items-center gap-6">
                 {/* Icône circulaire avec animation */}
