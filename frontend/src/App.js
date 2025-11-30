@@ -1531,7 +1531,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     {user?.plan && (
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                         (user.plan || '').toLowerCase() === 'free' || (user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo'
-                          ? 'bg-slate-700/50 text-slate-300 border border-slate-600'
+                          ? 'bg-gradient-to-r from-cyan-300/30 via-sky-400/30 to-cyan-300/30 text-cyan-100 border border-cyan-300/70 shadow-[0_0_18px_rgba(56,189,248,0.9)]'
                           : (user.plan || '').toLowerCase() === 'starter'
                           ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border border-emerald-400/40'
                           : (user.plan || '').toLowerCase() === 'pro'
