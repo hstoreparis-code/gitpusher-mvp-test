@@ -72,6 +72,8 @@ export function AdminSettingsPanel() {
     gitlab_integration: true,
     bitbucket_integration: false,
     stripe_integration: false
+  });
+
   // Autofix settings (loaded from backend)
   const [autofixSettings, setAutofixSettings] = useState({ auto_mode: false, webhook_secret: "" });
 
