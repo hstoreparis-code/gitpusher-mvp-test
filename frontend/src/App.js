@@ -968,6 +968,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   const credits = typeof user?.credits === "number" ? user.credits : null;
   const currentPlan = (user?.plan || "freemium").toLowerCase();
 
+
+  // MODE TEST - Simulateur d'abonnement (utilise testUser à la place de authUser)
+  // Pour désactiver le test, remettre testUser à null.
+
   
   // State for uploaded files
   const [uploadedFiles, setUploadedFiles] = useState([]);
