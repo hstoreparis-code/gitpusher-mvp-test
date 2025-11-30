@@ -1457,7 +1457,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
         {/* Dashboard Title + Toggle Free/Premium (mobile à droite du titre) */}
         <div className="flex items-center justify-between mb-2 sm:mb-3">
-          <h1 className="text-lg sm:text-xl font-semibold tracking-tight text-slate-50">Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Dashboard</h1>
           {/* Toggle Free / Premium (mobile, à droite du titre) */}
           <div className="flex sm:hidden items-center gap-2 text-[11px]">
             <div className="px-2 py-1 rounded-full bg-slate-900/80 border border-slate-700/80 flex items-center gap-2">
