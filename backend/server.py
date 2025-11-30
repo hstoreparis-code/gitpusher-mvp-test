@@ -2694,6 +2694,7 @@ async def run_project_pipeline(user: Dict, project: Dict, uploads: List[Dict]) -
         {
             "$set": {
                 "status": "done",
+                "provider": provider,
                 "github_repo_url": repo_url,
                 "github_repo_name": repo_info.full_name,
                 "readme_md": readme_md,
