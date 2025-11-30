@@ -242,6 +242,92 @@ export function AdminSettingsPanel() {
                     type="number"
                     value={creditSettings.credits_per_automation}
                     onChange={(e) => setCreditSettings({...creditSettings, credits_per_automation: parseInt(e.target.value)})}
+        {/* Onglet Autofix */}
+        <TabsContent value="autofix" className="mt-4 space-y-4">
+          <Card className="bg-slate-900/80 border-white/10 shadow-[0_0_20px_rgba(56,189,248,0.15)]">
+            <CardHeader>
+              <CardTitle className="text-base text-slate-100 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-emerald-400" />
+                Autofix - Webhook & Mode Auto
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm text-slate-300 mb-1 block">Secret Webhook Autofix</label>
+                <p className="text-xs text-slate-500 mb-1">
+                  Utilisé pour sécuriser l'endpoint public <code className="bg-slate-950/60 px-1 py-0.5 rounded border border-slate-700">POST /api/autofix/webhook/alert</code>.
+                  Le système externe doit inclure l'en-tête <code className="bg-slate-950/60 px-1 py-0.5 rounded border border-slate-700">X-Autofix-Secret</code>.
+                </p>
+                <Input
+                  type="text"
+                  value={autofixSettings.webhook_secret}
+                  onChange={(e) => setAutofixSettings({ ...autofixSettings, webhook_secret: e.target.value })}
+                  placeholder="Laisser vide pour désactiver la vérification du secret (démo uniquement)"
+                  className="bg-slate-950/60 border-slate-700 text-slate-100"
+                />
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-slate-950/60 border border-slate-800 rounded-lg">
+                <div>
+                  <p className="text-sm text-slate-200">Mode AutoFix</p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Lorsque ce mode est activé, les actions <span className="text-emerald-400">low risk</span> peuvent être exécutées automatiquement.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setAutofixSettings({ ...autofixSettings, auto_mode: !autofixSettings.auto_mode })}
+                  className={`relative w-12 h-6 rounded-full transition-colors ${
+                    autofixSettings.auto_mode ? 'bg-emerald-500' : 'bg-slate-600'
+                  }`}
+                >
+                  <span
+                    className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
+                      autofixSettings.auto_mode ? 'translate-x-[26px]' : 'translate-x-0.5'
+                    }`}
+                  />
+                </button>
+              </div>
+
+              <div className="text-xs text-slate-500 bg-slate-950/60 border border-slate-800 rounded-lg p-3">
+                <p className="font-semibold text-slate-300 mb-1">URL Webhook à utiliser :</p>
+                <code className="block break-all text-cyan-300">
+                  {process.env.REACT_APP_BACKEND_URL}/api/autofix/webhook/alert
+                </code>
+              </div>
+
+              <Button
+                className="w-full bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-white shadow-[0_0_18px_rgba(56,189,248,0.5)]"
+                onClick={async () => {
+                  const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
+                  if (!token) return;
+                  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+                  const API = `${BACKEND_URL}/api`;
+                  try {
+                    await fetch(`${API}/admin/autofix/settings`, {
+                      method: 'PATCH',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                      },
+                      body: JSON.stringify({
+                        auto_mode: autofixSettings.auto_mode,
+                        webhook_secret: autofixSettings.webhook_secret || null
+                      })
+                    });
+                    alert('Paramètres Autofix sauvegardés');
+                  } catch (err) {
+                    alert("Erreur lors de la sauvegarde des paramètres Autofix");
+                  }
+                }}
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Sauvegarder les paramètres Autofix
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+
                     className="bg-slate-950/60 border-slate-700 text-slate-100"
                   />
                 </div>
