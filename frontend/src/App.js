@@ -1675,7 +1675,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <Button
                       size="sm"
                       variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-400/70 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-400 text-slate-950 font-semibold shadow-[0_0_18px_rgba(139,92,246,0.9)] hover:shadow-[0_0_26px_rgba(168,85,247,1)]"
+                      className="w-full justify-start text-xs rounded-lg border-sky-400/70 bg-gradient-to-r from-slate-900 via-sky-700 to-sky-500 text-slate-50 font-semibold shadow-[0_0_18px_rgba(56,189,248,0.8)] hover:shadow-[0_0_26px_rgba(56,189,248,1)]"
                       onClick={() => navigate("/pricing")}
                     >
                       <span className="mr-2">💳</span> Acheter des crédits
@@ -1683,7 +1683,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <Button
                       size="sm"
                       variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-400/70 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-400 text-slate-950 font-semibold shadow-[0_0_18px_rgba(139,92,246,0.9)] hover:shadow-[0_0_26px_rgba(168,85,247,1)]"
+                      className="w-full justify-start text-xs rounded-lg border-sky-400/70 bg-gradient-to-r from-slate-900 via-sky-700 to-sky-500 text-slate-50 font-semibold shadow-[0_0_18px_rgba(56,189,248,0.8)] hover:shadow-[0_0_26px_rgba(56,189,248,1)]"
                       onClick={() => navigate("/pricing")}
                     >
                       <span className="mr-2">⭐</span> Passer au Premium
