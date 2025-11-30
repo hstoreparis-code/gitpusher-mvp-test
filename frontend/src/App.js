@@ -1586,48 +1586,54 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 </div>
               </div>
               
-              {/* Partie droite - Actions rapides */}
-              <div className="flex flex-col gap-2 min-w-[140px]">
-                <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-1">Actions rapides</div>
-                {((user?.plan || '').toLowerCase() === 'free' || (user?.plan || '').toLowerCase() === 'freemium' || (user?.plan || '').toLowerCase() === 'demo' || (user?.plan || '').toLowerCase() === 'starter') ? (
-                  <>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
-                      onClick={() => navigate("/pricing")}
-                    >
-                      <span className="mr-2">💳</span> Acheter des crédits
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
-                      onClick={() => navigate("/pricing")}
-                    >
-                      <span className="mr-2">⭐</span> Passer au Premium
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
-                      onClick={() => navigate("/account")}
-                    >
-                      <span className="mr-2">⚙️</span> Gérer l'abonnement
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
-                      onClick={() => navigate("/app/pro")}
-                    >
-                      <span className="mr-2">📊</span> Dashboard Pro
-                    </Button>
-                  </>
-                )}
+              {/* Partie droite - Actions rapides & paiement (desktop: colonne séparée) */}
+              <div className="flex flex-col gap-3 min-w-[220px] lg:w-[260px] mt-4 lg:mt-0">
+                <div className="space-y-1">
+                  <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-0.5">Actions rapides</div>
+                  {((user?.plan || '').toLowerCase() === 'free' || (user?.plan || '').toLowerCase() === 'freemium' || (user?.plan || '').toLowerCase() === 'demo' || (user?.plan || '').toLowerCase() === 'starter') ? (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
+                        onClick={() => navigate("/pricing")}
+                      >
+                        <span className="mr-2">💳</span> Acheter des crédits
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                        onClick={() => navigate("/pricing")}
+                      >
+                        <span className="mr-2">⭐</span> Passer au Premium
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                        onClick={() => navigate("/account")}
+                      >
+                        <span className="mr-2">⚙️</span> Gérer l'abonnement
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
+                        onClick={() => navigate("/app/pro")}
+                      >
+                        <span className="mr-2">📊</span> Dashboard Pro
+                      </Button>
+                    </>
+                  )}
+                </div>
+                <div className="hidden lg:block text-[10px] text-slate-400 leading-snug">
+                  <p>Paiements sécurisés gérés par Stripe. Cartes bancaires acceptées&nbsp;: Visa, Mastercard, American Express.</p>
+                  <p className="mt-1">Les paiements sont chiffrés, et vous pouvez annuler votre abonnement à tout moment depuis la page Compte.</p>
+                </div>
               </div>
             </div>
           </CardContent>
