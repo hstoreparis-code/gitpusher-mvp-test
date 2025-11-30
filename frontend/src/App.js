@@ -1486,8 +1486,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   )}
                   <div className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-full ${
                     (user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business'
-                      ? 'bg-gradient-to-br from-violet-500/20 to-pink-500/20 border-2 border-violet-400/40'
-                      : 'bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border-2 border-cyan-400/30'
+                      ? 'bg-gradient-to-br from-violet-700/60 to-indigo-800/60 border-2 border-violet-400/60'
+                      : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-cyan-400/40'
                   } flex flex-col items-center justify-center backdrop-blur-sm`}>
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
                       <>
