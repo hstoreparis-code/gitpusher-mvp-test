@@ -2418,16 +2418,16 @@ function AccountPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 </span>
               )}
               <Button
-              variant="outline"
-              size="sm"
-              className="rounded-full border-red-500/60 text-red-300 text-[11px]"
-              onClick={() => {
-                logout();
-                navigate("/");
-              }}
-            >
-              Logout
-            </Button>
+                variant="outline"
+                size="sm"
+                className="rounded-full border-red-500/60 text-red-300 text-[11px]"
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+              >
+                Logout
+              </Button>
           </div>
         </div>
       </header>
