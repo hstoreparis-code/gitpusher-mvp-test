@@ -1767,12 +1767,36 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                       />
                     </label>
                     {uploadedFiles.length > 0 && (
-                      <div className="mt-2 space-y-1 text-[11px] text-slate-300">
-                        <p className="font-semibold">Fichiers sélectionnés :</p>
-                        <ul className="max-h-24 overflow-y-auto pr-1 list-disc list-inside">
+                      <div className="mt-3 space-y-2 text-[11px] text-slate-300">
+                        <div className="flex items-center justify-between">
+                          <p className="font-semibold">Fichiers sélectionnés :</p>
+                          <button
+                            type="button"
+                            className="text-[10px] text-amber-300 hover:text-amber-200 underline"
+                            onClick={() => {
+                              setUploadedFiles([]);
+                              setPendingFiles([]);
+                            }}
+                          >
+                            Tout retirer
+                          </button>
+                        </div>
+                        <ul className="max-h-24 overflow-y-auto pr-1 space-y-1">
                           {uploadedFiles.map((f, idx) => (
-                            <li key={`${f.name}-${idx}`} className="truncate">
-                              {f.name} <span className="text-slate-500">({Math.round(f.size / 1024)} Ko)</span>
+                            <li key={`${f.name}-${idx}`} className="flex items-center justify-between gap-2">
+                              <span className="truncate">
+                                {f.name} <span className="text-slate-500">({Math.round(f.size / 1024)} Ko)</span>
+                              </span>
+                              <button
+                                type="button"
+                                className="text-[10px] text-red-300 hover:text-red-200"
+                                onClick={() => {
+                                  setUploadedFiles((prev) => prev.filter((_, i) => i !== idx));
+                                  setPendingFiles((prev) => prev.filter((_, i) => i !== idx));
+                                }}
+                              >
+                                Retirer
+                              </button>
                             </li>
                           ))}
                         </ul>
