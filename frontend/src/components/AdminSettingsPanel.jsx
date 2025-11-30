@@ -72,6 +72,34 @@ export function AdminSettingsPanel() {
     gitlab_integration: true,
     bitbucket_integration: false,
     stripe_integration: false
+  // Autofix settings (loaded from backend)
+  const [autofixSettings, setAutofixSettings] = useState({ auto_mode: false, webhook_secret: "" });
+
+  useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
+    if (!token) return;
+
+    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const API = `${BACKEND_URL}/api`;
+
+    fetch(`${API}/admin/autofix/settings`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (data) {
+          setAutofixSettings({
+            auto_mode: !!data.auto_mode,
+            webhook_secret: data.webhook_secret || ""
+          });
+        }
+      })
+      .catch(() => {
+        // silent fail, keep defaults
+      });
+  }, []);
+
+
   });
 
   const saveSettings = (section) => {
