@@ -878,6 +878,36 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
               variant="outline"
               className="w-full justify-center rounded-full border border-cyan-500/40 bg-slate-900 hover:bg-slate-900/80 text-slate-50 shadow-[0_0_18px_rgba(56,189,248,0.55)] transition-all"
               onClick={() => startOAuth("gitea")}
+        {/* Acceptation des CGU lors de l'inscription */}
+        {tab === "signup" && (
+          <div className="mt-4 mb-2 flex items-start gap-2 text-[11px] text-slate-400">
+            <input
+              id="accept-terms"
+              type="checkbox"
+              className="mt-[3px] h-3.5 w-3.5 rounded border-slate-600 bg-slate-900 text-cyan-400 focus:ring-cyan-500"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+            />
+            <label htmlFor="accept-terms" className="leading-snug">
+              J'accepte les
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.open("/terms", "_blank", "noopener,noreferrer");
+                  }
+                }}
+                className="ml-1 text-cyan-300 hover:text-cyan-200 underline underline-offset-2"
+              >
+                conditions générales d'utilisation
+              </button>
+              {" "}
+              de GitPusher.AI.
+            </label>
+          </div>
+        )}
+
+
               data-testid="gitea-oauth-button"
             >
               Gitea / Codeberg
