@@ -1707,53 +1707,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
             </CardContent>
           </Card>
 
-          {/* Version mobile / tablette des actions rapides : en dessous de la carte crédits */}
-          <Card className="lg:hidden bg-slate-900/80 border border-cyan-500/20 shadow-[0_0_24px_rgba(34,211,238,0.25)]">
-            <CardContent className="p-4 flex flex-col gap-3">
-              <div className="space-y-1">
-                <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-0.5">Actions rapides</div>
-                {((user?.plan || '').toLowerCase() === 'free' || (user?.plan || '').toLowerCase() === 'freemium' || (user?.plan || '').toLowerCase() === 'demo' || (user?.plan || '').toLowerCase() === 'starter') ? (
-                  <>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
-                      onClick={() => navigate("/pricing")}
-                    >
-                      <span className="mr-2">💳</span> Acheter des crédits
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
-                      onClick={() => navigate("/pricing")}
-                    >
-                      <span className="mr-2">⭐</span> Passer au Premium
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
-                      onClick={() => navigate("/account")}
-                    >
-                      <span className="mr-2">⚙️</span> Gérer l'abonnement
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
-                      onClick={() => navigate("/app/pro")}
-                    >
-                      <span className="mr-2">📊</span> Dashboard Pro
-                    </Button>
-                  </>
-                )}
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* CONTENU PRINCIPAL DU DASHBOARD USER */}
