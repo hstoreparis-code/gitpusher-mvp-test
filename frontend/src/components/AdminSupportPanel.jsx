@@ -70,20 +70,6 @@ export function AdminSupportPanel() {
       setConversations(convRes.data);
       setUnreadCount(unreadRes.data.unread_count || 0);
       setLoading(false);
-
-  const loadConversations = async () => {
-    try {
-      const [convRes, unreadRes] = await Promise.all([
-        axios.get(`${API}/support/conversations`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${API}/support/unread-count`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      ]);
-      setConversations(convRes.data);
-      setUnreadCount(unreadRes.data.unread_count || 0);
-      setLoading(false);
     } catch (err) {
       console.error("Failed to load conversations", err);
       setLoading(false);
