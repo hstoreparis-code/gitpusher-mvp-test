@@ -301,9 +301,11 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
 
   // Si on est en mode /signup, ouvrir immédiatement le bloc d'inscription
   useEffect(() => {
-    if (forceSignupMode) {
+    if (!forceSignupMode) return;
+    const id = window.setTimeout(() => {
       setAuthOpen(true);
-    }
+    }, 0);
+    return () => window.clearTimeout(id);
   }, [forceSignupMode]);
 
 
