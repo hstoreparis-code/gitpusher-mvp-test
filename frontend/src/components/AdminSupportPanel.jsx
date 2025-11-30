@@ -98,6 +98,13 @@ export function AdminSupportPanel() {
   const toggleAdminStatus = async () => {
     try {
       await axios.patch(
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [selectedConversation]);
+
+
         `${API}/support/admin-status`,
         { online: !adminOnline },
         { headers: { Authorization: `Bearer ${token}` } }
