@@ -241,6 +241,22 @@ export function AdminSettingsPanel() {
                     type="number"
                     value={creditSettings.credits_per_automation}
                     onChange={(e) => setCreditSettings({...creditSettings, credits_per_automation: parseInt(e.target.value)})}
+                    className="bg-slate-950/60 border-slate-700 text-slate-100"
+                  />
+                </div>
+              </div>
+
+              <Button
+                className="w-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white shadow-[0_0_18px_rgba(56,189,248,0.5)]"
+                onClick={() => saveSettings('crédits')}
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Sauvegarder la configuration crédits
+              </Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         {/* Onglet Autofix */}
         <TabsContent value="autofix" className="mt-4 space-y-4">
           <Card className="bg-slate-900/80 border-white/10 shadow-[0_0_20px_rgba(56,189,248,0.15)]">
