@@ -92,13 +92,6 @@ export function AdminSupportPanel() {
     return () => clearInterval(interval);
   }, [token, navigate]);
 
-
-    } catch (err) {
-      console.error("Failed to load conversations", err);
-      setLoading(false);
-    }
-  };
-
   const toggleAdminStatus = async () => {
     try {
       await axios.patch(
