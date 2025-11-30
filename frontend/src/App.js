@@ -810,7 +810,7 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
           </button>
         </div>
 
-        <p className="text-sm text-slate-300 mb-4 text-center font-medium">
+        <p className="text-sm text-slate-300 mb-3 text-center font-medium">
           {tab === "login" ? "Connectez-vous avec :" : "Créez votre compte avec :"}
         </p>
 
