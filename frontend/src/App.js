@@ -1958,43 +1958,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         data-testid="dashboard-file-input"
                       />
 
-      {/* Panneau flottant : fil d'actualités complet */}
-      {showNewsPanel && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-          <div className="w-full max-w-2xl max-h-[80vh] rounded-3xl border border-slate-700 bg-slate-950/95 shadow-[0_0_40px_rgba(15,23,42,0.9)] overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-slate-800">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.22em] text-cyan-300/80">Fil d'actualit e9s</p>
-                <h2 className="text-sm sm:text-base font-semibold text-slate-50">Les derni e8res avanc e9es GitPusher.AI</h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowNewsPanel(false)}
-                className="h-8 w-8 rounded-full border border-slate-700 flex items-center justify-center text-slate-300 hover:bg-slate-800"
-                aria-label="Fermer"
-              >
-                05
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-3">
-              {newsItems.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-2xl border border-slate-800 bg-slate-900/70 px-3 sm:px-4 py-3 space-y-1"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-medium text-slate-50">{item.title}</h3>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-cyan-300 uppercase tracking-wide whitespace-nowrap">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-400">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
 
                     </label>
