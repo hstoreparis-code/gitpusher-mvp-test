@@ -512,7 +512,7 @@ export function AdminSettingsPanel() {
               <div className="flex items-center justify-between p-4 bg-slate-950/60 border border-slate-800 rounded-lg">
                 <div>
                   <p className="text-sm text-slate-200">Indicateur admin en ligne</p>
-                  <p className="text-xs text-slate-400 mt-1">Afficher le statut vert/rouge de l'admin</p>
+                  <p className="text-xs text-slate-400 mt-1">Afficher le statut vert/rouge de l’admin</p>
                 </div>
                 <button
                   onClick={() => setChatbotSettings({...chatbotSettings, admin_online_status: !chatbotSettings.admin_online_status})}
