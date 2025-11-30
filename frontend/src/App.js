@@ -1476,7 +1476,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
 
         {/* BLOC CRÉATIF CRÉDITS */}
-        <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-[0_0_30px_rgba(56,189,248,0.15)] overflow-hidden relative">
+        <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-[0_24px_70px_rgba(15,23,42,0.95)] overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-violet-500/5 pointer-events-none" />
           <CardContent className="p-6 relative z-10">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
