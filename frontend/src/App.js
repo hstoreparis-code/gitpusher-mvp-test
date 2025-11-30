@@ -1486,18 +1486,17 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         </div>
 
         {/* BLOC CRÉATIF CRÉDITS */}
-        <div className="relative">
-          <div className="pointer-events-none absolute -inset-x-4 -inset-y-3 rounded-3xl bg-gradient-to-r from-cyan-500/35 via-sky-500/30 to-violet-500/35 blur-2xl opacity-80" />
+        <div className="relative space-y-4 lg:space-y-0 lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(0,1.3fr)] lg:gap-4">
+          <div className="pointer-events-none absolute -inset-x-4 -inset-y-3 rounded-3xl bg-gradient-to-r from-cyan-500/35 via-sky-500/30 to-violet-500/35 blur-2xl opacity-80 lg:hidden" />
+
+          {/* Carte Crédits disponibles */}
           <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-none overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-violet-500/5 pointer-events-none" />
             <CardContent className="p-6 relative z-10">
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-                {/* Partie gauche - Compteur principal */}
-                <div className="flex items-center gap-6">
+              <div className="flex items-center gap-6">
                 {/* Icône circulaire avec animation */}
                 <div className="relative">
                   {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
-                    // Effet spécial pour Premium et Business illimités
                     <div className="absolute inset-0 bg-gradient-to-br from-violet-400 via-purple-400 to-pink-500 rounded-full blur-xl opacity-50 animate-pulse" />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-full blur-xl opacity-40 animate-pulse" />
@@ -1508,7 +1507,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                       : 'bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border-2 border-cyan-400/30'
                   } flex flex-col items-center justify-center backdrop-blur-sm`}>
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
-                      // Affichage infini pour Premium et Business
                       <>
                         <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-br from-violet-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
                           ∞
@@ -1518,7 +1516,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         </span>
                       </>
                     ) : (
-                      // Affichage normal pour tous les autres plans (Free, Starter, Pro)
                       <>
                         <span className="text-3xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 to-violet-300 bg-clip-text text-transparent">
                           {credits == null ? "—" : credits}
@@ -1530,14 +1527,13 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     )}
                   </div>
                 </div>
-                
+
                 {/* Texte et statut */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-3">
                     <h3 className="text-lg sm:text-xl font-semibold text-slate-100">
                       Crédits disponibles
                     </h3>
-                    {/* Badge du plan actuel */}
                     {user?.plan && (
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                         (user.plan || '').toLowerCase() === 'free' || (user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo'
@@ -1558,7 +1554,6 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   </div>
                   <div className="flex items-center gap-2">
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
-                      // Statut premium pour plans illimités
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-400/40">
                         <span className="text-lg">✨</span>
                         <span className="text-xs font-semibold text-violet-300">Accès illimité</span>
@@ -1585,60 +1580,109 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   </p>
                 </div>
               </div>
-              
-              {/* Partie droite - Actions rapides & paiement (desktop: colonne séparée) */}
-              <div className="flex flex-col gap-3 min-w-[220px] lg:w-[260px] mt-4 lg:mt-0">
-                <div className="space-y-1">
-                  <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-0.5">Actions rapides</div>
-                  {((user?.plan || '').toLowerCase() === 'free' || (user?.plan || '').toLowerCase() === 'freemium' || (user?.plan || '').toLowerCase() === 'demo' || (user?.plan || '').toLowerCase() === 'starter') ? (
-                    <>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
-                        onClick={() => navigate("/pricing")}
-                      >
-                        <span className="mr-2">💳</span> Acheter des crédits
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
-                        onClick={() => navigate("/pricing")}
-                      >
-                        <span className="mr-2">⭐</span> Passer au Premium
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
-                        onClick={() => navigate("/account")}
-                      >
-                        <span className="mr-2">⚙️</span> Gérer l'abonnement
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
-                        onClick={() => navigate("/app/pro")}
-                      >
-                        <span className="mr-2">📊</span> Dashboard Pro
-                      </Button>
-                    </>
-                  )}
-                </div>
-                <div className="hidden lg:block text-[10px] text-slate-400 leading-snug">
-                  <p>Paiements sécurisés gérés par Stripe. Cartes bancaires acceptées&nbsp;: Visa, Mastercard, American Express.</p>
-                  <p className="mt-1">Les paiements sont chiffrés, et vous pouvez annuler votre abonnement à tout moment depuis la page Compte.</p>
-                </div>
+            </CardContent>
+          </Card>
+
+          {/* Carte Actions rapides & paiement (desktop: carte séparée) */}
+          <Card className="hidden lg:block bg-slate-900/80 border border-cyan-500/20 shadow-[0_0_32px_rgba(34,211,238,0.25)]">
+            <CardContent className="p-5 flex flex-col gap-3">
+              <div className="space-y-1">
+                <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-0.5">Actions rapides</div>
+                {((user?.plan || '').toLowerCase() === 'free' || (user?.plan || '').toLowerCase() === 'freemium' || (user?.plan || '').toLowerCase() === 'demo' || (user?.plan || '').toLowerCase() === 'starter') ? (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
+                      onClick={() => navigate("/pricing")}
+                    >
+                      <span className="mr-2">💳</span> Acheter des crédits
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                      onClick={() => navigate("/pricing")}
+                    >
+                      <span className="mr-2">⭐</span> Passer au Premium
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                      onClick={() => navigate("/account")}
+                    >
+                      <span className="mr-2">⚙️</span> Gérer l'abonnement
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
+                      onClick={() => navigate("/app/pro")}
+                    >
+                      <span className="mr-2">📊</span> Dashboard Pro
+                    </Button>
+                  </>
+                )}
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+              <div className="text-[10px] text-slate-400 leading-snug">
+                <p>Paiements sécurisés gérés par Stripe. Cartes bancaires acceptées&nbsp;: Visa, Mastercard, American Express.</p>
+                <p className="mt-1">Les paiements sont chiffrés, et vous pouvez annuler votre abonnement à tout moment depuis la page Compte.</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Version mobile / tablette des actions rapides : en dessous de la carte crédits */}
+          <Card className="lg:hidden bg-slate-900/80 border border-cyan-500/20 shadow-[0_0_24px_rgba(34,211,238,0.25)]">
+            <CardContent className="p-4 flex flex-col gap-3">
+              <div className="space-y-1">
+                <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-0.5">Actions rapides</div>
+                {((user?.plan || '').toLowerCase() === 'free' || (user?.plan || '').toLowerCase() === 'freemium' || (user?.plan || '').toLowerCase() === 'demo' || (user?.plan || '').toLowerCase() === 'starter') ? (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300 hover:text-cyan-200"
+                      onClick={() => navigate("/pricing")}
+                    >
+                      <span className="mr-2">💳</span> Acheter des crédits
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                      onClick={() => navigate("/pricing")}
+                    >
+                      <span className="mr-2">⭐</span> Passer au Premium
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                      onClick={() => navigate("/account")}
+                    >
+                      <span className="mr-2">⚙️</span> Gérer l'abonnement
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
+                      onClick={() => navigate("/app/pro")}
+                    >
+                      <span className="mr-2">📊</span> Dashboard Pro
+                    </Button>
+                  </>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* CONTENU PRINCIPAL DU DASHBOARD USER */}
         <div className="grid gap-4 lg:grid-cols-[2fr,3fr] mt-4">
