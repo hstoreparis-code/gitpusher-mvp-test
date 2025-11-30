@@ -1061,6 +1061,47 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         { headers: { Authorization: `Bearer ${token}` } },
       );
       setProjects((prev) => [res.data, ...prev]);
+  // Si on arrive sur le dashboard juste après un drag&drop sur la landing,
+  // récupérer les fichiers temporaires stockés en global et créer un projet + uploader
+  useEffect(() => {
+    if (!token) return;
+    if (landingFilesHandled) return;
+    if (typeof window === "undefined") return;
+    const files = window.__landingFiles;
+    if (!files || !Array.isArray(files) || files.length === 0) return;
+
+    const run = async () => {
+      try {
+        // Créer un nouveau projet si aucun projet sélectionné
+        let project = selected;
+        if (!project) {
+          setCreating(true);
+          const res = await axios.post(
+            `${API}/workflows/projects`,
+            { name: null, description: null, language: "en" },
+            { headers: { Authorization: `Bearer ${token}` } },
+          );
+          project = res.data;
+          setProjects((prev) => [res.data, ...prev]);
+          setSelected(res.data);
+        }
+
+        // Préparer l'upload des fichiers
+        setPendingFiles(files);
+        const filesInfo = files.map((f) => ({ name: f.name, size: f.size, type: f.type }));
+        setUploadedFiles(filesInfo);
+        setProgress(33);
+      } finally {
+        setCreating(false);
+        setLandingFilesHandled(true);
+        window.__landingFiles = null;
+      }
+    };
+
+    run();
+  }, [token, selected, landingFilesHandled, API, setProjects]);
+
+
       setSelected(res.data);
     } finally {
       setCreating(false);
