@@ -189,6 +189,72 @@ export function AdminCreditsPanel() {
             disabled={saving}
             className="w-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 font-semibold"
           >
+
+      {/* Simulateur de plan & crédits (admin uniquement, ne touche pas à la base) */}
+      <Card className="bg-amber-500/5 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.25)]">
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <Gift className="h-4 w-4 text-amber-400" />
+            Simulateur de Plan & Crédits (Test visuel)
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-xs text-slate-300">
+          <p className="text-[11px] text-slate-400">
+            Ce simulateur ne modifie pas la base de données. Il sert uniquement à tester le rendu des cartes pricing et des seuils de crédits.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-3 items-center">
+            <div className="space-y-1">
+              <Label className="text-xs">Plan simulé</Label>
+              <select
+                value={simPlan}
+                onChange={(e) => setSimPlan(e.target.value)}
+                className="w-full px-2 py-1.5 rounded-md bg-slate-950/70 border border-slate-700 text-xs text-slate-100"
+              >
+                <option>Free</option>
+                <option>Starter</option>
+                <option>Pro</option>
+                <option>Premium</option>
+                <option>Business</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-xs">Crédits simulés</Label>
+              <Input
+                type="number"
+                min="0"
+                value={simCredits}
+                onChange={(e) => setSimCredits(parseInt(e.target.value) || 0)}
+                className="bg-slate-950/70 border-slate-700 h-8 text-xs"
+              />
+              <p className="text-[10px] text-slate-500">De 0 à 2 : état "warning" jaune, au-delà : bleu néon.</p>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-xs">Raccourcis rapides</Label>
+              <div className="flex flex-wrap gap-1.5">
+                <Button size="xs" variant="outline" className="text-[10px] h-7 px-2 border-slate-600" onClick={() => setSimCredits(2)}>
+                  2 crédits
+                </Button>
+                <Button size="xs" variant="outline" className="text-[10px] h-7 px-2 border-slate-600" onClick={() => setSimCredits(10)}>
+                  Starter
+                </Button>
+                <Button size="xs" variant="outline" className="text-[10px] h-7 px-2 border-slate-600" onClick={() => setSimCredits(50)}>
+                  Pro
+                </Button>
+                <Button size="xs" variant="outline" className="text-[10px] h-7 px-2 border-emerald-500/60 text-emerald-300" onClick={() => { setSimPlan("Premium"); setSimCredits(999999); }}>
+                  Premium ∞
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 text-[11px] text-slate-400">
+            <p>
+              Utilisez ces valeurs comme référence pour ajuster les textes et les seuils dans le dashboard user (ex : comportement en dessous de 3 crédits, affichage illimité Premium/Business, etc.).
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+
             <Save className="h-4 w-4 mr-2" />
             {saving ? "Sauvegarde..." : "Sauvegarder les Paramètres"}
           </Button>
