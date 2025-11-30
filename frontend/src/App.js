@@ -3014,7 +3014,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   <CardTitle className="text-xl font-bold">Premium</CardTitle>
                 </div>
                 <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-3xl font-bold text-cyan-300">29,99€</span>
+                  <span className="text-3xl font-bold text-cyan-300">19,99€</span>
                   <span className="text-cyan-300 text-sm">/ mois</span>
                 </div>
                 <p className="text-xs text-slate-400">
