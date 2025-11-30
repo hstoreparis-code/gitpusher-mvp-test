@@ -911,11 +911,6 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
           </div>
         )}
 
-
-              data-testid="gitea-oauth-button"
-            >
-              Gitea / Codeberg
-            </Button>
           </div>
 
           {/* Message d'information à la place de l'auth email */}
