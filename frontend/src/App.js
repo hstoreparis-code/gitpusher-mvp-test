@@ -815,7 +815,7 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
         </p>
 
         {/* Bloc connexions rapides en premier */}
-        <div className="mb-5 space-y-3">
+        <div className="mb-5 space-y-4">
           <div className="space-y-2 flex flex-col items-center">
             <p className="text-[11px] text-slate-400 self-start">Connexion ultra-rapide :</p>
             <Button
