@@ -127,12 +127,14 @@ class ProjectUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     language: Optional[str] = None
+    provider: Optional[str] = None  # github | gitlab | bitbucket
 
 
 class ProjectPublic(BaseModel):
     id: str
     name: str
     status: str
+    provider: Optional[str] = "github"
     github_repo_url: Optional[str] = None
     created_at: datetime
 
