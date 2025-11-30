@@ -1040,7 +1040,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     try {
       const res = await axios.patch(
         `${API}/workflows/projects/${selected.id}`,
-        { name: newName },
+        { name: newName, provider: selectedProvider },
         { headers: { Authorization: `Bearer ${token}` } },
       );
       const updated = res.data;
