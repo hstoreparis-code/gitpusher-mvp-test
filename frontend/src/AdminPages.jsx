@@ -1122,6 +1122,10 @@ export function AdminDashboardPage() {
                 )}
               </TabsContent>
 
+              <TabsContent value="credits" className="mt-4">
+                <AdminCreditsPanel />
+              </TabsContent>
+
               <TabsContent value="users" className="mt-4 space-y-3">
                 {/* Search and Filters */}
                 <Card className="bg-slate-900/80 border-white/10 shadow-[0_0_20px_rgba(56,189,248,0.15)]">
