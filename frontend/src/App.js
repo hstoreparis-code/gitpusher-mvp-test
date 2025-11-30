@@ -463,7 +463,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
               <span className="text-slate-300">
                 Dépose tes fichiers, l’IA organise ton projet, génère le README et pousse tes dépôts Git
               </span>
-              <span className="ml-1 bg-gradient-to-r from-cyan-300 via-sky-400 to-cyan-300 bg-clip-text text-transparent font-semibold drop-shadow-[0_0_22px_rgba(56,189,248,1)] animate-pulse">
+              <span className="ml-1 bg-gradient-to-r from-cyan-300 via-sky-400 to-cyan-300 bg-clip-text text-transparent font-semibold drop-shadow-[0_0_22px_rgba(56,189,248,1)] neon-flicker">
                 (GitHub, GitLab, Bitbucket, Azure DevOps, Gitea…)
               </span>
             </p>
