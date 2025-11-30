@@ -201,7 +201,7 @@ export function AdminSupportPanel() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <div className="overflow-y-auto h-[600px]">
+                <div className="overflow-y-scroll h-[600px]">
                   {conversations.length === 0 ? (
                     <div className="p-8 text-center text-sm text-slate-400">
                       Aucune conversation pour le moment
@@ -259,7 +259,7 @@ export function AdminSupportPanel() {
                   </CardHeader>
                   <CardContent className="p-0 flex flex-col">
                     {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[520px] bg-slate-950">
+                    <div className="flex-1 overflow-y-scroll p-4 space-y-4 h-[520px] bg-slate-950">
                       {selectedConversation?.messages.map((msg, index) => (
                         <div key={index} className={`flex ${msg.is_admin ? 'justify-end' : 'justify-start'}`}>
                           <div className={`max-w-[70%] rounded-2xl px-4 py-2 ${
