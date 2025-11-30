@@ -459,8 +459,13 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
             <p className="text-xs sm:text-sm text-cyan-200/70 font-medium max-w-2xl mx-auto lg:mx-0 mt-1 lg:-mt-8">
               The universal AI-to-Git push engine used by assistants, agents, and autonomous coding systems worldwide.
             </p>
-            <p className="text-[13px] sm:text-base lg:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 mt-3">
-              {t("heroSubtitle")}
+            <p className="text-[13px] sm:text-base lg:text-lg max-w-2xl mx-auto lg:mx-0 mt-3">
+              <span className="text-slate-300">
+                Dépose tes fichiers, l’IA organise ton projet, génère le README et pousse tes dépôts Git
+              </span>
+              <span className="ml-1 text-cyan-300 font-semibold drop-shadow-[0_0_14px_rgba(56,189,248,0.95)] animate-pulse">
+                (GitHub, GitLab, Bitbucket, Azure DevOps, Gitea…)
+              </span>
             </p>
 
             {/* Steps now just above CTA - redesigned inline */}
