@@ -2771,17 +2771,16 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 </div>
               </PopoverContent>
             </Popover>
-            <Button
-              variant="outline"
-              size="sm"
+            <button
+              type="button"
               onClick={() => window.history.back()}
-              className="group relative px-3 py-2 rounded-full border border-cyan-400/70 bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 text-sm font-semibold shadow-[0_0_22px_rgba(34,211,238,0.9)] hover:shadow-[0_0_32px_rgba(34,211,238,1)] transition-all flex items-center gap-2 overflow-hidden"
+              className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/70 bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 shadow-[0_0_22px_rgba(34,211,238,0.9)] hover:shadow-[0_0_32px_rgba(34,211,238,1)] transition-all overflow-hidden"
+              aria-label="Retour"
               data-testid="pricing-back-button"
             >
-              <span className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(244,244,245,0.35),transparent_55%)] opacity-60 group-hover:opacity-90 transition-opacity" />
+              <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(244,244,245,0.45),transparent_60%)] opacity-70 group-hover:opacity-100 transition-opacity" />
               <ArrowLeft className="relative z-10 h-4 w-4 drop-shadow-[0_0_8px_rgba(15,23,42,0.9)]" />
-              <span className="relative z-10 text-xs sm:text-sm tracking-wide">Retour</span>
-            </Button>
+            </button>
           </div>
         </div>
       </header>
