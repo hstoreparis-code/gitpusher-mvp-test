@@ -708,6 +708,10 @@ export function AdminDashboardPage() {
                   <BarChart3 className="w-4 h-4 mr-2" />
                   Statistiques
                 </TabsTrigger>
+                <TabsTrigger value="credits">
+                  <Gift className="w-4 h-4 mr-2" />
+                  Crédits
+                </TabsTrigger>
                 <TabsTrigger value="users">
                   <Users className="w-4 h-4 mr-2" />
                   Utilisateurs
