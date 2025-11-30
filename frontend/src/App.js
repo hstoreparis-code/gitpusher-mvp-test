@@ -1467,6 +1467,89 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               >
                 <span className="absolute top-[3px] w-4 h-4 rounded-full bg-black transition-transform duration-200 translate-x-[2px]" />
               </button>
+
+        {/* TEST MODE - Simulateur d'abonnement (réactivé pour debug) */}
+        <Card className="mb-4 bg-amber-500/10 border-amber-500/30">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <p className="text-xs sm:text-sm font-semibold text-amber-300 mb-1">🧪 MODE TEST - Simulateur d'abonnement</p>
+                <p className="text-[10px] sm:text-xs text-slate-400">Testez rapidement les scénarios de crédits et de plan sans impacter les vrais utilisateurs.</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const currentUser = user || {};
+                    const newCredits = Math.max(0, (currentUser.credits || 0) - 1);
+                    setTestUser({ ...currentUser, credits: newCredits });
+                  }}
+                  variant="outline"
+                  className="text-xs border-red-500/50 text-red-300 hover:bg-red-500/20"
+                >
+                  -1 crédit
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const currentUser = user || {};
+                    setTestUser({ ...currentUser, credits: (currentUser.credits || 0) + 5 });
+                  }}
+                  variant="outline"
+                  className="text-xs border-green-500/50 text-green-300 hover:bg-green-500/20"
+                >
+                  +5 crédits
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const currentUser = user || {};
+                    setTestUser({ ...currentUser, credits: (currentUser.credits || 0) + 50 });
+                  }}
+                  variant="outline"
+                  className="text-xs border-cyan-500/50 text-cyan-300 hover:bg-cyan-500/20"
+                >
+                  +50 crédits
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => {
+                    const currentUser = user || {};
+                    const plans = ["Free", "Starter", "Pro", "Premium", "Business"];
+                    const currentIndex = plans.indexOf((currentUser.plan || "Free"));
+                    const nextPlan = plans[(currentIndex + 1) % plans.length];
+
+                    let newCredits = currentUser.credits || 2;
+                    if (nextPlan === "Free") {
+                      newCredits = 2;
+                    } else if (nextPlan === "Starter") {
+                      newCredits = 10;
+                    } else if (nextPlan === "Pro") {
+                      newCredits = 50;
+                    } else if (nextPlan === "Premium" || nextPlan === "Business") {
+                      newCredits = 999999;
+                    }
+
+                    setTestUser({ ...currentUser, plan: nextPlan, credits: newCredits });
+                  }}
+                  variant="outline"
+                  className="text-xs border-violet-500/50 text-violet-300 hover:bg-violet-500/20"
+                >
+                  Changer Plan
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => setTestUser(null)}
+                  variant="outline"
+                  className="text-xs border-slate-500/60 text-slate-300 hover:bg-slate-700/40"
+                >
+                  Reset test
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
               <span className="text-[10px] font-medium text-slate-400">Premium</span>
             </div>
           </div>
