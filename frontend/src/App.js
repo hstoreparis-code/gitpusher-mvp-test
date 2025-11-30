@@ -2313,6 +2313,8 @@ function TermsPage() {
   );
 }
 
+// Duplicate AccountPage function - commented out (actual implementation below)
+/*
 function AccountPage({ t, lang, setLang, dark, setDark, currentLang, languages, isLoadingLang }) {
   const { token, user, logout } = useAuth();
   const navigate = useNavigate();
