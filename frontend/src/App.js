@@ -1786,7 +1786,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                           />
                           <Button
                             size="xs"
-                            className="h-8 px-3 rounded-full text-[11px] bg-cyan-400 hover:bg-cyan-300 text-slate-950 whitespace-nowrap w-full sm:w-auto shadow-[0_0_18px_rgba(34,211,238,0.9)] border border-cyan-300"
+                            className="h-8 px-3 rounded-full text-[11px] bg-gradient-to-r from-cyan-300 via-sky-400 to-cyan-300 text-slate-950 whitespace-nowrap w-full sm:w-auto shadow-[0_0_22px_rgba(56,189,248,1)] border border-cyan-200"
                             onClick={renameProject}
                             disabled={renaming || !editName.trim() || editName === (selected.name || "")}
                           >
