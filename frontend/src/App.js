@@ -3301,8 +3301,8 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <p className="text-slate-300">
-              Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span> supporte <strong className="text-cyan-300">12 plateformes Git</strong> différentes, 
-              permettant une distribution mondiale et une flexibilité maximale.
+              Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span> supporte <strong className="text-cyan-300">plusieurs plateformes Git</strong> majeures, 
+              avec un développement continu pour étendre la compatibilité.
             </p>
             
             <div className="space-y-3">
@@ -3311,16 +3311,28 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
                 <div className="p-4 rounded-xl bg-slate-950/50 border border-cyan-500/20 text-center">
                   <p className="text-base">
                     <span className="text-cyan-300 drop-shadow-[0_0_10px_rgba(56,189,248,0.9)] neon-flicker font-semibold">
-                      GitHub, GitLab, Bitbucket, Gitea, Codeberg, Gitee
+                      GitHub, GitLab, Bitbucket
                     </span>
                   </p>
-                  <p className="text-xs text-slate-400 mt-2">6 plateformes Git entièrement opérationnelles</p>
+                  <p className="text-xs text-slate-400 mt-2">3 plateformes Git entièrement opérationnelles</p>
                 </div>
               </div>
               
               <div>
                 <p className="font-semibold text-amber-300 mb-2">🟡 Providers En Développement</p>
                 <div className="grid sm:grid-cols-2 gap-2 text-xs text-slate-400">
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/30">
+                    <Clock className="h-4 w-4" />
+                    <span>Gitea</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/30">
+                    <Clock className="h-4 w-4" />
+                    <span>Codeberg</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/30">
+                    <Clock className="h-4 w-4" />
+                    <span>Gitee</span>
+                  </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/30">
                     <Clock className="h-4 w-4" />
                     <span>Azure DevOps</span>
@@ -3335,7 +3347,11 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/30">
                     <Clock className="h-4 w-4" />
-                    <span>Alibaba Cloud + Tencent</span>
+                    <span>Alibaba Cloud</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-950/30">
+                    <Clock className="h-4 w-4" />
+                    <span>Tencent Cloud</span>
                   </div>
                 </div>
               </div>
