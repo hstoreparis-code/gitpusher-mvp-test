@@ -1818,6 +1818,7 @@ async def google_callback(code: str):
                 {"$set": {"provider_google_id": google_id, "updated_at": datetime.now(timezone.utc).isoformat()}},
             )
         else:
+            initial_credits = await get_initial_credits()
             user_id = str(uuid.uuid4())
             user = {
                 "_id": user_id,
@@ -1827,7 +1828,7 @@ async def google_callback(code: str):
                 "provider_google_id": google_id,
                 "provider_github_id": None,
                 "github_access_token": None,
-                "credits": 5,  # New users get 5 free credits
+                "credits": initial_credits,
                 "plan": "freemium",  # Default plan
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
