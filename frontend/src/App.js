@@ -1500,10 +1500,10 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                       </>
                     ) : (
                       <>
-                        <span className="text-3xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 to-violet-300 bg-clip-text text-transparent">
+                        <span className="text-3xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]">
                           {credits == null ? "—" : credits}
                         </span>
-                        <span className="text-[10px] uppercase tracking-widest text-slate-400 mt-0.5">
+                        <span className="text-[10px] uppercase tracking-widest text-cyan-200 mt-0.5">
                           {credits === 1 ? "crédit" : "crédits"}
                         </span>
                       </>
