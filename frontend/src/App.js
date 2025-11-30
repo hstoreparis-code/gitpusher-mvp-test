@@ -1780,19 +1780,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     </label>
                     {uploadedFiles.length > 0 && (
                       <div className="mt-3 space-y-2 text-[11px] text-slate-300">
-                        <div className="flex items-center justify-between">
-                          <p className="font-semibold">Fichiers sélectionnés :</p>
-                          <button
-                            type="button"
-                            className="text-[10px] text-amber-300 hover:text-amber-200 underline"
-                            onClick={() => {
-                              setUploadedFiles([]);
-                              setPendingFiles([]);
-                            }}
-                          >
-                            Tout retirer
-                          </button>
-                        </div>
+                        <p className="font-semibold">Fichiers sélectionnés :</p>
                         <ul className="max-h-24 overflow-y-auto pr-1 space-y-1">
                           {uploadedFiles.map((f, idx) => (
                             <li key={`${f.name}-${idx}`} className="flex items-center justify-between gap-2">
