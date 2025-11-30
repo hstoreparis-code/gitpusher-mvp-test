@@ -611,7 +611,11 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                   multiple
                   className="hidden"
                   onChange={(e) => {
-                    if (e.target.files && e.target.files.length > 0) {
+                    const files = Array.from(e.target.files || []);
+                    if (files.length > 0) {
+                      if (typeof window !== "undefined") {
+                        window.__landingFiles = files;
+                      }
                       handleGetStarted();
                     }
                   }}
@@ -911,6 +915,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
   const [loading, setLoading] = useState(true);
   const [jobsLoading, setJobsLoading] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [landingFilesHandled, setLandingFilesHandled] = useState(false);
   const [selected, setSelected] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [processing, setProcessing] = useState(false);
