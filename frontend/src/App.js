@@ -426,6 +426,7 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
                     navigate("/app");
                   }}
                   onClose={() => setAuthOpen(false)}
+                  initialTab={forceSignupMode ? "signup" : "login"}
                 />
               </PopoverContent>
             </Popover>
