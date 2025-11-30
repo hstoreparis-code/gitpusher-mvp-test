@@ -1675,7 +1675,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <Button
                       size="sm"
                       variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-sky-400/70 bg-gradient-to-r from-slate-950 via-sky-800 to-sky-500 text-slate-50 font-semibold shadow-[0_0_18px_rgba(56,189,248,0.7)] hover:shadow-[0_0_26px_rgba(56,189,248,1)] hover:from-slate-900 hover:via-sky-700 hover:to-sky-400 transition-all"
+                      className="w-full justify-start text-xs rounded-lg border-sky-400/60 bg-gradient-to-r from-slate-950 via-slate-900 to-sky-600 text-slate-50 font-semibold shadow-[0_0_14px_rgba(56,189,248,0.55)] hover:shadow-[0_0_22px_rgba(56,189,248,0.9)] hover:from-slate-950 hover:via-slate-900 hover:to-sky-500 transition-all"
                       onClick={() => navigate("/pricing")}
                     >
                       <span className="mr-2">💳</span> Acheter des crédits
@@ -1683,7 +1683,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <Button
                       size="sm"
                       variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-sky-400/70 bg-gradient-to-r from-slate-950 via-sky-800 to-sky-500 text-slate-50 font-semibold shadow-[0_0_18px_rgba(56,189,248,0.7)] hover:shadow-[0_0_26px_rgba(56,189,248,1)] hover:from-slate-900 hover:via-sky-700 hover:to-sky-400 transition-all"
+                      className="w-full justify-start text-xs rounded-lg border-sky-400/60 bg-gradient-to-r from-slate-950 via-slate-900 to-sky-600 text-slate-50 font-semibold shadow-[0_0_14px_rgba(56,189,248,0.55)] hover:shadow-[0_0_22px_rgba(56,189,248,0.9)] hover:from-slate-950 hover:via-slate-900 hover:to-sky-500 transition-all"
                       onClick={() => navigate("/pricing")}
                     >
                       <span className="mr-2">⭐</span> Passer au Premium
