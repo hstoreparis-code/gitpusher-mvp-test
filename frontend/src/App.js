@@ -1093,7 +1093,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     try {
       const res = await axios.post(
         `${API}/workflows/projects`,
-        { name: null, description: null, language: "en" },
+        { name: null, description: null, language: "en", provider: selectedProvider },
         { headers: { Authorization: `Bearer ${token}` } },
       );
       setProjects((prev) => [res.data, ...prev]);
