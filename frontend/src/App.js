@@ -728,6 +728,10 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
+    if (!acceptedTerms) {
+      setError("Vous devez accepter les conditions générales d'utilisation pour créer un compte.");
+      return;
+    }
     setLoading(true);
     try {
       await register(email, password, name);
