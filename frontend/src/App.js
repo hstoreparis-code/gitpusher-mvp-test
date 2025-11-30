@@ -681,6 +681,13 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
   const { login, register } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState("login");
+  useEffect(() => {
+    if (initialTab) {
+      setTab(initialTab);
+    }
+  }, [initialTab]);
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
