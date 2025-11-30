@@ -878,10 +878,10 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
               variant="outline"
               className="w-full justify-center rounded-full border border-cyan-500/40 bg-slate-900 hover:bg-slate-900/80 text-slate-50 shadow-[0_0_18px_rgba(56,189,248,0.55)] transition-all"
               onClick={() => startOAuth("gitea")}
+              data-testid="gitea-oauth-button"
             >
-              Gitea
+              Gitea / Codeberg
             </Button>
-
         {/* Acceptation des CGU lors de l'inscription */}
         {tab === "signup" && (
           <div className="mt-4 mb-2 flex items-start gap-2 text-[11px] text-slate-400">
