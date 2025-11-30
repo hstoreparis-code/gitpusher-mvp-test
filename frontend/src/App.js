@@ -1026,6 +1026,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
     if (selected) {
       setEditName(selected.name || "");
       setEditDescription(selected.description || "");
+      if (selected.provider) setSelectedProvider(selected.provider);
     }
   }, [selected]);
 
