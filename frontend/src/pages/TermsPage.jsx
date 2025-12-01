@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { DownloadCloud } from "lucide-react";
 
 export function TermsPage() {
