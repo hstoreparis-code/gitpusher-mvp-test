@@ -3204,28 +3204,19 @@ async def v1_upload_and_push(
         content = await file.read()
         file_size = len(content)
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": f"File received: {file.filename} ({file_size} bytes)"}}
-        )
+        await job_manager.add_log(job_id, f"File received: {file.filename} ({file_size} bytes)")
         
         # Extract if ZIP
         upload_id = uuid.uuid4().hex
         result = await storage_service.save_upload(upload_id, content, file.filename)
         extracted_files = await storage_service.extract_files(upload_id, file.filename)
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": f"Extracted {len(extracted_files)} files"}}
-        )
+        await job_manager.add_log(job_id, f"Extracted {len(extracted_files)} files")
         
         # Generate AI files
         file_list = [{"path": f, "mime_type": "text/plain", "size": 0} for f in extracted_files]
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": "Generating README with AI..."}}
-        )
+        await job_manager.add_log(job_id, "Generating README with AI...")
         
         readme_md = await generate_readme(
             file_list=file_list,
@@ -3234,32 +3225,20 @@ async def v1_upload_and_push(
             description=None
         )
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": "Generating .gitignore..."}}
-        )
+        await job_manager.add_log(job_id, "Generating .gitignore...")
         
         gitignore_content = await generate_gitignore(file_list=file_list, language="en")
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": "Generating LICENSE..."}}
-        )
+        await job_manager.add_log(job_id, "Generating LICENSE...")
         
         license_content = await generate_license("MIT", user.get("display_name", "Contributor"))
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": "Generating CHANGELOG..."}}
-        )
+        await job_manager.add_log(job_id, "Generating CHANGELOG...")
         
         changelog_content = await generate_changelog(repoName)
         
         # Create repo on selected provider
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": f"Creating repository on {provider}..."}}
-        )
+        await job_manager.add_log(job_id, f"Creating repository on {provider}...")
         
         repo_info = await git_service.create_repo(
             token=user["github_access_token"],
@@ -3269,10 +3248,7 @@ async def v1_upload_and_push(
             provider=provider
         )
         
-        await db.jobs_v1.update_one(
-            {"_id": job_id},
-            {"$push": {"logs": f"Repository created: {repo_info.url}"}}
-        )
+        await job_manager.add_log(job_id, f"Repository created: {repo_info.url}")
         
         # Upload all files
         commit_msg = "feat: initial commit via GitPusher"
