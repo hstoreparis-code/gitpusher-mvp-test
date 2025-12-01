@@ -204,6 +204,10 @@ class PushRequest(BaseModel):
 
 
 api_router = APIRouter(prefix="/api")
+
+
+@api_router.post("/push")
+async def public_push(req: PushRequest, x_api_key: Optional[str] = Header(None)):
     """
     Public push endpoint for AI agents and external integrations.
     
