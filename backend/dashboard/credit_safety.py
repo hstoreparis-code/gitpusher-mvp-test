@@ -73,13 +73,20 @@ async def credit_safety_status(authorization: Optional[str] = Header(default=Non
     }
 
 
-@router.post("/test-workflow", dependencies=[Depends(require_admin)])
-async def credit_safety_test_workflow():
+@router.post("/test-workflow")
+async def credit_safety_test_workflow(authorization: Optional[str] = Header(default=None)):
     """Create a synthetic job and simulate full workflow for periodic tests.
 
     This does NOT call external providers. It only exercises the credit/job pipeline
     using an internal test user and a dummy job in jobs_v1.
     """
+    global db, require_admin
+    if db is None:
+        db, require_admin = get_db_and_auth()
+    
+    # Verify admin
+    await require_admin(authorization)
+    
     from datetime import datetime, timezone
     import uuid
 
