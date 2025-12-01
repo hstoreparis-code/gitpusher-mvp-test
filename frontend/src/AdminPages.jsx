@@ -1147,7 +1147,7 @@ export function AdminDashboardPage() {
                           className="px-3 py-2 bg-slate-950/60 border border-slate-700 rounded-md text-sm text-slate-100"
                         >
                           <option value="all">Tous les plans</option>
-                          <option value="free">Free</option>
+                          <option value="free">Gratuit</option>
                           <option value="freemium">Freemium</option>
                           <option value="starter">Starter</option>
                           <option value="pro">Pro</option>
