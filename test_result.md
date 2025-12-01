@@ -221,12 +221,11 @@ test_plan:
 agent_communication:
     - agent: "main"
       message: "Merci d'exécuter un test QA frontend complet de type smoke : ouvrir la landing, cliquer quelques boutons principaux, tester login demo, tester un petit formulaire (si présent), puis logout. Générer un court rapport de statut par étape (OK/FAIL)."
-
-
-agent_communication:
     - agent: "testing"
       message: "Admin endpoint /api/admin/users tested successfully. The EmailStr -> str model change fixed the validation issue. Endpoint now returns HTTP 200 with proper JSON array of users (9 users found). Admin authentication flow working correctly."
     - agent: "testing"
       message: "Complete support chat system tested successfully. All 5 endpoints working correctly: (1) User send message - ✅ (2) Admin get conversations - ✅ (3) User get messages - ✅ (4) Admin send response - ✅ (5) Admin online status - ✅. Full conversation flow verified: demo user sent message, admin retrieved it, admin responded, user received response. All messages correctly stored in database with proper user_id and is_admin flags."
     - agent: "testing"
       message: "GitPusher QA Full Workflow Test completed successfully. Fixed backend syntax error (IndentationError at line 271) and circular import issue with admin_dashboard_router. All major frontend functionality tested and working: Landing page ✅, Navigation ✅, Theme toggle ✅, Language selector ✅, Pricing navigation ✅, Auth modal with OAuth buttons ✅, Demo login/logout flow ✅, Get Started button ✅, File dropzone ✅. Demo login now works correctly (POST /api/auth/demo returns 200, redirects to dashboard). Complete smoke test passed."
+    - agent: "testing"
+      message: "QA Frontend Smoke Test GitPusher terminé avec succès. Toutes les fonctionnalités principales testées et fonctionnelles: (1) Landing page - logo, titre, navigation ✅ (2) Navigation - pricing, langue, thème ✅ (3) Auth modal - OAuth buttons présents ✅ (4) Demo login - redirection dashboard ✅ (5) Dashboard - affichage crédits, menu utilisateur ✅ (6) Logout - retour landing ✅ (7) File dropzone et Get Started ✅. Aucune erreur critique détectée. Application prête pour utilisation."
