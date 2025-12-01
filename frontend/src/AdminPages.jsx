@@ -1289,7 +1289,7 @@ function AdminUserRow({ user, onUpdate }) {
             onChange={(e) => setPlan(e.target.value)}
           >
             <option value="">-</option>
-            <option value="free">Free</option>
+            <option value="free">Gratuit</option>
             <option value="freemium">Freemium</option>
             <option value="starter">Starter</option>
             <option value="pro">Pro</option>
