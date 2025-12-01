@@ -596,7 +596,7 @@ export function AdminDashboardPage() {
                     const allPlans = [
                       { 
                         key: 'free', 
-                        label: 'Free', 
+                        label: 'Gratuit', 
                         icon: '🆓',
                         gradient: 'from-slate-500/20 to-slate-600/10',
                         border: 'border-slate-500/30',
