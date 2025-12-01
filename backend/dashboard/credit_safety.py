@@ -1,9 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException
-from typing import List, Dict, Any
-
-from server import db, require_admin
+from fastapi import APIRouter, Header, HTTPException
+from typing import List, Dict, Any, Optional
 
 router = APIRouter()
+
+# Import tardif pour éviter l'import circulaire
+def get_db_and_auth():
+    from server import db, require_admin
+    return db, require_admin
+
+db = None
+require_admin = None
 
 
 @router.get("/status", dependencies=[Depends(require_admin)])
