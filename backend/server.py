@@ -195,21 +195,271 @@ async def public_status():
     return {"status": "ok", "service": "gitpusher", "time": datetime.now(timezone.utc).isoformat()}
 
 class PushRequest(BaseModel):
-    source: str
-    provider: str
+    source: str  # "url" or "base64"
+    provider: str  # "github", "gitlab", etc.
     repo_name: Optional[str] = None
-    content: Dict[str, Any]
+    content: Dict[str, Any]  # {"url": "..."} or {"data": "base64...", "filename": "..."}
+    api_key: Optional[str] = None  # User API key for authentication
+    auto_prompts: Optional[Dict[str, Any]] = None  # AI generation options
+
 
 @app.post("/push")
-async def public_push(req: PushRequest):
-    """Public push endpoint stub for AI actions. Always returns 200 with a fake result."""
-    return {
-        "status": "success",
-        "repo_url": f"https://example.com/{req.provider}/{req.repo_name or 'generated-repo'}",
-        "commit_id": "fake-commit-id",
-        "provider": req.provider,
-        "next_actions": ["open_repo", "trigger_build", "share_repo"],
-    }
+async def public_push(req: PushRequest, x_api_key: Optional[str] = Header(None)):
+    """
+    Public push endpoint for AI agents and external integrations.
+    
+    This endpoint allows AI agents to push code/files to Git repositories.
+    Requires authentication via API key (header or body).
+    Uses the robust JobManager for credit management.
+    
+    Flow:
+    1. Verify API key and get user
+    2. Create job with JobManager (checks credits, doesn't consume)
+    3. Process content (download from URL or decode base64)
+    4. Generate AI files (README, .gitignore, etc.)
+    5. Create repo and push files
+    6. Complete job (consumes credits only on success)
+    """
+    # Get API key from header or body
+    api_key = x_api_key or req.api_key
+    if not api_key:
+        raise HTTPException(
+            status_code=401,
+            detail="API key required. Provide via X-API-Key header or api_key field."
+        )
+    
+    # Verify API key and get user
+    # For MVP: we'll use the API key as a user token
+    # In production: implement proper API key management
+    try:
+        user = await get_user_from_token(api_key)
+    except HTTPException:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+    
+    # Validate provider token
+    provider_token_field = f"{req.provider}_access_token"
+    if not user.get(provider_token_field):
+        raise HTTPException(
+            status_code=400,
+            detail=f"{req.provider.title()} token not linked. Connect via OAuth first."
+        )
+    
+    # Generate repo name if not provided
+    repo_name = req.repo_name or f"ai-generated-{uuid.uuid4().hex[:8]}"
+    
+    # Create job using JobManager
+    try:
+        job = await job_manager.create_job(
+            user_id=user["_id"],
+            job_type="ai_push",
+            job_data={
+                "provider": req.provider,
+                "repo_name": repo_name,
+                "source": req.source,
+                "auto_prompts": req.auto_prompts or {}
+            },
+            required_credits=1
+        )
+        job_id = job["_id"]
+    except ValueError as e:
+        raise HTTPException(status_code=402, detail=str(e))
+    
+    try:
+        # Start job
+        await job_manager.start_job(job_id)
+        await job_manager.add_log(job_id, f"Processing {req.source} source...")
+        
+        # Process content based on source type
+        if req.source == "url":
+            # Download from URL
+            file_url = req.content.get("url")
+            if not file_url:
+                raise ValueError("URL source requires 'url' field in content")
+            
+            await job_manager.add_log(job_id, f"Downloading from: {file_url}")
+            
+            async with httpx.AsyncClient(timeout=60) as client:
+                response = await client.get(file_url)
+                if response.status_code != 200:
+                    raise ValueError(f"Failed to download: HTTP {response.status_code}")
+                content = response.content
+                filename = file_url.split("/")[-1] or "download.zip"
+        
+        elif req.source == "base64":
+            # Decode base64 content
+            b64_data = req.content.get("data")
+            filename = req.content.get("filename", "upload.zip")
+            
+            if not b64_data:
+                raise ValueError("Base64 source requires 'data' field in content")
+            
+            await job_manager.add_log(job_id, f"Decoding base64 content: {filename}")
+            content = base64.b64decode(b64_data)
+        
+        else:
+            raise ValueError(f"Unsupported source type: {req.source}")
+        
+        file_size = len(content)
+        await job_manager.add_log(job_id, f"Content received: {file_size} bytes")
+        
+        # Save and extract files
+        upload_id = uuid.uuid4().hex
+        result = await storage_service.save_upload(upload_id, content, filename)
+        extracted_files = await storage_service.extract_files(upload_id, filename)
+        
+        await job_manager.add_log(job_id, f"Extracted {len(extracted_files)} files")
+        
+        # Generate AI files
+        file_list = [{"path": f, "mime_type": "text/plain", "size": 0} for f in extracted_files]
+        
+        await job_manager.add_log(job_id, "Generating README with AI...")
+        readme_md = await generate_readme(
+            file_list=file_list,
+            language="en",
+            project_name=repo_name,
+            description=None
+        )
+        
+        await job_manager.add_log(job_id, "Generating .gitignore...")
+        gitignore_content = await generate_gitignore(file_list=file_list, language="en")
+        
+        await job_manager.add_log(job_id, "Generating LICENSE...")
+        license_content = await generate_license("MIT", user.get("display_name", "Contributor"))
+        
+        await job_manager.add_log(job_id, "Generating CHANGELOG...")
+        changelog_content = await generate_changelog(repo_name)
+        
+        # Create repo
+        await job_manager.add_log(job_id, f"Creating repository on {req.provider}...")
+        
+        repo_info = await git_service.create_repo(
+            token=user[provider_token_field],
+            name=repo_name,
+            description=f"Created via GitPusher AI",
+            private=False,
+            provider=req.provider
+        )
+        
+        await job_manager.add_log(job_id, f"Repository created: {repo_info.url}")
+        
+        # Upload files
+        commit_msg = "feat: initial commit via GitPusher AI"
+        upload_path = storage_service.get_upload_path(upload_id)
+        
+        if filename.endswith('.zip'):
+            extract_dir = upload_path / "extracted"
+            for root, dirs, files in os.walk(extract_dir):
+                for f in files:
+                    file_path = Path(root) / f
+                    rel_path = file_path.relative_to(extract_dir)
+                    content_bytes = file_path.read_bytes()
+                    
+                    await git_service.put_file(
+                        token=user[provider_token_field],
+                        repo_full_name=repo_info.full_name,
+                        path=str(rel_path),
+                        content_bytes=content_bytes,
+                        message=commit_msg,
+                        provider=req.provider
+                    )
+                    
+                    await job_manager.add_log(job_id, f"Uploaded: {rel_path}")
+        else:
+            # Single file
+            file_path = upload_path / filename
+            content_bytes = file_path.read_bytes()
+            
+            await git_service.put_file(
+                token=user[provider_token_field],
+                repo_full_name=repo_info.full_name,
+                path=filename,
+                content_bytes=content_bytes,
+                message=commit_msg,
+                provider=req.provider
+            )
+        
+        # Upload generated files
+        await git_service.put_file(
+            user[provider_token_field],
+            repo_info.full_name,
+            "README.md",
+            readme_md.encode("utf-8"),
+            commit_msg,
+            req.provider
+        )
+        
+        await git_service.put_file(
+            user[provider_token_field],
+            repo_info.full_name,
+            ".gitignore",
+            gitignore_content.encode("utf-8"),
+            commit_msg,
+            req.provider
+        )
+        
+        await git_service.put_file(
+            user[provider_token_field],
+            repo_info.full_name,
+            "LICENSE",
+            license_content.encode("utf-8"),
+            commit_msg,
+            req.provider
+        )
+        
+        await git_service.put_file(
+            user[provider_token_field],
+            repo_info.full_name,
+            "CHANGELOG.md",
+            changelog_content.encode("utf-8"),
+            commit_msg,
+            req.provider
+        )
+        
+        await job_manager.add_log(job_id, "All files uploaded successfully!")
+        
+        # Store repo in DB
+        repo_id = str(uuid.uuid4())
+        await db.repos_v1.insert_one({
+            "_id": repo_id,
+            "user_id": user["_id"],
+            "job_id": job_id,
+            "name": repo_name,
+            "url": repo_info.url,
+            "provider": req.provider,
+            "private": False,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "source": "ai_agent"
+        })
+        
+        # Complete job successfully (CRITICAL: Credits consumed here)
+        await job_manager.complete_job(
+            job_id=job_id,
+            success=True,
+            result_data={"repo_url": repo_info.url}
+        )
+        
+        # Cleanup
+        await storage_service.cleanup_upload(upload_id)
+        
+        return {
+            "status": "success",
+            "job_id": job_id,
+            "repo_url": repo_info.url,
+            "repo_name": repo_name,
+            "provider": req.provider,
+            "files_uploaded": len(extracted_files) + 4,  # +4 for generated files
+            "next_actions": ["open_repo", "clone_repo", "share_repo"]
+        }
+        
+    except Exception as e:
+        # Complete job with failure (CRITICAL: Credits NOT consumed)
+        await job_manager.complete_job(
+            job_id=job_id,
+            success=False,
+            error=str(e)
+        )
+        
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 api_router = APIRouter(prefix="/api")
