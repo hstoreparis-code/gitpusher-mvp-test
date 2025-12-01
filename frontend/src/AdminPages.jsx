@@ -864,7 +864,7 @@ export function AdminDashboardPage() {
                           <tr>
                             <th className="py-3 pr-4 text-left font-medium">Date</th>
                             <th className="py-3 px-3 text-center font-medium">Nouveaux</th>
-                            <th className="py-3 px-3 text-center font-medium">Free</th>
+                            <th className="py-3 px-3 text-center font-medium">Gratuit</th>
                             <th className="py-3 px-3 text-center font-medium">Starter</th>
                             <th className="py-3 px-3 text-center font-medium">Pro</th>
                             <th className="py-3 px-3 text-center font-medium">Premium</th>
