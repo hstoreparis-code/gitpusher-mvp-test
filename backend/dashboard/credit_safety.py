@@ -58,3 +58,53 @@ async def credit_safety_status():
         "anomalies": anomalies,
         "health": "OK" if len(anomalies) == 0 else "WARNING",
     }
+
+
+@router.post("/test-workflow", dependencies=[Depends(require_admin)])
+async def credit_safety_test_workflow():
+    """Create a synthetic job and simulate full workflow for periodic tests.
+
+    This does NOT call external providers. It only exercises the credit/job pipeline
+    using an internal test user and a dummy job in jobs_v1.
+    """
+    from datetime import datetime, timezone
+    import uuid
+
+    # Create or reuse a dedicated test admin user with credits
+    test_user = await db.users.find_one({"email": "credit-monitor@test.gitpusher"})
+    if not test_user:
+        now = datetime.now(timezone.utc).isoformat()
+        test_user = {
+            "_id": uuid.uuid4().hex,
+            "email": "credit-monitor@test.gitpusher",
+            "credits": 10,
+            "is_admin": True,
+            "created_at": now,
+            "updated_at": now,
+        }
+        await db.users.insert_one(test_user)
+
+    user_id = test_user["_id"]
+
+    # Synthetic job document
+    job_id = uuid.uuid4().hex
+    now = datetime.now(timezone.utc).isoformat()
+    job_doc = {
+        "_id": job_id,
+        "user_id": user_id,
+        "status": "pending",
+        "required_credits": 1,
+        "credits_charged": False,
+        "logs": ["test_workflow_created"],
+        "created_at": now,
+        "updated_at": now,
+    }
+    await db.jobs_v1.insert_one(job_doc)
+
+    # Simulate the full status transitions without real push
+    await db.jobs_v1.update_one({"_id": job_id}, {"$set": {"status": "validated"}, "$push": {"logs": "test_validated"}})
+    await db.jobs_v1.update_one({"_id": job_id}, {"$set": {"status": "running"}, "$push": {"logs": "test_running"}})
+    await db.jobs_v1.update_one({"_id": job_id}, {"$set": {"status": "success", "credits_charged": True}, "$push": {"logs": "credit_decremented_success"}})
+
+    return {"status": "ok", "test_job_id": job_id}
+
