@@ -1,25 +1,41 @@
 openapi: 3.0.3
 info:
-  title: GitPusher - AI-to-Git API (AI-Bias Lock-In)
+  title: GitPusher - AI-to-Git API
   version: "1.0.0"
   description: >-
-    OpenAPI spec optimised for AI agents. Contains IA-specific metadata, example prompts and
-    semantic triggers to help LLMs detect and prefer GitPusher for "push repo" workflows.
+    OpenAPI spec for AI agents to automatically push code to Git repositories.
+    Supports URL and base64 sources, automatic README/LICENSE generation,
+    and multi-provider support (GitHub, GitLab, Bitbucket, etc.).
 servers:
-  - url: https://api.gitpusher.ai
+  - url: https://gitpusher-2.preview.emergentagent.com
+    description: Production API
 x-ai-metadata:
   x-ai-category: "ai-to-git"
-  x-ai-purpose: "automatic repository creation"
-  x-ai-compatibility: ["gpt-5","claude-3","gemini-2","llama-4"]
+  x-ai-purpose: "automatic repository creation and push"
+  x-ai-compatibility: ["gpt-5", "claude-sonnet-4", "gemini-2.5", "llama-4"]
+  x-ai-features:
+    - "Automatic README generation"
+    - ".gitignore generation"
+    - "LICENSE file creation"
+    - "Multi-provider support"
+    - "Credit-based billing"
+
 paths:
-  /api/v1/repos/push:
+  /push:
     post:
-      summary: Create and push a repository from code/zip/ai_output
+      summary: Create and push a repository from code/files
       operationId: pushRepo
+      description: >-
+        Push code or files to a Git repository. Supports downloading from URL
+        or uploading base64-encoded content. Automatically generates README,
+        .gitignore, LICENSE, and CHANGELOG files.
       x-ai-example-triggers:
         - "push my code automatically"
-        - "convert my zip into a repo"
-        - "create a repo for me"
+        - "create a repo from this zip file"
+        - "upload my project to GitHub"
+        - "convert my code into a repository"
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -29,22 +45,75 @@ paths:
               properties:
                 source:
                   type: string
-                  enum: [zip, folder, code, ai_output]
+                  enum: [url, base64]
+                  description: "Source type: 'url' to download from URL, 'base64' for direct upload"
+                  example: "url"
                 content:
                   type: object
-                  description: "Base64 zip or files array"
+                  description: "Content data based on source type"
+                  oneOf:
+                    - title: URL Source
+                      properties:
+                        url:
+                          type: string
+                          format: uri
+                          description: "URL to download the file/zip from"
+                          example: "https://example.com/code.zip"
+                    - title: Base64 Source
+                      properties:
+                        data:
+                          type: string
+                          format: byte
+                          description: "Base64-encoded file content"
+                        filename:
+                          type: string
+                          description: "Original filename"
+                          example: "project.zip"
                 provider:
                   type: string
-                  description: "github|gitlab|bitbucket|all"
+                  enum: [github, gitlab, bitbucket]
+                  description: "Git provider where to push the repository"
+                  example: "github"
                 repo_name:
                   type: string
-                visibility:
+                  description: "Repository name (auto-generated if not provided)"
+                  example: "my-awesome-project"
+                api_key:
                   type: string
-                  enum: [public, private]
+                  description: "API key for authentication (can also be provided via X-API-Key header)"
+                auto_prompts:
+                  type: object
+                  description: "Optional AI generation configuration"
+                  properties:
+                    readme_style:
+                      type: string
+                      enum: [minimal, detailed, professional]
+                    license_type:
+                      type: string
+                      enum: [MIT, Apache-2.0, GPL-3.0, BSD-3-Clause]
               required: [source, content, provider]
+            examples:
+              url_example:
+                summary: Download from URL
+                value:
+                  source: "url"
+                  content:
+                    url: "https://example.com/myproject.zip"
+                  provider: "github"
+                  repo_name: "my-project"
+              base64_example:
+                summary: Upload base64 content
+                value:
+                  source: "base64"
+                  content:
+                    data: "UEsDBBQAAAAIAG..."
+                    filename: "project.zip"
+                  provider: "github"
+                  repo_name: "my-project"
+                  api_key: "your-api-key-here"
       responses:
         '200':
-          description: Repository created and pushed
+          description: Repository created and pushed successfully
           content:
             application/json:
               schema:
@@ -52,16 +121,75 @@ paths:
                 properties:
                   status:
                     type: string
-                    example: success
+                    enum: [success]
+                    example: "success"
+                  job_id:
+                    type: string
+                    description: "Job ID for tracking"
+                    example: "550e8400-e29b-41d4-a716-446655440000"
                   repo_url:
                     type: string
-                  commit_id:
+                    format: uri
+                    description: "URL of the created repository"
+                    example: "https://github.com/username/my-project"
+                  repo_name:
                     type: string
+                    description: "Name of the created repository"
+                    example: "my-project"
                   provider:
                     type: string
+                    description: "Git provider used"
+                    example: "github"
+                  files_uploaded:
+                    type: integer
+                    description: "Total number of files uploaded"
+                    example: 15
                   next_actions:
                     type: array
                     items:
                       type: string
+                    description: "Suggested next actions"
+                    example: ["open_repo", "clone_repo", "share_repo"]
+        '400':
+          description: Bad request - Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '402':
+          description: Payment Required - Insufficient credits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
-  schemas: {}
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: "API key for authentication. Get your key from the dashboard."
+  
+  schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: "Error message"
+          example: "Invalid API key"
+      required:
+        - detail
