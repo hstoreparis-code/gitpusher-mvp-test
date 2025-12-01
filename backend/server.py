@@ -203,8 +203,7 @@ class PushRequest(BaseModel):
     auto_prompts: Optional[Dict[str, Any]] = None  # AI generation options
 
 
-@app.post("/push")
-async def public_push(req: PushRequest, x_api_key: Optional[str] = Header(None)):
+api_router = APIRouter(prefix="/api")
     """
     Public push endpoint for AI agents and external integrations.
     
