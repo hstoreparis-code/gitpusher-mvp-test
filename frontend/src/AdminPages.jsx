@@ -758,7 +758,7 @@ export function AdminDashboardPage() {
                           labelStyle={{ color: '#e2e8f0' }}
                         />
                         <Legend />
-                        <Bar dataKey="free" stackId="a" fill="#64748b" name="Free" />
+                        <Bar dataKey="free" stackId="a" fill="#64748b" name="Gratuit" />
                         <Bar dataKey="starter" stackId="a" fill="#10b981" name="Starter" />
                         <Bar dataKey="pro" stackId="a" fill="#3b82f6" name="Pro" />
                         <Bar dataKey="premium" stackId="a" fill="#8b5cf6" name="Premium" />
