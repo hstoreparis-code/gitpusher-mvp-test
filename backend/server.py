@@ -177,6 +177,41 @@ class PlanUpdate(BaseModel):
 
 # FastAPI app
 app = FastAPI(title="GitPusher API")
+
+@app.get("/openapi.yaml")
+async def public_openapi():
+    """Serve the static OpenAPI YAML for AI agents."""
+    from fastapi.responses import PlainTextResponse
+    yaml_path = ROOT_DIR / "api" / "openapi.yaml"
+    content = yaml_path.read_text(encoding="utf-8")
+    return PlainTextResponse(content, media_type="application/yaml")
+
+@app.get("/providers")
+async def public_providers():
+    return {"providers": ["github", "gitlab", "bitbucket", "gitea", "codeberg", "gitee", "azure_devops", "aws_codecommit", "google_cloud_source", "alibaba_cloud", "tencent_cloud"]}
+
+@app.get("/status")
+async def public_status():
+    return {"status": "ok", "service": "gitpusher", "time": datetime.now(timezone.utc).isoformat()}
+
+class PushRequest(BaseModel):
+    source: str
+    provider: str
+    repo_name: Optional[str] = None
+    content: Dict[str, Any]
+
+@app.post("/push")
+async def public_push(req: PushRequest):
+    """Public push endpoint stub for AI actions. Always returns 200 with a fake result."""
+    return {
+        "status": "success",
+        "repo_url": f"https://example.com/{req.provider}/{req.repo_name or 'generated-repo'}",
+        "commit_id": "fake-commit-id",
+        "provider": req.provider,
+        "next_actions": ["open_repo", "trigger_build", "share_repo"],
+    }
+
+
 api_router = APIRouter(prefix="/api")
 
 # Import services after DB is initialized
