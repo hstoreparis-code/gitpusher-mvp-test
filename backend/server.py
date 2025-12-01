@@ -221,6 +221,7 @@ sys.path.insert(0, str(ROOT_DIR))
 from services.credits_service import CreditsService
 from services.storage_service import StorageService  
 from services.git_service import GitService
+from jobs import JobManager
 from models.schemas import (
     GitHubTokenRequest, GitHubTokenResponse,
     UploadInitRequest, UploadInitResponse, UploadStatus, UploadCompleteRequest,
