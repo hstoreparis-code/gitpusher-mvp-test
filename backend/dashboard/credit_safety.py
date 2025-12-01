@@ -12,13 +12,20 @@ db = None
 require_admin = None
 
 
-@router.get("/status", dependencies=[Depends(require_admin)])
-async def credit_safety_status():
+@router.get("/status")
+async def credit_safety_status(authorization: Optional[str] = Header(default=None)):
     """Simple credit safety status for admin.
 
     NOTE: This uses jobs_v1 and credits from users collection.
     It looks for inconsistencies between job status and credits_charged flag.
     """
+    global db, require_admin
+    if db is None:
+        db, require_admin = get_db_and_auth()
+    
+    # Verify admin
+    await require_admin(authorization)
+    
     # Global credits: sum of all users credits (or adjust as needed)
     pipeline = [
         {"$group": {"_id": None, "total_credits": {"$sum": {"$ifNull": ["$credits", 0]}}}}
