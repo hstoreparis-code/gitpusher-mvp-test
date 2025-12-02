@@ -1017,8 +1017,8 @@ class SendMessageRequest(BaseModel):
 @api_router.get("/admin/users", response_model=List[AdminUserSummary])
 async def admin_list_users(authorization: Optional[str] = Header(default=None)):
     admin = await require_admin(authorization)
-    _ = admin  # unused, just to make it explicit
-    cur = db.users.find({}, {"_id": 1, "email": 1, "display_name": 1, "plan": 1, "credits": 1, "created_at": 1})
+    _ = admin
+    cur = db.users.find({}, {"_id": 1, "email": 1, "display_name": 1, "plan": 1, "credits": 1, "created_at": 1}).limit(100)
     users: List[AdminUserSummary] = []
     async for u in cur:
         users.append(
