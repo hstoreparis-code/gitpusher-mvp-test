@@ -62,6 +62,31 @@ export function HelpPage() {
       ]
     },
     {
+      category: "Sécurité & Confidentialité",
+      questions: [
+        {
+          q: "GitPusher.AI conserve-t-il mes projets et fichiers ?",
+          a: "NON. GitPusher.AI ne conserve PAS vos fichiers uploadés. Votre code et vos fichiers sont traités temporairement pour générer la structure du projet, puis immédiatement supprimés après le push Git réussi. Seules les métadonnées du projet (nom, provider, statut) sont conservées."
+        },
+        {
+          q: "Mes données sont-elles sécurisées ?",
+          a: "OUI. Toutes les communications sont chiffrées (HTTPS/TLS). Les tokens OAuth sont stockés de manière sécurisée et jamais exposés. Les fichiers uploadés sont supprimés automatiquement après traitement. Nous ne vendons ni ne partageons vos données avec des tiers."
+        },
+        {
+          q: "Qui a accès à mes dépôts Git ?",
+          a: "VOUS UNIQUEMENT. GitPusher.AI utilise VOS tokens OAuth pour créer des dépôts sur VOTRE compte Git. Nous n'avons aucun accès permanent à vos dépôts. Vous pouvez révoquer l'accès à tout moment depuis les paramètres de votre provider Git."
+        },
+        {
+          q: "Que se passe-t-il avec mes fichiers sensibles ?",
+          a: "Vos fichiers sont traités uniquement pour l'analyse de structure et la génération de documentation. Ils transitent de manière sécurisée et sont supprimés immédiatement après le push. Pour des données hautement sensibles, nous recommandons de les exclure avant upload."
+        },
+        {
+          q: "Puis-je supprimer mes données ?",
+          a: "OUI. Vous pouvez supprimer vos projets à tout moment depuis le dashboard. Pour une suppression complète de votre compte et données associées, contactez support@gitpusher.ai."
+        }
+      ]
+    },
+    {
       category: "Support par Plan",
       questions: [
         {
