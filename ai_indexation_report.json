@@ -1,0 +1,14 @@
+{
+  "AI_INDEXATION": "STABLE",
+  "FILES_OK": 6,
+  "DOMAIN_OK": true,
+  "TESTS_HTTP": {
+    "/status": 200,
+    "/providers": 200,
+    "/api/openapi.yaml": 200,
+    "/robots.txt": 200,
+    "/sitemap.xml": 200,
+    "/.well-known/ai-actions.json": 200
+  },
+  "NEXT_STEPS": "NONE"
+}
