@@ -1717,10 +1717,14 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <Button
                       size="default"
                       variant="outline"
-                      className="w-full justify-start text-sm rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200 py-2.5"
-                      onClick={() => navigate("/app/pro")}
+                      className="w-full justify-start text-sm rounded-lg border-pink-500/30 bg-pink-500/5 hover:bg-pink-500/10 text-pink-300 hover:text-pink-200 py-2.5"
+                      onClick={() => {
+                        const shareUrl = encodeURIComponent(window.location.origin);
+                        const shareText = encodeURIComponent("🚀 Découvrez GitPusher.AI - No-Code GitHub Workflow ! Automatisez vos dépôts Git en un clic ✨");
+                        window.open(`https://www.tiktok.com/share?url=${shareUrl}&title=${shareText}`, '_blank');
+                      }}
                     >
-                      <span className="mr-2">📊</span> Dashboard Pro
+                      <span className="mr-2">🎵</span> Partager l'expérience
                     </Button>
                   </>
                 )}
