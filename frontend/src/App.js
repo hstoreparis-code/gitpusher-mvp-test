@@ -1563,6 +1563,28 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
           {/* Carte Crédits disponibles */}
           <Card className="bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/70 border border-cyan-500/20 shadow-none overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-transparent to-violet-500/5 pointer-events-none" />
+            
+            {/* Badge plan en haut à droite */}
+            {user?.plan && (
+              <div className="absolute top-4 right-4 z-20">
+                <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                  (user.plan || '').toLowerCase() === 'free' || (user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo'
+                    ? 'bg-gradient-to-r from-cyan-300/30 via-sky-400/30 to-cyan-300/30 text-cyan-100 border border-cyan-300/70 shadow-[0_0_18px_rgba(56,189,248,0.9)]'
+                    : (user.plan || '').toLowerCase() === 'starter'
+                    ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border border-emerald-400/40'
+                    : (user.plan || '').toLowerCase() === 'pro'
+                    ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 border border-blue-400/40'
+                    : (user.plan || '').toLowerCase() === 'premium'
+                    ? 'bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-300 border border-violet-400/40'
+                    : (user.plan || '').toLowerCase() === 'business'
+                    ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-400/40'
+                    : 'bg-slate-700/50 text-slate-300 border border-slate-600'
+                }`}>
+                  {(user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo' ? 'Free' : user.plan}
+                </span>
+              </div>
+            )}
+            
             <CardContent className="p-6 relative z-10">
               <div className="flex items-center gap-6">
                 {/* Icône circulaire avec animation */}
