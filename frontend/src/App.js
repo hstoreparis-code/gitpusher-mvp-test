@@ -1555,6 +1555,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               <span className="text-[10px] font-medium text-slate-400">Premium</span>
             </div>
           </div>
+          )}
         </div>
 
         {/* BLOC CRÉATIF CRÉDITS */}
