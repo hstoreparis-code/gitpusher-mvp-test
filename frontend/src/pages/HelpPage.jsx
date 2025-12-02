@@ -1,4 +1,4 @@
-import { DownloadCloud, Mail } from "lucide-react";
+import { DownloadCloud, Mail, ArrowLeft } from "lucide-react";
 
 export function HelpPage() {
   const faqs = [
@@ -96,18 +96,20 @@ export function HelpPage() {
               <span className="text-[10px] text-slate-400">Centre d'aide</span>
             </div>
           </div>
-          <a
-            href="/"
-            className="text-[11px] px-3 py-1 rounded-full border border-slate-700 text-slate-300 hover:text-slate-50 hover:border-cyan-400/70 hover:bg-slate-900/70 transition-colors"
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/70 bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 shadow-[0_0_22px_rgba(34,211,238,0.9)] hover:shadow-[0_0_32px_rgba(34,211,238,1)] transition-all overflow-hidden"
+            aria-label="Retour"
           >
-            Retour à l'accueil
-          </a>
+            <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(244,244,245,0.45),transparent_60%)] opacity-70 group-hover:opacity-100 transition-opacity" />
+            <ArrowLeft className="relative z-10 h-4 w-4 drop-shadow-[0_0_8px_rgba(15,23,42,0.9)]" />
+          </button>
         </div>
       </header>
 
       <main className="flex-1">
         <div className="max-w-4xl mx-auto px-4 py-8 sm:py-10 space-y-8">
-          {/* Hero */}
           <section className="text-center space-y-3">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-xs text-cyan-300 mb-2">
               <span className="h-2 w-2 rounded-full bg-cyan-300 animate-pulse" />
@@ -121,7 +123,6 @@ export function HelpPage() {
             </p>
           </section>
 
-          {/* FAQ par catégorie */}
           {faqs.map((section, idx) => (
             <section key={idx} className="space-y-4">
               <h2 className="text-xl sm:text-2xl font-semibold text-cyan-400 flex items-center gap-2">
@@ -146,7 +147,6 @@ export function HelpPage() {
             </section>
           ))}
 
-          {/* Contact Support */}
           <section className="mt-12 p-6 rounded-xl bg-gradient-to-br from-cyan-500/10 via-slate-900/60 to-violet-500/10 border-2 border-dashed border-cyan-400/40 shadow-[0_0_24px_rgba(34,211,238,0.3)]">
             <div className="text-center space-y-4">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 shadow-[0_0_24px_rgba(34,211,238,0.6)]">
@@ -196,7 +196,6 @@ export function HelpPage() {
             </div>
           </section>
 
-          {/* Quick Links */}
           <section className="text-center space-y-3">
             <h3 className="text-sm font-semibold text-slate-400">Liens utiles</h3>
             <div className="flex flex-wrap items-center justify-center gap-3 text-xs">

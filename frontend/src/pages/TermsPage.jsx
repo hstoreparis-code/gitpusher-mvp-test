@@ -1,4 +1,4 @@
-import { DownloadCloud } from "lucide-react";
+import { DownloadCloud, ArrowLeft } from "lucide-react";
 
 export function TermsPage() {
   return (
@@ -17,12 +17,15 @@ export function TermsPage() {
               <span className="text-[10px] text-slate-400">Conditions générales d'utilisation</span>
             </div>
           </div>
-          <a
-            href="/"
-            className="text-[11px] px-3 py-1 rounded-full border border-slate-700 text-slate-300 hover:text-slate-50 hover:border-cyan-400/70 hover:bg-slate-900/70 transition-colors"
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/70 bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 shadow-[0_0_22px_rgba(34,211,238,0.9)] hover:shadow-[0_0_32px_rgba(34,211,238,1)] transition-all overflow-hidden"
+            aria-label="Retour"
           >
-            Retour à l'accueil
-          </a>
+            <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(244,244,245,0.45),transparent_60%)] opacity-70 group-hover:opacity-100 transition-opacity" />
+            <ArrowLeft className="relative z-10 h-4 w-4 drop-shadow-[0_0_8px_rgba(15,23,42,0.9)]" />
+          </button>
         </div>
       </header>
 
