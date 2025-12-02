@@ -1635,28 +1635,9 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
 
                 {/* Texte et statut */}
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-lg sm:text-xl font-semibold text-slate-100 whitespace-nowrap sm:whitespace-normal">
-                      Crédits disponibles
-                    </h3>
-                    {user?.plan && (
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                        (user.plan || '').toLowerCase() === 'free' || (user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo'
-                          ? 'bg-gradient-to-r from-cyan-300/30 via-sky-400/30 to-cyan-300/30 text-cyan-100 border border-cyan-300/70 shadow-[0_0_18px_rgba(56,189,248,0.9)]'
-                          : (user.plan || '').toLowerCase() === 'starter'
-                          ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-300 border border-emerald-400/40'
-                          : (user.plan || '').toLowerCase() === 'pro'
-                          ? 'bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 border border-blue-400/40'
-                          : (user.plan || '').toLowerCase() === 'premium'
-                          ? 'bg-gradient-to-r from-violet-500/20 to-purple-500/20 text-violet-300 border border-violet-400/40'
-                          : (user.plan || '').toLowerCase() === 'business'
-                          ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-400/40'
-                          : 'bg-slate-700/50 text-slate-300 border border-slate-600'
-                      }`}>
-                        {(user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo' ? 'Free' : user.plan}
-                      </span>
-                    )}
-                  </div>
+                  <h3 className="text-lg sm:text-xl font-semibold text-slate-100 whitespace-nowrap sm:whitespace-normal">
+                    Crédits disponibles
+                  </h3>
                   <div className="flex items-center gap-2">
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-400/40">
