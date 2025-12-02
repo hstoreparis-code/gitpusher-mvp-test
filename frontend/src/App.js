@@ -3758,6 +3758,15 @@ function WhitePaperPage({ t, lang, setLang, dark, setDark, currentLang, language
         <div className="border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
           <p>Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span> © 2024</p>
           <p className="mt-2">Version 1.0.0 • API V1 • 12 Git Providers</p>
+          <div className="mt-3 flex items-center justify-center gap-4">
+            <a href="/help" className="text-cyan-400 hover:text-cyan-300 transition-colors">
+              Aide
+            </a>
+            <span className="text-slate-700">•</span>
+            <a href="/terms" className="text-slate-500 hover:text-slate-400 transition-colors">
+              CGU
+            </a>
+          </div>
         </div>
       </main>
     </div>
