@@ -1830,8 +1830,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                               </div>
                               <Button
                                 size="xs"
-                                variant="outline"
-                                className="h-7 px-2 rounded-full border-red-500/60 text-red-300 text-[10px]"
+                                variant="default"
+                                className="h-7 px-2 rounded-full bg-red-500 hover:bg-red-600 text-white border-0 text-[10px] shadow-lg"
                                 onClick={() => deleteProject(project.id)}
                               >
                                 Supprimer
