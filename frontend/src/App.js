@@ -1594,17 +1594,17 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-full blur-xl opacity-40 animate-pulse" />
                   )}
-                  <div className={`relative w-20 h-20 sm:w-28 sm:h-28 rounded-full ${
+                  <div className={`relative w-40 h-40 sm:w-28 sm:h-28 rounded-full ${
                     (user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business'
                       ? 'bg-gradient-to-br from-violet-700/60 to-indigo-800/60 border-2 border-violet-400/60'
                       : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-cyan-400/40'
                   } flex flex-col items-center justify-center backdrop-blur-sm`}>
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
                       <>
-                        <span className="text-3xl sm:text-5xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent">
+                        <span className="text-6xl sm:text-5xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent">
                           ∞
                         </span>
-                        <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-cyan-200 mt-0.5 font-semibold">
+                        <span className="text-xs sm:text-[9px] uppercase tracking-widest text-cyan-200 mt-1 sm:mt-0.5 font-semibold">
                           illimité
                         </span>
                       </>
@@ -1613,8 +1613,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         <span
                           className={
                             credits != null && credits <= 2
-                              ? "text-2xl sm:text-4xl font-bold bg-gradient-to-br from-amber-300 via-yellow-300 to-amber-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(250,204,21,0.9)]"
-                              : "text-2xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]"
+                              ? "text-4xl sm:text-4xl font-bold bg-gradient-to-br from-amber-300 via-yellow-300 to-amber-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(250,204,21,0.9)]"
+                              : "text-4xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]"
                           }
                         >
                           {credits == null ? "—" : credits}
@@ -1622,8 +1622,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         <span
                           className={
                             credits != null && credits <= 2
-                              ? "text-[9px] sm:text-[10px] uppercase tracking-widest text-amber-200 mt-0.5"
-                              : "text-[9px] sm:text-[10px] uppercase tracking-widest text-cyan-200 mt-0.5"
+                              ? "text-xs sm:text-[10px] uppercase tracking-widest text-amber-200 mt-1 sm:mt-0.5"
+                              : "text-xs sm:text-[10px] uppercase tracking-widest text-cyan-200 mt-1 sm:mt-0.5"
                           }
                         >
                           {credits === 1 ? "crédit" : "crédits"}
