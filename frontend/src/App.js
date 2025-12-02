@@ -1737,7 +1737,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
         {/* CONTENU PRINCIPAL DU DASHBOARD USER */}
         <div className="grid gap-4 lg:grid-cols-[2fr,3fr] mt-4">
           {/* Colonne projets */}
-          <Card className="bg-slate-900/80 border-slate-800/80">
+          <Card className="bg-slate-900/80 border-2 border-dashed border-cyan-400/60 shadow-[0_0_24px_rgba(34,211,238,0.4)] rounded-xl">
             <CardHeader>
               <CardTitle className="text-base sm:text-lg flex items-center justify-between gap-2">
                 <span className="font-semibold">Projets</span>
