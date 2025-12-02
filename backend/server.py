@@ -1346,7 +1346,7 @@ async def get_support_conversations(authorization: Optional[str] = Header(defaul
             continue
         
         # Get messages for this user
-        messages_cursor = db.support_messages.find({"user_id": uid}).sort("created_at", 1)
+        messages_cursor = db.support_messages.find({"user_id": uid}).sort("created_at", 1).limit(100)
         messages = []
         unread = 0
         async for msg in messages_cursor:
