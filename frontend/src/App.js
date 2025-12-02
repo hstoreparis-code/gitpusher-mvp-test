@@ -1693,17 +1693,17 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 ) : (
                   <>
                     <Button
-                      size="sm"
+                      size="default"
                       variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200"
+                      className="w-full justify-start text-sm rounded-lg border-violet-500/30 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 hover:text-violet-200 py-2.5"
                       onClick={() => navigate("/account")}
                     >
                       <span className="mr-2">⚙️</span> Gérer l'abonnement
                     </Button>
                     <Button
-                      size="sm"
+                      size="default"
                       variant="outline"
-                      className="w-full justify-start text-xs rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200"
+                      className="w-full justify-start text-sm rounded-lg border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-300 hover:text-emerald-200 py-2.5"
                       onClick={() => navigate("/app/pro")}
                     >
                       <span className="mr-2">📊</span> Dashboard Pro
