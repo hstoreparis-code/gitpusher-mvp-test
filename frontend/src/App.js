@@ -1566,8 +1566,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
             
             {/* Badge plan en haut à droite */}
             {user?.plan && (
-              <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20">
-                <span className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-lg ${
+              <div className="absolute top-4 right-4 z-20">
+                <span className={`px-2 py-0.5 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] font-bold uppercase tracking-wide sm:tracking-wider shadow-lg ${
                   (user.plan || '').toLowerCase() === 'free' || (user.plan || '').toLowerCase() === 'freemium' || (user.plan || '').toLowerCase() === 'demo'
                     ? 'bg-gradient-to-r from-cyan-300/30 via-sky-400/30 to-cyan-300/30 text-cyan-100 border border-cyan-300/70 shadow-[0_0_18px_rgba(56,189,248,0.9)]'
                     : (user.plan || '').toLowerCase() === 'starter'
@@ -1585,26 +1585,26 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
               </div>
             )}
             
-            <CardContent className="p-6 relative z-10">
-              <div className="flex items-center gap-6">
+            <CardContent className="p-5 sm:p-6 relative z-10">
+              <div className="flex items-start sm:items-center gap-4 sm:gap-6">
                 {/* Icône circulaire avec animation */}
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                   {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
                     <div className="absolute inset-0 bg-gradient-to-br from-violet-400 via-purple-400 to-pink-500 rounded-full blur-xl opacity-50 animate-pulse" />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-full blur-xl opacity-40 animate-pulse" />
                   )}
-                  <div className={`relative w-24 h-24 sm:w-28 sm:h-28 rounded-full ${
+                  <div className={`relative w-20 h-20 sm:w-28 sm:h-28 rounded-full ${
                     (user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business'
                       ? 'bg-gradient-to-br from-violet-700/60 to-indigo-800/60 border-2 border-violet-400/60'
                       : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-cyan-400/40'
                   } flex flex-col items-center justify-center backdrop-blur-sm`}>
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
                       <>
-                        <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent">
+                        <span className="text-3xl sm:text-5xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent">
                           ∞
                         </span>
-                        <span className="text-[9px] uppercase tracking-widest text-cyan-200 mt-0.5 font-semibold">
+                        <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-cyan-200 mt-0.5 font-semibold">
                           illimité
                         </span>
                       </>
@@ -1613,8 +1613,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         <span
                           className={
                             credits != null && credits <= 2
-                              ? "text-3xl sm:text-4xl font-bold bg-gradient-to-br from-amber-300 via-yellow-300 to-amber-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(250,204,21,0.9)]"
-                              : "text-3xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]"
+                              ? "text-2xl sm:text-4xl font-bold bg-gradient-to-br from-amber-300 via-yellow-300 to-amber-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(250,204,21,0.9)]"
+                              : "text-2xl sm:text-4xl font-bold bg-gradient-to-br from-cyan-300 via-sky-300 to-cyan-100 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]"
                           }
                         >
                           {credits == null ? "—" : credits}
@@ -1622,8 +1622,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                         <span
                           className={
                             credits != null && credits <= 2
-                              ? "text-[10px] uppercase tracking-widest text-amber-200 mt-0.5"
-                              : "text-[10px] uppercase tracking-widest text-cyan-200 mt-0.5"
+                              ? "text-[9px] sm:text-[10px] uppercase tracking-widest text-amber-200 mt-0.5"
+                              : "text-[9px] sm:text-[10px] uppercase tracking-widest text-cyan-200 mt-0.5"
                           }
                         >
                           {credits === 1 ? "crédit" : "crédits"}
@@ -1634,32 +1634,32 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 </div>
 
                 {/* Texte et statut */}
-                <div className="flex flex-col gap-2 mt-2">
-                  <h3 className="text-lg sm:text-xl font-semibold text-slate-100 whitespace-nowrap sm:whitespace-normal pr-24 sm:pr-20">
+                <div className="flex flex-col gap-2 flex-1 min-w-0 pt-3 sm:pt-0">
+                  <h3 className="text-base sm:text-xl font-semibold text-slate-100 pr-20 sm:pr-16">
                     Crédits disponibles
                   </h3>
                   <div className="flex items-center gap-2">
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business') ? (
-                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-400/40">
-                        <span className="text-lg">✨</span>
-                        <span className="text-xs font-semibold text-violet-300">Accès illimité</span>
+                      <div className="flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-400/40">
+                        <span className="text-sm sm:text-lg">✨</span>
+                        <span className="text-[11px] sm:text-xs font-semibold text-violet-300">Accès illimité</span>
                       </div>
                     ) : credits != null && credits <= 2 ? (
-                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/40 animate-pulse">
+                      <div className="flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-400/40 animate-pulse">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                         </span>
-                        <span className="text-xs font-semibold text-amber-300">⚠️ Crédits faibles</span>
+                        <span className="text-[11px] sm:text-xs font-semibold text-amber-300">⚠️ Crédits faibles</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-400/30">
+                      <div className="flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-400/30">
                         <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
-                        <span className="text-xs font-medium text-emerald-300">✓ Solde sain</span>
+                        <span className="text-[11px] sm:text-xs font-medium text-emerald-300">✓ Solde sain</span>
                       </div>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-400 max-w-xs leading-relaxed">
+                  <p className="text-[10px] sm:text-[11px] text-slate-400 leading-relaxed pr-2">
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business')
                       ? (
                         <>
