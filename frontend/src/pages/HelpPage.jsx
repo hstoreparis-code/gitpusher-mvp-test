@@ -165,10 +165,10 @@ export function HelpPage() {
                 <div className="p-4 rounded-lg bg-slate-950/60 border border-slate-700/50">
                   <p className="text-cyan-400 font-semibold mb-2">📧 Contact Email</p>
                   <a
-                    href="mailto:support@pushin.app"
+                    href="mailto:support@gitpusher.ai"
                     className="text-slate-300 hover:text-cyan-400 transition-colors underline"
                   >
-                    support@pushin.app
+                    support@gitpusher.ai
                   </a>
                 </div>
 
