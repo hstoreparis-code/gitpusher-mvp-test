@@ -1040,7 +1040,7 @@ async def admin_list_jobs(authorization: Optional[str] = Header(default=None)):
     _ = admin
     cur = db.jobs.find({}, {"_id": 1, "user_id": 1, "project_id": 1, "status": 1, "error": 1, "created_at": 1}).sort(
         "created_at", -1
-    )
+    ).limit(100)
     jobs: List[AdminJobSummary] = []
     async for j in cur:
         jobs.append(
