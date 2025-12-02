@@ -1856,7 +1856,7 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     <Button
                       variant="outline"
                       size="xs"
-                      className="h-7 px-2 rounded-full border-violet-400/60 bg-violet-500/10 text-violet-300 hover:bg-violet-500/20 hover:text-violet-200 hover:border-violet-400 shadow-[0_0_12px_rgba(139,92,246,0.3)] hover:shadow-[0_0_18px_rgba(139,92,246,0.6)] transition-all text-[10px]"
+                      className="h-8 px-3 rounded-full border-violet-400/60 bg-violet-500/10 text-violet-300 hover:bg-violet-500/20 hover:text-violet-200 hover:border-violet-400 shadow-[0_0_12px_rgba(139,92,246,0.3)] hover:shadow-[0_0_18px_rgba(139,92,246,0.6)] transition-all text-[10px]"
                       onClick={() => archiveProject(selected.id)}
                     >
                       Archiver
