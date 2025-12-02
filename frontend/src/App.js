@@ -1665,7 +1665,11 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                     {((user?.plan || '').toLowerCase() === 'premium' || (user?.plan || '').toLowerCase() === 'business')
                       ? (
                         <>
-                          Plan {user.plan} :<br />
+                          <span className={
+                            (user?.plan || '').toLowerCase() === 'business'
+                              ? 'text-amber-300 font-semibold'
+                              : 'text-violet-300 font-semibold'
+                          }>Plan {user.plan}</span> :<br />
                           Crédits illimités inclus dans votre abonnement
                         </>
                       )
