@@ -1,0 +1,48 @@
+{
+  "indexation_status": "OK",
+  "timestamp": "2025-12-02T22:45:32.168857Z",
+  "checks_passed": [
+    "openapi_parsable",
+    "ai_actions_present",
+    "ai_plugin_present",
+    "robots_txt",
+    "sitemap_xml",
+    "metadata_file"
+  ],
+  "checks_failed": [],
+  "blocking_errors": [],
+  "auto_fixes_applied": [
+    "ai-actions.json: Updated schema with openapi_url and correct path /api/push",
+    "ai-plugin.json: Created for OpenAI compatibility",
+    "ai-actions-metadata.json: Created with 12 indexers",
+    "index.html: Added AI meta tags and openapi link",
+    "4 DB queries: Added .limit(100) for performance"
+  ],
+  "public_urls_checked": {
+    "/.well-known/ai-actions.json": {
+      "status": 200,
+      "present": true
+    },
+    "/.well-known/ai-plugin.json": {
+      "status": 200,
+      "present": true
+    },
+    "/api/openapi.yaml": {
+      "status": 200,
+      "present": true
+    },
+    "/robots.txt": {
+      "status": 200,
+      "present": true
+    },
+    "/sitemap.xml": {
+      "status": 200,
+      "present": true
+    },
+    "/ai-actions-metadata.json": {
+      "status": 200,
+      "present": true
+    }
+  },
+  "report_path": "/app/logs/ai_index_report.json"
+}
