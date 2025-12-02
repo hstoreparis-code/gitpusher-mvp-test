@@ -1634,8 +1634,8 @@ function Dashboard({ t, lang, setLang, dark, setDark, currentLang, languages, is
                 </div>
 
                 {/* Texte et statut */}
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-lg sm:text-xl font-semibold text-slate-100 whitespace-nowrap sm:whitespace-normal">
+                <div className="flex flex-col gap-2 mt-1">
+                  <h3 className="text-lg sm:text-xl font-semibold text-slate-100 whitespace-nowrap sm:whitespace-normal pr-20">
                     Crédits disponibles
                   </h3>
                   <div className="flex items-center gap-2">
