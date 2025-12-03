@@ -64,7 +64,7 @@ export function AdminMonitorPage() {
 
       <div style={{ textAlign: "center", marginBottom: "40px" }}>
         <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>👁️ AI LIVE MONITOR</h1>
-        <p style={{ color: "#0ef", fontSize: "14px" }}>Oscillations d'activité IA + jauge de recommandation imminente</p>
+        <p style={{ color: "#0ef", fontSize: "14px" }}>Oscillations d&apos;activité IA + jauge de recommandation imminente</p>
       </div>
 
       {/* Oscillogramme */}
