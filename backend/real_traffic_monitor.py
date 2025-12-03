@@ -35,31 +35,44 @@ class RealTrafficMonitor:
             pass
         return "Unknown"
     
-    async def log_request(self, request: Request, response_time_ms: float, status_code: int):
+    def log_request_sync(self, request_data: dict, response_time_ms: float, status_code: int):
+        """Synchronous logging (called from middleware)"""
         with self.lock:
-            client_ip = request.client.host if request.client else "unknown"
+            client_ip = request_data.get("client_ip", "unknown")
+            path = request_data.get("path", "/")
+            method = request_data.get("method", "GET")
             current_hour = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:00")
             
             event = {
                 "timestamp": datetime.now(timezone.utc).isoformat(),
-                "method": request.method,
-                "path": request.url.path,
+                "method": method,
+                "path": path,
                 "status": status_code,
                 "duration_ms": response_time_ms,
-                "user_agent": request.headers.get("user-agent", "")[:100],
+                "user_agent": request_data.get("user_agent", "")[:100],
                 "ip": client_ip,
                 "hour": current_hour
             }
             
             self.requests.append(event)
             self.stats["total_requests"] += 1
-            self.stats["by_endpoint"][event["path"]] = self.stats["by_endpoint"].get(event["path"], 0) + 1
-            self.stats["by_method"][event["method"]] = self.stats["by_method"].get(event["method"], 0) + 1
+            self.stats["by_endpoint"][path] = self.stats["by_endpoint"].get(path, 0) + 1
+            self.stats["by_method"][method] = self.stats["by_method"].get(method, 0) + 1
             self.stats["by_status"][status_code] = self.stats["by_status"].get(status_code, 0) + 1
             self.stats["by_hour"][current_hour] += 1
-            self.stats["by_page"][event["path"]] = self.stats["by_page"].get(event["path"], 0) + 1
+            self.stats["by_page"][path] = self.stats["by_page"].get(path, 0) + 1
             self.stats["unique_ips"].add(client_ip)
             self.stats["active_users"].add(client_ip)
+    
+    async def log_request(self, request: Request, response_time_ms: float, status_code: int):
+        """Async wrapper for middleware"""
+        request_data = {
+            "client_ip": request.client.host if request.client else "unknown",
+            "path": request.url.path,
+            "method": request.method,
+            "user_agent": request.headers.get("user-agent", "")
+        }
+        self.log_request_sync(request_data, response_time_ms, status_code)
     
     def get_realtime_stats(self):
         with self.lock:
