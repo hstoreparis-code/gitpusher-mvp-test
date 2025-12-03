@@ -1,0 +1,14 @@
+{
+  "module_status": "INSTALLED",
+  "files_created": 5,
+  "routes_added": 3,
+  "tests_passed": 5,
+  "backend_status": "RUNNING",
+  "endpoints": [
+    "/api/admin/ai-monitor/live",
+    "/api/admin/ai-monitor/stats",
+    "/api/admin/ai-monitor/top-ias"
+  ],
+  "ai_detection": "ACTIVE",
+  "credit_optimized": true
+}
