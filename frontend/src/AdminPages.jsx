@@ -1687,11 +1687,66 @@ export function AdminDashboardPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <Card className="bg-slate-900/80 border-white/10">
                     <CardHeader>
-                      <CardTitle className="text-sm">🎯 Top Endpoints</CardTitle>
+                      <CardTitle className="text-sm">🎯 Top Pages Visitées</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-1 text-xs max-h-64 overflow-y-auto">
+                      {Object.entries(trafficStats.top_pages || {}).length === 0 ? (
+                        <p className="text-slate-500 text-center py-4">En collecte...</p>
+                      ) : (
+                        Object.entries(trafficStats.top_pages).map(([path, count]) => (
+                          <div key={path} className="flex justify-between p-2 bg-slate-950/60 rounded">
+                            <span className="truncate">{path}</span>
+                            <span className="text-cyan-400 font-mono">{count}</span>
+                          </div>
+                        ))
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/80 border-white/10">
+                    <CardHeader>
+                      <CardTitle className="text-sm">🌍 Visiteurs par Pays</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-1 text-xs max-h-64 overflow-y-auto">
+                      {Object.entries(trafficStats.by_country || {}).length === 0 ? (
+                        <p className="text-slate-500 text-center py-4">En collecte...</p>
+                      ) : (
+                        Object.entries(trafficStats.by_country).map(([country, count]) => (
+                          <div key={country} className="flex justify-between p-2 bg-slate-950/60 rounded">
+                            <span>{country}</span>
+                            <span className="text-violet-400 font-mono">{count}</span>
+                          </div>
+                        ))
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <Card className="bg-slate-900/80 border-violet-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-sm">⏰ Trafic par Heure (24h)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer width="100%" height={200}>
+                      <BarChart data={trafficStats.by_hour || []}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis dataKey="hour" stroke="#94a3b8" style={{ fontSize: '10px' }} />
+                        <YAxis stroke="#94a3b8" />
+                        <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }} />
+                        <Bar dataKey="count" fill="#8b5cf6" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card className="bg-slate-900/80 border-white/10">
+                    <CardHeader>
+                      <CardTitle className="text-sm">🎯 Top Endpoints API</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-1 text-xs max-h-64 overflow-y-auto">
                       {Object.entries(trafficStats.top_endpoints || {}).length === 0 ? (
-                        <p className="text-slate-500 text-center py-4">Aucune donnée</p>
+                        <p className="text-slate-500 text-center py-4">En collecte...</p>
                       ) : (
                         Object.entries(trafficStats.top_endpoints).map(([path, count]) => (
                           <div key={path} className="flex justify-between p-2 bg-slate-950/60 rounded">
