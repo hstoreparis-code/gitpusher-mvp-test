@@ -760,6 +760,10 @@ export function AdminDashboardPage() {
                   <Settings className="w-4 h-4 mr-2" />
                   Paramètres
                 </TabsTrigger>
+                <TabsTrigger value="features">
+                  <Zap className="w-4 h-4 mr-2" />
+                  Features
+                </TabsTrigger>
               </TabsList>
 
               {/* Onglet AI Monitor */}
