@@ -3352,7 +3352,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                       return;
                     }
                     axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/billing/purchase`, 
-                      { packId: "pack_business" },
+                      { packId: "sub_business" },
                       { headers: { Authorization: `Bearer ${token}` } }
                     ).then(res => {
                       window.location.href = res.data.checkoutUrl;
