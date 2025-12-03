@@ -4089,6 +4089,10 @@ api_router.include_router(features_health_router)
 from routes.smtp_config import router as smtp_config_router
 api_router.include_router(smtp_config_router)
 
+# Mount Admin Pages router
+from routes.admin_pages import router as admin_pages_router
+api_router.include_router(admin_pages_router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
