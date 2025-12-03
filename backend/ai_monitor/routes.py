@@ -4,7 +4,6 @@ from datetime import datetime, timezone, timedelta
 from typing import Optional, List
 import json
 import asyncio
-import random
 
 router = APIRouter(prefix="/admin/ai-monitor")
 
@@ -22,10 +21,27 @@ async def ai_monitor_stream(authorization: Optional[str] = Header(None)):
     await require_admin_auth(authorization)
     
     async def event_generator():
+        db = await get_db()
+        
         while True:
-            freq = random.random() * 100
-            likelihood = min(100, max(0, int(freq + (random.random() * 15 - 7))))
-            data = json.dumps({"freq": freq, "likelihood": likelihood, "t": int(datetime.now(timezone.utc).timestamp() * 1000)})
+            # Get real AI events from last minute
+            one_min_ago = (datetime.now(timezone.utc) - timedelta(minutes=1)).isoformat()
+            recent_count = await db.ai_events.count_documents({"timestamp": {"$gte": one_min_ago}})
+            
+            # Get total events last hour for frequency calculation
+            one_hour_ago = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()
+            hour_count = await db.ai_events.count_documents({"timestamp": {"$gte": one_hour_ago}})
+            
+            freq = min(100, (hour_count / 60) * 10)  # Normalize to 0-100
+            likelihood = min(100, max(0, int(freq * 1.5 + recent_count * 20)))
+            
+            data = json.dumps({
+                "freq": freq,
+                "likelihood": likelihood,
+                "t": int(datetime.now(timezone.utc).timestamp() * 1000),
+                "events_last_min": recent_count,
+                "events_last_hour": hour_count
+            })
             yield f"data: {data}\n\n"
             await asyncio.sleep(0.8)
     
@@ -49,7 +65,7 @@ async def ai_monitor_stats(authorization: Optional[str] = Header(None)):
     events_24h = await db.ai_events.count_documents({"timestamp": {"$gte": day_ago}})
     events_7d = await db.ai_events.count_documents({"timestamp": {"$gte": week_ago}})
     
-    pipeline = [{"$group": {"_id": "$source", "count": {"$sum": 1}}}]
+    pipeline = [{"$group": {"_id": "$source", "count": {"$sum": 1}}}, {"$sort": {"count": -1}}]
     by_source = await db.ai_events.aggregate(pipeline).to_list(100)
     
     return {
@@ -70,3 +86,4 @@ async def ai_monitor_top(authorization: Optional[str] = Header(None)):
     ]
     top = await db.ai_events.aggregate(pipeline).to_list(10)
     return {"top_ias": top}
+
