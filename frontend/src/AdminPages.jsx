@@ -1644,6 +1644,37 @@ export function AdminDashboardPage() {
 
               {/* Onglet Trafic Temps Réel */}
               <TabsContent value="traffic" className="mt-4 space-y-4">
+                {/* Bouton Actualiser */}
+                <div className="flex justify-end">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="text-xs border-cyan-400/60 text-cyan-400"
+                    onClick={async () => {
+                      try {
+                        const res = await axios.get(`${API}/admin/traffic/stats`, {
+                          headers: { Authorization: `Bearer ${token}` }
+                        });
+                        setTrafficStats(prev => ({
+                          ...prev,
+                          ...res.data,
+                          top_endpoints: res.data.top_endpoints || {},
+                          by_country: res.data.by_country || {},
+                          by_hour: res.data.by_hour || [],
+                          top_pages: res.data.top_pages || {},
+                          unique_visitors: res.data.unique_visitors || 0,
+                          total_ai_requests: res.data.total_ai_requests || 0,
+                          ai_traffic: res.data.ai_traffic || {}
+                        }));
+                      } catch (err) {
+                        console.error(err);
+                      }
+                    }}
+                  >
+                    🔄 Actualiser
+                  </Button>
+                </div>
+
                 <div className="grid gap-4 md:grid-cols-3">
                   <Card className="bg-slate-900/80 border-cyan-400/30">
                     <CardContent className="p-4">
