@@ -1649,8 +1649,8 @@ export function AdminDashboardPage() {
                   </Card>
                   <Card className="bg-slate-900/80 border-violet-400/30">
                     <CardContent className="p-4">
-                      <p className="text-xs text-slate-400">Utilisateurs actifs</p>
-                      <p className="text-3xl font-bold text-violet-400">{trafficStats.users || 0}</p>
+                      <p className="text-xs text-slate-400">Visiteurs Uniques</p>
+                      <p className="text-3xl font-bold text-violet-400">{trafficStats.unique_visitors || 0}</p>
                     </CardContent>
                   </Card>
                   <Card className="bg-slate-900/80 border-emerald-400/30">
