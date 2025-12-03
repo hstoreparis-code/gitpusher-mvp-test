@@ -1,0 +1,55 @@
+/* Admin Monitor Responsive Styles */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.admin-monitor-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+canvas {
+  width: 100% !important;
+  max-width: 900px;
+  height: 180px !important;
+}
+
+#gauge {
+  width: 300px !important;
+  height: 300px !important;
+  max-width: 100%;
+}
+
+@media(max-width: 768px) {
+  canvas {
+    height: 140px !important;
+  }
+  
+  #gauge {
+    width: 220px !important;
+    height: 220px !important;
+  }
+  
+  .admin-monitor-container {
+    padding: 8px;
+  }
+}
+
+@media(max-width: 480px) {
+  canvas {
+    height: 120px !important;
+  }
+  
+  #gauge {
+    width: 180px !important;
+    height: 180px !important;
+  }
+}
