@@ -789,6 +789,10 @@ export function AdminDashboardPage() {
                   <Settings className="w-4 h-4 mr-2" />
                   Sécurité
                 </TabsTrigger>
+                <TabsTrigger value="emails">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Emails
+                </TabsTrigger>
                 <TabsTrigger value="traffic">
                   <Activity className="w-4 h-4 mr-2" />
                   Trafic
