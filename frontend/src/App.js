@@ -3342,23 +3342,27 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
               </CardContent>
               <div className="px-6 pb-5 md:pb-4">
                 <Button
-                  variant="outline"
-                  className="w-full rounded-full border-amber-400/60 text-amber-200 text-xs hover:bg-amber-500/10"
-                  data-testid="pricing-business-cta"
-                  onClick={async () => {
-                    try {
-                      const res = await axios.post(
-                        `${API}/billing/plan`,
-                        { plan: "business" },
-                        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
-                      );
-                      console.log("Plan business appliqué", res.data);
-                    } catch (e) {
-                      console.error("Set business plan failed", e);
+                  className="w-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold shadow-[0_0_18px_rgba(245,158,11,0.8)] hover:shadow-[0_0_24px_rgba(245,158,11,1)] transition-all"
+                  size="lg"
+                  onClick={() => {
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                      sessionStorage.setItem("intended_purchase", "pack_business");
+                      window.location.href = "/signup";
+                      return;
                     }
+                    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/billing/purchase`, 
+                      { packId: "pack_business" },
+                      { headers: { Authorization: `Bearer ${token}` } }
+                    ).then(res => {
+                      window.location.href = res.data.checkoutUrl;
+                    }).catch(err => {
+                      alert("Erreur: " + (err.response?.data?.detail || "Veuillez vous connecter"));
+                      window.location.href = "/signup";
+                    });
                   }}
                 >
-                  Contacter l&apos;équipe
+                  Acheter Business - 99€/mois
                 </Button>
               </div>
             </Card>
