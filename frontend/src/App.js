@@ -2995,7 +2995,26 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                     <span>Support email (48h)</span>
                   </li>
                 </ul>
-                <Button className="w-full rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 mt-4" size="lg">
+                <Button
+                  onClick={async () => {
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                      window.location.href = "/";
+                      return;
+                    }
+                    try {
+                      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/billing/purchase`, 
+                        { packId: "pack_10" },
+                        { headers: { Authorization: `Bearer ${token}` } }
+                      );
+                      window.location.href = res.data.checkoutUrl;
+                    } catch (err) {
+                      alert("Erreur: " + (err.response?.data?.detail || "Connexion requise"));
+                    }
+                  }}
+                  className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-[0_0_18px_rgba(6,182,212,0.8)] hover:shadow-[0_0_24px_rgba(6,182,212,1)] transition-all mt-4"
+                  size="lg"
+                >
                   Acheter - 9,99€
                 </Button>
               </CardContent>
