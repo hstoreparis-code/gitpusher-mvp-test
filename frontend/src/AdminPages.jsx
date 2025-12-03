@@ -1514,6 +1514,73 @@ export function AdminDashboardPage() {
                 </div>
               </TabsContent>
 
+              {/* Onglet Security/Roles */}
+              <TabsContent value="security" className="mt-4 space-y-4">
+                <Card className="bg-slate-900/80 border-violet-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-base">🔒 Système de Rôles</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3 text-xs">
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="p-3 rounded-lg bg-gradient-to-r from-red-500/20 to-pink-500/20 border-2 border-red-400/40">
+                        <p className="font-bold text-red-300 mb-2">👑 FOUNDER_ADMIN</p>
+                        <p className="text-slate-400">• Accès total système</p>
+                        <p className="text-slate-400">• Gestion des rôles</p>
+                        <p className="text-slate-400">• Création admins</p>
+                      </div>
+                      <div className="p-3 rounded-lg bg-violet-500/10 border border-violet-400/40">
+                        <p className="font-bold text-violet-300 mb-2">⚙️ ADMIN</p>
+                        <p className="text-slate-400">• Dashboard complet</p>
+                        <p className="text-slate-400">• Gestion utilisateurs</p>
+                        <p className="text-slate-400">• Crédits & Jobs</p>
+                      </div>
+                      <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-400/40">
+                        <p className="font-bold text-blue-300 mb-2">👤 STAFF</p>
+                        <p className="text-slate-400">• Support tickets</p>
+                        <p className="text-slate-400">• Lecture stats</p>
+                      </div>
+                      <div className="p-3 rounded-lg bg-slate-700/20 border border-slate-600/40">
+                        <p className="font-bold text-slate-300 mb-2">👁️ VIEWER</p>
+                        <p className="text-slate-400">• Lecture seule</p>
+                        <p className="text-slate-400">• Accès limité</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-slate-900/80 border-cyan-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-base">👥 Comptes Admin Actifs</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-400/40">
+                        <div>
+                          <p className="font-bold text-red-300">founder@gitpusher.ai</p>
+                          <p className="text-xs text-slate-400">Role: FOUNDER_ADMIN</p>
+                        </div>
+                        <span className="px-2 py-1 rounded-full bg-red-500/20 text-red-300 text-xs font-bold">ACTIF</span>
+                      </div>
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-violet-500/10 border border-violet-400/40">
+                        <div>
+                          <p className="font-bold text-violet-300">admin@pushin.app</p>
+                          <p className="text-xs text-slate-400">Role: ADMIN</p>
+                        </div>
+                        <span className="px-2 py-1 rounded-full bg-violet-500/20 text-violet-300 text-xs font-bold">ACTIF</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-gradient-to-br from-cyan-500/10 via-slate-900/80 to-violet-500/10 border-2 border-dashed border-cyan-400/40">
+                  <CardContent className="p-4">
+                    <p className="text-xs text-cyan-300">
+                      🔒 <strong>Sécurité</strong> : JWT avec expiration 60min, tokens refresh automatique, rôles hiérarchiques, routes protégées par middleware
+                    </p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
               {/* Onglet Trafic Temps Réel */}
               <TabsContent value="traffic" className="mt-4 space-y-4">
                 <div className="grid gap-4 md:grid-cols-3">
