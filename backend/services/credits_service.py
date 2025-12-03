@@ -73,29 +73,34 @@ class CreditsService:
         pack = self.PACKS[pack_id]
         
         try:
-            session = stripe.checkout.Session.create(
-                payment_method_types=['card'],
-                line_items=[{
+            checkout_params = {
+                'payment_method_types': ['card'],
+                'line_items': [{
                     'price_data': {
                         'currency': pack["currency"].lower(),
                         'product_data': {
-                            'name': f'Pack {pack["credits"]} crédits',
+                            'name': pack.get("name", f'Pack {pack["credits"]} crédits'),
                             'description': f'{pack["credits"]} crédits GitPusher.AI'
                         },
                         'unit_amount': int(pack["price"] * 100)
                     },
                     'quantity': 1
                 }],
-                mode='payment',
-                success_url=f'{os.environ.get("FRONTEND_URL", "")}/billing/success?session_id={{CHECKOUT_SESSION_ID}}',
-                cancel_url=f'{os.environ.get("FRONTEND_URL", "")}/pricing',
-                client_reference_id=user_id,
-                metadata={
+                'mode': 'subscription' if pack.get("recurring") else 'payment',
+                'success_url': f'{os.environ.get("FRONTEND_URL", "")}/billing/success?session_id={{CHECKOUT_SESSION_ID}}',
+                'cancel_url': f'{os.environ.get("FRONTEND_URL", "")}/pricing',
+                'client_reference_id': user_id,
+                'metadata': {
                     'user_id': user_id,
                     'pack_id': pack_id,
                     'credits': pack["credits"]
                 }
-            )
+            }
+            
+            if pack.get("recurring"):
+                checkout_params['line_items'][0]['price_data']['recurring'] = {'interval': 'month'}
+            
+            session = stripe.checkout.Session.create(**checkout_params)
             
             await self.db.pending_checkouts.insert_one({
                 "_id": session.id,
