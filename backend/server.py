@@ -3962,6 +3962,10 @@ api_router.include_router(email_router)
 from routes.ping_ai import router as ping_ai_router
 app.include_router(ping_ai_router)
 
+# Mount Stripe Stats router
+from routes.stripe_stats import router as stripe_stats_router
+api_router.include_router(stripe_stats_router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
