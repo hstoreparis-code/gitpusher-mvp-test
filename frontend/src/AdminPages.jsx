@@ -249,15 +249,19 @@ export function AdminDashboardPage() {
           navigate("/admin-login", { replace: true });
           return;
         }
-        const [usersRes, jobsRes] = await Promise.all([
+        const [usersRes, jobsRes, aiStatsRes, aiEventsRes] = await Promise.all([
           axios.get(`${API}/admin/users`, { headers: { Authorization: `Bearer ${token}` } }),
           axios.get(`${API}/admin/jobs`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API}/admin/ai-monitor/stats`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: { stats_24h: 0, stats_7d: 0, by_source: [], health: "OK" } })),
+          axios.get(`${API}/admin/ai-monitor/live`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: { events: [] } })),
         ]);
         const fetchedUsers = usersRes.data || [];
         const fetchedJobs = jobsRes.data || [];
         
         setUsers(fetchedUsers);
         setJobs(fetchedJobs);
+        setAiStats(aiStatsRes.data || { stats_24h: 0, stats_7d: 0, by_source: [], health: "OK" });
+        setAiEvents(aiEventsRes.data?.events || []);
         
         // Calculate statistics
         const totalCredits = fetchedUsers.reduce((sum, u) => sum + (u.credits || 0), 0);
