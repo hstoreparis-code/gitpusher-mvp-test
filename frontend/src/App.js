@@ -3268,22 +3268,26 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
               </CardContent>
               <div className="px-6 pb-5 space-y-2">
                 <Button
-                  className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-semibold"
-                  data-testid="pricing-premium-cta"
+                  className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-[0_0_18px_rgba(6,182,212,0.8)] hover:shadow-[0_0_24px_rgba(6,182,212,1)] transition-all"
+                  size="lg"
                   onClick={async () => {
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                      window.location.href = "/";
+                      return;
+                    }
                     try {
-                      const res = await axios.post(
-                        `${API}/billing/plan`,
-                        { plan: "premium" },
-                        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } },
+                      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/billing/purchase`, 
+                        { packId: "pack_100" },
+                        { headers: { Authorization: `Bearer ${token}` } }
                       );
-                      console.log("Plan premium appliqué", res.data);
-                    } catch (e) {
-                      console.error("Set premium plan failed", e);
+                      window.location.href = res.data.checkoutUrl;
+                    } catch (err) {
+                      alert("Erreur: " + (err.response?.data?.detail || "Connexion requise"));
                     }
                   }}
                 >
-                  Passer en Premium
+                  Acheter - 19,99€/mois
                 </Button>
                 <p className="text-[10px] text-slate-200 text-center">
                   Sans engagement. Annulation en un clic.
