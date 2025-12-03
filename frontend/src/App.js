@@ -3275,7 +3275,8 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   onClick={async () => {
                     const token = localStorage.getItem("token");
                     if (!token) {
-                      window.location.href = "/";
+                      sessionStorage.setItem("intended_purchase", "pack_100");
+                      window.location.href = "/?action=signup";
                       return;
                     }
                     try {
@@ -3285,7 +3286,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                       );
                       window.location.href = res.data.checkoutUrl;
                     } catch (err) {
-                      alert("Erreur: " + (err.response?.data?.detail || "Connexion requise"));
+                      alert("Erreur: " + (err.response?.data?.detail || "Veuillez vous connecter"));
                     }
                   }}
                 >
