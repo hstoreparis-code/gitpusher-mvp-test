@@ -3954,6 +3954,10 @@ api_router.include_router(ai_monitor_router)
 from routes.traffic_routes import router as traffic_router
 api_router.include_router(traffic_router)
 
+# Mount Email templates router
+from routes.email_routes import router as email_router
+api_router.include_router(email_router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
