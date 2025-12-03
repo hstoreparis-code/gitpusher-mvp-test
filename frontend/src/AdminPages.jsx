@@ -776,6 +776,30 @@ export function AdminDashboardPage() {
                   </Card>
                 </div>
 
+                {/* Graphique Temps Réel */}
+                <Card className="bg-slate-900/80 border-cyan-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-base">📈 Activité IA Temps Réel</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer width="100%" height={200}>
+                      <LineChart data={aiLiveData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis dataKey="t" stroke="#94a3b8" hide />
+                        <YAxis stroke="#94a3b8" domain={[0, 100]} />
+                        <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }} />
+                        <Line type="monotone" dataKey="freq" stroke="#06b6d4" strokeWidth={2} dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                    <div className="mt-4 text-center">
+                      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-violet-500/20 border border-cyan-400/40">
+                        <span className="text-xs text-slate-400">Probabilité recommandation</span>
+                        <span className="text-xl font-bold text-cyan-400">{Math.round(aiLikelihood)}%</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* Graphique Origines IA */}
                 <Card className="bg-slate-900/80 border-white/10">
                   <CardHeader>
