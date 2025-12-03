@@ -2303,11 +2303,24 @@ async def github_callback(code: str):
                 "provider_github_id": gh_id,
                 "github_access_token": gh_token,
                 "credits": initial_credits,
-                "plan": "freemium",  # Default plan
+                "plan": "freemium",
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
             await db.users.insert_one(user)
+            
+            # Send welcome email (async, non-blocking)
+            try:
+                from services.email_service import EmailService
+                email_service = EmailService(db)
+                await email_service.send_from_template(
+                    "welcome_email",
+                    user["email"],
+                    {"name": user.get("display_name", user["email"].split("@")[0])}
+                )
+                logger.info(f"Welcome email sent to {user['email']}")
+            except Exception as e:
+                logger.warning(f"Welcome email failed for {user['email']}: {str(e)}")
 
         # Create JWT token for the user
         token = create_access_token({"sub": user["_id"]})
