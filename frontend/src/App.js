@@ -3272,22 +3272,22 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                 <Button
                   className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-[0_0_18px_rgba(6,182,212,0.8)] hover:shadow-[0_0_24px_rgba(6,182,212,1)] transition-all"
                   size="lg"
-                  onClick={async () => {
+                  onClick={() => {
                     const token = localStorage.getItem("token");
                     if (!token) {
                       sessionStorage.setItem("intended_purchase", "pack_100");
-                      window.location.href = "/?action=signup";
+                      window.location.href = "/signup";
                       return;
                     }
-                    try {
-                      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/billing/purchase`, 
-                        { packId: "pack_100" },
-                        { headers: { Authorization: `Bearer ${token}` } }
-                      );
+                    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/billing/purchase`, 
+                      { packId: "pack_100" },
+                      { headers: { Authorization: `Bearer ${token}` } }
+                    ).then(res => {
                       window.location.href = res.data.checkoutUrl;
-                    } catch (err) {
+                    }).catch(err => {
                       alert("Erreur: " + (err.response?.data?.detail || "Veuillez vous connecter"));
-                    }
+                      window.location.href = "/signup";
+                    });
                   }}
                 >
                   Acheter - 19,99€/mois
