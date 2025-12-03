@@ -1,10 +1,9 @@
 {
-  "service": "GitPusher",
-  "version": "1.0.0",
-  "description": "Universal AI-to-Git push engine.",
-  "endpoints": [
-    {"path": "/push", "method": "POST"},
-    {"path": "/providers", "method": "GET"},
-    {"path": "/status", "method": "GET"}
-  ]
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "GitPusher",
+ "description": "Universal AI-to-Git push engine.",
+ "applicationCategory": "DeveloperTool",
+ "operatingSystem": "Web",
+ "provider": "GitPusher.ai"
 }
