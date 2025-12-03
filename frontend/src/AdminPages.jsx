@@ -837,6 +837,10 @@ export function AdminDashboardPage() {
                   <Zap className="w-4 h-4 mr-2" />
                   Features
                 </TabsTrigger>
+                <TabsTrigger value="pages" className="flex-shrink-0">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Pages SEO/AEO
+                </TabsTrigger>
                 <TabsTrigger value="security" className="flex-shrink-0">
                   <Settings className="w-4 h-4 mr-2" />
                   Sécurité
