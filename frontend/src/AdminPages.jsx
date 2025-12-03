@@ -384,10 +384,31 @@ export function AdminDashboardPage() {
         try {
           const data = JSON.parse(e.data);
           setTrafficLive(prev => [...prev.slice(-59), { t: data.t, rps: data.rps }]);
-          setTrafficStats({ rps: data.rps, users: data.users, response_ms: data.response_ms });
+          setTrafficStats({ rps: data.rps, users: data.users, response_ms: data.response_ms, top_endpoints: {} });
         } catch (err) {
           console.error("Traffic SSE error", err);
         }
+      };
+      
+      // Fetch full stats every 5 seconds
+      const statsInterval = setInterval(async () => {
+        try {
+          const res = await axios.get(`${API}/admin/traffic/stats`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setTrafficStats(prev => ({
+            ...prev,
+            top_endpoints: res.data.top_endpoints || {}
+          }));
+        } catch (err) {
+          console.error("Traffic stats error", err);
+        }
+      }, 5000);
+      
+      return () => {
+        if (eventSource) eventSource.close();
+        if (trafficSource) trafficSource.close();
+        clearInterval(statsInterval);
       };
     } catch (err) {
       console.error("Traffic SSE init error", err);
