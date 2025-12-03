@@ -3915,6 +3915,10 @@ api_router.include_router(v1_router)
 from routes.admin_credit_safety import admin_dashboard_router
 api_router.include_router(admin_dashboard_router, prefix="/admin")
 
+# Mount AI monitor router
+from ai_monitor.routes import router as ai_monitor_router
+api_router.include_router(ai_monitor_router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
