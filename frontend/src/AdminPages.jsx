@@ -330,7 +330,6 @@ export function AdminDashboardPage() {
         
         setLoading(false);
       } catch (err) {
-        // Si erreur 401, le token est invalide -> rediriger vers login
         if (err?.response?.status === 401) {
           localStorage.removeItem("admin_token");
           navigate("/admin-login", { replace: true });
@@ -341,6 +340,15 @@ export function AdminDashboardPage() {
       }
     };
     fetchData();
+
+    // SSE for AI Monitor realtime
+    const eventSource = new EventSource(`${API}/admin/ai-monitor/stream`);
+    eventSource.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      setAiLiveData(prev => [...prev.slice(-149), { t: data.t, freq: data.freq }]);
+      setAiLikelihood(data.likelihood);
+    };
+    return () => eventSource.close();
   }, [navigate, token]);
 
   const handleUpdateUser = async (userId, plan, credits) => {
