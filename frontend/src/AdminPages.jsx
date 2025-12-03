@@ -1667,7 +1667,23 @@ export function AdminDashboardPage() {
 
                 <Card className="bg-slate-900/80 border-cyan-400/30">
                   <CardHeader>
-                    <CardTitle className="text-base">📊 Trafic Temps Réel (60 dernières secondes)</CardTitle>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base">📊 Trafic Temps Réel (60 dernières secondes)</CardTitle>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-xs"
+                        onClick={async () => {
+                          try {
+                            window.open(`${API}/admin/traffic/export`, '_blank');
+                          } catch (err) {
+                            console.error(err);
+                          }
+                        }}
+                      >
+                        📥 Exporter
+                      </Button>
+                    </div>
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={250}>
@@ -1685,6 +1701,27 @@ export function AdminDashboardPage() {
                         <Area type="monotone" dataKey="rps" stroke="#06b6d4" fillOpacity={1} fill="url(#colorRps)" />
                       </AreaChart>
                     </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+
+                {/* AI Traffic Card */}
+                <Card className="bg-slate-900/80 border-violet-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-base">🤖 Trafic IA ({trafficStats.total_ai_requests || 0} requêtes)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer width="100%" height={200}>
+                      <BarChart data={Object.entries(trafficStats.ai_traffic || {}).map(([name, count]) => ({ name, count }))}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis dataKey="name" stroke="#94a3b8" style={{ fontSize: '11px' }} />
+                        <YAxis stroke="#94a3b8" />
+                        <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }} />
+                        <Bar dataKey="count" fill="#8b5cf6" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                    {Object.keys(trafficStats.ai_traffic || {}).length === 0 && (
+                      <p className="text-xs text-slate-500 text-center py-4">Aucun trafic IA détecté</p>
+                    )}
                   </CardContent>
                 </Card>
 
