@@ -921,14 +921,14 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
             Pour utiliser Git<span className="bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent font-semibold">Pusher</span>, inscris-toi ou connecte-toi avec l&apos;un de ces providers.
           </p>
         </div>
-        {/* Bouton Accès Business sous les providers */}
+        {/* Bouton Accès Admin sous les providers */}
         <div className="mt-5 flex flex-col gap-3 items-stretch">
           <Button
-            className="w-full justify-center rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-slate-950 text-xs sm:text-sm font-semibold px-3 py-2 flex items-center gap-2 shadow-[0_0_18px_rgba(56,189,248,0.85)]"
-            onClick={() => navigate("/app/pro")}
-            data-testid="auth-pro-dashboard-button"
+            className="w-full justify-center rounded-full bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-400 hover:to-purple-400 text-white text-xs sm:text-sm font-semibold px-3 py-2 flex items-center gap-2 shadow-[0_0_18px_rgba(139,92,246,0.85)]"
+            onClick={() => navigate("/admin-login")}
+            data-testid="auth-admin-dashboard-button"
           >
-            Accès Business
+            ⚙️ Accès Admin
           </Button>
         </div>
 
