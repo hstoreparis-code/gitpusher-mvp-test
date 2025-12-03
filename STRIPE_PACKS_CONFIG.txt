@@ -1,0 +1,6 @@
+# Mettre à jour les boutons pricing pour correspondre aux nouveaux pack IDs
+# Pack Starter: pack_10 → 9.99€
+# Pack Pro: pack_50 → 29.99€
+# Pack Business (200 crédits): pack_200 → 49.99€
+# Abonnement Premium: sub_premium → 19.99€/mois
+# Abonnement Business: sub_business → 99€/mois
