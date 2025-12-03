@@ -833,6 +833,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Traffic monitoring middleware
+@app.middleware("http")
+async def traffic_logging_middleware(request: Request, call_next):
+    from real_traffic_monitor import real_traffic_monitor
+    import time
+    
+    start_time = time.time()
+    response = await call_next(request)
+    duration_ms = (time.time() - start_time) * 1000
+    
+    # Log to traffic monitor (async, non-blocking)
+    try:
+        await real_traffic_monitor.log_request(request, duration_ms, response.status_code)
+    except:
+        pass
+    
+    return response
+
 
 
 @app.on_event("startup")
