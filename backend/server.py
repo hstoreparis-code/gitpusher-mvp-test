@@ -3786,6 +3786,37 @@ async def v1_billing_history(authorization: str = Header(None)):
     return {"transactions": transactions}
 
 
+@v1_router.post("/billing/webhook")
+async def stripe_webhook(request: Request):
+    """Stripe webhook handler for payment events."""
+    import stripe
+    import os
+    
+    stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+    webhook_secret = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
+    
+    payload = await request.body()
+    sig_header = request.headers.get("stripe-signature")
+    
+    try:
+        if webhook_secret:
+            event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
+        else:
+            event = json.loads(payload)
+        
+        if event["type"] == "checkout.session.completed":
+            session = event["data"]["object"]
+            session_id = session["id"]
+            
+            await credits_service.complete_checkout(session_id)
+            logger.info(f"Payment completed: {session_id}")
+        
+        return {"status": "success"}
+    except Exception as e:
+        logger.error(f"Webhook error: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 # ---------- V1 AUTOPUSH ENDPOINTS ----------
 
 @v1_router.get("/autopush/settings", response_model=AutopushSettings)
