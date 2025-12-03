@@ -3958,6 +3958,10 @@ api_router.include_router(traffic_router)
 from routes.email_routes import router as email_router
 api_router.include_router(email_router)
 
+# Mount AI Ping router
+from routes.ping_ai import router as ping_ai_router
+app.include_router(ping_ai_router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
