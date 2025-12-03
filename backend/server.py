@@ -2557,11 +2557,24 @@ async def bitbucket_callback(code: str):
                 "provider_bitbucket_id": bb_id,
                 "bitbucket_access_token": bb_token,
                 "credits": initial_credits,
-                "plan": "freemium",  # Default plan
+                "plan": "freemium",
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
             await db.users.insert_one(user)
+            
+            # Send welcome email (async, non-blocking)
+            try:
+                from services.email_service import EmailService
+                email_service = EmailService(db)
+                await email_service.send_from_template(
+                    "welcome_email",
+                    user["email"],
+                    {"name": user.get("display_name", user["email"].split("@")[0])}
+                )
+                logger.info(f"Welcome email sent to {user['email']}")
+            except Exception as e:
+                logger.warning(f"Welcome email failed for {user['email']}: {str(e)}")
 
         token = create_access_token({"sub": user["_id"]})
         return RedirectResponse(url=f"{FRONTEND_URL}/auth/callback?token={token}")
