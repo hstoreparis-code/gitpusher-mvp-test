@@ -1497,6 +1497,83 @@ export function AdminDashboardPage() {
                 </div>
               </TabsContent>
 
+              {/* Onglet Trafic Temps Réel */}
+              <TabsContent value="traffic" className="mt-4 space-y-4">
+                <div className="grid gap-4 md:grid-cols-3">
+                  <Card className="bg-slate-900/80 border-cyan-400/30">
+                    <CardContent className="p-4">
+                      <p className="text-xs text-slate-400">Req/sec</p>
+                      <p className="text-3xl font-bold text-cyan-400">{trafficStats.rps || 0}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-900/80 border-violet-400/30">
+                    <CardContent className="p-4">
+                      <p className="text-xs text-slate-400">Utilisateurs actifs</p>
+                      <p className="text-3xl font-bold text-violet-400">{trafficStats.users || 0}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-900/80 border-emerald-400/30">
+                    <CardContent className="p-4">
+                      <p className="text-xs text-slate-400">Temps réponse</p>
+                      <p className="text-3xl font-bold text-emerald-400">{trafficStats.response_ms || 0}<span className="text-sm">ms</span></p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <Card className="bg-slate-900/80 border-cyan-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-base">📊 Trafic Temps Réel (60 dernières secondes)</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <AreaChart data={trafficLive}>
+                        <defs>
+                          <linearGradient id="colorRps" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis dataKey="t" stroke="#94a3b8" hide />
+                        <YAxis stroke="#94a3b8" />
+                        <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }} />
+                        <Area type="monotone" dataKey="rps" stroke="#06b6d4" fillOpacity={1} fill="url(#colorRps)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card className="bg-slate-900/80 border-white/10">
+                    <CardHeader>
+                      <CardTitle className="text-sm">🎯 Top Endpoints</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-1 text-xs max-h-64 overflow-y-auto">
+                      <div className="flex justify-between p-2 bg-slate-950/60 rounded"><span>/api/auth/demo</span><span className="text-cyan-400">---</span></div>
+                      <div className="flex justify-between p-2 bg-slate-950/60 rounded"><span>/api/v1/jobs</span><span className="text-cyan-400">---</span></div>
+                      <div className="flex justify-between p-2 bg-slate-950/60 rounded"><span>/api/push</span><span className="text-cyan-400">---</span></div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className={`bg-slate-900/80 ${trafficStats.response_ms < 200 ? 'border-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.4)]' : trafficStats.response_ms < 500 ? 'border-amber-400' : 'border-red-400'}`}>
+                    <CardHeader>
+                      <CardTitle className="text-sm">🚨 Statut Serveur</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-center">
+                        <div className={`inline-flex items-center gap-2 px-4 py-3 rounded-full ${trafficStats.response_ms < 500 ? 'bg-emerald-500/20 border-2 border-emerald-400' : 'bg-red-500/20 border-2 border-red-400'}`}>
+                          <span className={`h-3 w-3 rounded-full ${trafficStats.response_ms < 500 ? 'bg-emerald-400 animate-pulse' : 'bg-red-400 animate-ping'}`} />
+                          <span className={`text-lg font-bold ${trafficStats.response_ms < 500 ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {trafficStats.response_ms < 500 ? '✓ ACTIF' : '⚠ INCIDENT'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-3">Dernière mesure : {new Date().toLocaleTimeString('fr-FR')}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
             </Tabs>
           </>
         )}
