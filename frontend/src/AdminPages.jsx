@@ -1571,6 +1571,8 @@ export function AdminDashboardPage() {
 
               {/* Onglet Security/Roles */}
               <TabsContent value="security" className="mt-4 space-y-4">
+                <AdminSecurityPanel />
+                
                 <AdminPasswordChange />
                 
                 <Card className="bg-slate-900/80 border-violet-400/30">
