@@ -139,7 +139,16 @@ export function AdminDashboardPage() {
   const [aiLiveData, setAiLiveData] = useState([]);
   const [aiLikelihood, setAiLikelihood] = useState(75);
   const [trafficLive, setTrafficLive] = useState([]);
-  const [trafficStats, setTrafficStats] = useState({ rps: 0, users: 0, response_ms: 0, top_endpoints: {} });
+  const [trafficStats, setTrafficStats] = useState({ 
+    rps: 0, 
+    users: 0, 
+    response_ms: 0, 
+    top_endpoints: {},
+    by_country: {},
+    by_hour: [],
+    top_pages: {},
+    unique_visitors: 0
+  });
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalCredits: 0,
