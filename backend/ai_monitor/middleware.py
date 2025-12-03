@@ -1,5 +1,6 @@
 from fastapi import Request
 from datetime import datetime, timezone
+from typing import Optional, Dict, Any
 import uuid
 
 AI_USER_AGENTS = {
