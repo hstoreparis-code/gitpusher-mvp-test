@@ -12,6 +12,7 @@ import { AdminCreditsPanel } from "./components/AdminCreditsPanel";
 import { AdminPasswordChange } from "./components/AdminPasswordChange";
 import { AdminEmailPanel } from "./components/AdminEmailPanel";
 import { AdminSecurityPanel } from "./components/AdminSecurityPanel";
+import { AdminFeaturesPanel } from "./components/AdminFeaturesPanel";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
