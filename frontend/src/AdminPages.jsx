@@ -1588,6 +1588,42 @@ export function AdminDashboardPage() {
                 </Card>
               </TabsContent>
 
+              {/* Onglet Emails */}
+              <TabsContent value="emails" className="mt-4 space-y-4">
+                <Card className="bg-slate-900/80 border-cyan-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-base">📧 Email Nouvel Arrivant</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4 text-xs">
+                    <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-400/30">
+                      <p className="font-bold text-cyan-300 mb-2">✉️ Welcome Email</p>
+                      <p className="text-slate-400">Sujet : Bienvenue sur GitPusher.AI !</p>
+                      <p className="text-slate-400 mt-2">Variables : name, email</p>
+                      <div className="mt-3 flex gap-2">
+                        <Button size="sm" variant="outline" className="text-xs">✏️ Éditer</Button>
+                        <Button size="sm" variant="outline" className="text-xs">📤 Test</Button>
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-400/30">
+                      <p className="text-blue-300">
+                        💡 Les emails sont envoyés automatiquement aux nouveaux utilisateurs après inscription via OAuth
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-slate-900/80 border-amber-400/30">
+                  <CardHeader>
+                    <CardTitle className="text-sm">⚙️ Configuration SMTP</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 text-xs">
+                    <div className="p-2 rounded bg-slate-950/60"><p className="text-slate-400">Host</p><p className="text-cyan-400 font-mono">{process.env.SMTP_HOST || "Non configuré"}</p></div>
+                    <div className="p-2 rounded bg-slate-950/60"><p className="text-slate-400">From</p><p className="text-cyan-400 font-mono">welcome@gitpusher.ai</p></div>
+                    <div className="p-2 rounded bg-slate-950/60"><p className="text-slate-400">Status</p><p className="text-amber-400 font-mono">En attente config SMTP</p></div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
               {/* Onglet Trafic Temps Réel */}
               <TabsContent value="traffic" className="mt-4 space-y-4">
                 <div className="grid gap-4 md:grid-cols-3">
