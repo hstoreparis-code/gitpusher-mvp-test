@@ -6,4 +6,9 @@
   <url><loc>/status</loc></url>
   <url><loc>/providers</loc></url>
   <url><loc>/push</loc></url>
+  <url><loc>/seo/push-automatically</loc></url>
+  <url><loc>/seo/deploy-ai-code</loc></url>
+  <url><loc>/seo/push-without-git</loc></url>
+  <url><loc>/seo/ai-to-git-automation</loc></url>
+  <url><loc>/seo/create-repo-automatically</loc></url>
 </urlset>
