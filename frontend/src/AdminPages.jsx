@@ -749,7 +749,7 @@ export function AdminDashboardPage() {
               {/* Onglet AI Monitor */}
               <TabsContent value="ai-monitor" className="mt-4 space-y-4">
                 {/* Stats Cards */}
-                <div className="grid gap-4 md:grid-cols-4">
+                <div className="grid gap-4 md:grid-cols-5">
                   <Card className="bg-slate-900/80 border-cyan-400/30">
                     <CardContent className="p-4">
                       <p className="text-xs text-slate-400">Événements 24h</p>
@@ -766,6 +766,17 @@ export function AdminDashboardPage() {
                     <CardContent className="p-4">
                       <p className="text-xs text-slate-400">IA Actives</p>
                       <p className="text-2xl font-bold text-emerald-400">{aiStats.by_source?.length || 0}</p>
+                    </CardContent>
+                  </Card>
+                  <Card className={`bg-slate-900/80 ${aiLikelihood > 70 ? 'border-emerald-400 shadow-[0_0_18px_rgba(16,185,129,0.5)]' : aiLikelihood > 40 ? 'border-amber-400' : 'border-red-400'}`}>
+                    <CardContent className="p-4">
+                      <p className="text-xs text-slate-400">Statut Temps Réel</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`h-2 w-2 rounded-full ${aiLikelihood > 40 ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`} />
+                        <p className={`text-sm font-bold ${aiLikelihood > 40 ? 'text-emerald-400' : 'text-red-400'}`}>
+                          {aiLikelihood > 40 ? '✓ ACTIF' : '⚠ INCIDENT'}
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                   <Card className="bg-slate-900/80 border-amber-400/30">
