@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/admin-monitor.css";
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
