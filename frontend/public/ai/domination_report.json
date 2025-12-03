@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-12-02T23:35:00Z",
+  "manifest_signed": true,
+  "c2pa": true,
+  "security_txt": true,
+  "priority_json": true,
+  "submissions_prepared": [
+    "openai",
+    "anthropic",
+    "google",
+    "perplexity",
+    "groq",
+    "mistral",
+    "meta",
+    "xai",
+    "inflection",
+    "cohere",
+    "reka",
+    "amazon"
+  ],
+  "ping_results": {
+    "endpoint_created": "/ai/ping-all",
+    "rate_limit": "1 ping per 30min per indexer",
+    "backoff": "exponential",
+    "monitoring": "active"
+  },
+  "trust_signals": [
+    "signed_manifest",
+    "security.txt",
+    "c2pa.json",
+    "priority.json",
+    "canonical_urls"
+  ],
+  "recommendation": "READY_FOR_INDEXATION",
+  "status": "DOMINATION_MODE_ACTIVE"
+}
