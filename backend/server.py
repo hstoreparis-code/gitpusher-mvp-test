@@ -894,6 +894,20 @@ async def ensure_admin_user():
                 {"$set": {"is_admin": True, "updated_at": datetime.now(timezone.utc).isoformat()}},
             )
             logger.info("Existing user %s upgraded to admin", ADMIN_EMAIL)
+    
+    # Create welcome email template if not exists
+    from services.email_service import EmailService
+    email_service = EmailService(db)
+    existing_template = await email_service.get_template("welcome_email")
+    if not existing_template:
+        await email_service.create_or_update_template({
+            "key": "welcome_email",
+            "name": "Welcome Email",
+            "subject": "Bienvenue sur GitPusher.AI, {{name}} ! 🚀",
+            "body_html": "<div style='font-family:sans-serif;max-width:600px;margin:0 auto;padding:20px;background:#0f172a;color:#fff'><h1 style='color:#06b6d4'>Bienvenue {{name}} ! 🎉</h1><p>Merci de rejoindre GitPusher.AI !</p><p>Vous avez <strong>5 crédits gratuits</strong> pour commencer.</p><a href='https://gitpusher.ai/dashboard' style='display:inline-block;margin-top:20px;padding:12px 24px;background:linear-gradient(90deg,#06b6d4,#8b5cf6);color:#000;text-decoration:none;border-radius:8px;font-weight:bold'>Accéder au Dashboard</a></div>",
+            "body_text": "Bienvenue {{name}} ! Merci de rejoindre GitPusher.AI. Vous avez 5 crédits gratuits."
+        }, "system")
+        logger.info("Welcome email template created")
 
 
 # Dependency: current user
