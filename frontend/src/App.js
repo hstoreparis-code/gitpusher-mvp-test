@@ -2999,7 +2999,8 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                   onClick={async () => {
                     const token = localStorage.getItem("token");
                     if (!token) {
-                      window.location.href = "/";
+                      sessionStorage.setItem("intended_purchase", "pack_10");
+                      window.location.href = "/?action=signup";
                       return;
                     }
                     try {
@@ -3009,7 +3010,7 @@ function PricingPage({ t, lang, setLang, dark, setDark, currentLang, languages, 
                       );
                       window.location.href = res.data.checkoutUrl;
                     } catch (err) {
-                      alert("Erreur: " + (err.response?.data?.detail || "Connexion requise"));
+                      alert("Erreur: " + (err.response?.data?.detail || "Veuillez vous connecter"));
                     }
                   }}
                   className="w-full rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-[0_0_18px_rgba(6,182,212,0.8)] hover:shadow-[0_0_24px_rgba(6,182,212,1)] transition-all mt-4"
