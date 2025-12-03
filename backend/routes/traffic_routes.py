@@ -3,7 +3,6 @@ from fastapi.responses import StreamingResponse
 from typing import Optional
 import json
 import asyncio
-import random
 from datetime import datetime, timezone
 
 router = APIRouter(prefix="/admin/traffic")
@@ -17,16 +16,16 @@ async def traffic_stream(authorization: Optional[str] = Header(None)):
     await require_admin_auth(authorization)
     
     async def event_generator():
+        from real_traffic_monitor import real_traffic_monitor
+        
         while True:
-            requests_per_sec = random.randint(0, 15)
-            active_users = random.randint(1, 25)
-            avg_response_ms = random.randint(50, 300)
+            stats = real_traffic_monitor.get_realtime_stats()
             
             data = json.dumps({
                 "t": int(datetime.now(timezone.utc).timestamp() * 1000),
-                "rps": requests_per_sec,
-                "users": active_users,
-                "response_ms": avg_response_ms
+                "rps": stats["rps"],
+                "users": stats["active_users"],
+                "response_ms": stats["avg_response_ms"]
             })
             yield f"data: {data}\n\n"
             await asyncio.sleep(1)
@@ -36,5 +35,5 @@ async def traffic_stream(authorization: Optional[str] = Header(None)):
 @router.get("/stats")
 async def traffic_stats(authorization: Optional[str] = Header(None)):
     await require_admin_auth(authorization)
-    from traffic_monitor import traffic_monitor
-    return traffic_monitor.get_stats()
+    from real_traffic_monitor import real_traffic_monitor
+    return real_traffic_monitor.get_realtime_stats()
