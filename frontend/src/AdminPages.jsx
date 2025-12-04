@@ -322,10 +322,10 @@ export function AdminDashboardPage() {
           return;
         }
         const [usersRes, jobsRes, aiStatsRes, aiEventsRes] = await Promise.all([
-          axios.get(`${API}/admin/users`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API}/admin/jobs`, { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get(`${API}/admin/ai-monitor/stats`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: { stats_24h: 0, stats_7d: 0, by_source: [], health: "OK" } })),
-          axios.get(`${API}/admin/ai-monitor/live`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: { events: [] } })),
+          axios.get(`${API}/admin/users`),
+          axios.get(`${API}/admin/jobs`),
+          axios.get(`${API}/admin/ai-monitor/stats`).catch(() => ({ data: { stats_24h: 0, stats_7d: 0, by_source: [], health: "OK" } })),
+          axios.get(`${API}/admin/ai-monitor/live`).catch(() => ({ data: { events: [] } })),
         ]);
         const fetchedUsers = usersRes.data || [];
         const fetchedJobs = jobsRes.data || [];
