@@ -11,7 +11,10 @@ export default function AdminAIIndexingDashboard() {
   const [indexing, setIndexing] = useState(null);
 
   useEffect(() => {
-    fetch("/api/admin/ai-indexing")
+    const token = typeof window !== "undefined" ? window.localStorage.getItem("admin_token") : null;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+    fetch("/api/admin/ai-indexing", { headers })
       .then((r) => r.json())
       .then(setIndexing)
       .catch(() => setIndexing({ error: true }));

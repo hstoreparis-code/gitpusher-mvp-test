@@ -17,7 +17,10 @@ export default function AdminPerformanceDashboard() {
   const [perf, setPerf] = useState(null);
 
   useEffect(() => {
-    fetch("/api/admin/performance")
+    const token = typeof window !== "undefined" ? window.localStorage.getItem("admin_token") : null;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+    fetch("/api/admin/performance", { headers })
       .then((r) => r.json())
       .then(setPerf)
       .catch(() => setPerf({ error: true }));
