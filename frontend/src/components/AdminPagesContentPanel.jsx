@@ -97,6 +97,43 @@ export function AdminPagesContentPanel() {
     a.click();
   };
 
+  const onAutofix = async () => {
+    if (!token || autofixing) return;
+    setAutofixing(true);
+    try {
+      const updated = [];
+      for (const p of pages) {
+        if (statusMap[p.slug] === "error") {
+          // Marque en inactif côté backoffice pour signaler le problème
+          const res = await axios.post(
+            `${API}/admin/pages`,
+            {
+              slug: p.slug,
+              page_type: p.page_type,
+              title: p.title,
+              description: p.description,
+              body: p.body,
+              status: "inactive",
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+          );
+          updated.push(res.data);
+        }
+      }
+      if (updated.length > 0) {
+        setPages((prev) => {
+          const map = new Map(prev.map((x) => [x.slug, x]));
+          for (const u of updated) {
+            map.set(u.slug, u);
+          }
+          return Array.from(map.values());
+        });
+      }
+    } finally {
+      setAutofixing(false);
+    }
+  };
+
   return (
     <Card className="bg-slate-900/80 border-white/10">
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
