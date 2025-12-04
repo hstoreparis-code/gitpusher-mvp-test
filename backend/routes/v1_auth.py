@@ -21,6 +21,10 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/github", response_model=GitHubTokenResponse)
 async def connect_github_token(payload: GitHubTokenRequest, db=None, user_id: Optional[str] = None):
+    identity = _get_identity_from_token(payload.githubToken)
+    if check_login_lockout(identity):
+        log_security("GitHub token login attempt while locked out", identity=identity)
+        raise HTTPException(status_code=429, detail="Too many failed attempts. Temporarily locked.")
     """
     Connect GitHub via Personal Access Token.
     Validates token, fetches user info, stores encrypted token.
