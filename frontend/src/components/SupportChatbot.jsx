@@ -111,7 +111,7 @@ export function SupportChatbot() {
             </svg>
           </div>
           <div>
-            <h3 className="text-white font-semibold text-sm">Support GitPusher</h3>
+            <h3 className="text-white font-semibold text-sm">Support GitPusher™</h3>
             <div className="flex items-center gap-1.5">
               <div className={`w-2 h-2 rounded-full ${adminOnline ? 'bg-emerald-400' : 'bg-red-400'}`}></div>
               <p className="text-white/80 text-xs">

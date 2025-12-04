@@ -8,7 +8,7 @@ import { Save, Globe, CreditCard, Lock, Palette, Zap, Mail, MessageSquare, Shiel
 export function AdminSettingsPanel() {
   // Paramètres Généraux
   const [generalSettings, setGeneralSettings] = useState({
-    platform_name: "GitPusher.AI",
+    platform_name: "GitPusher™.AI",
     platform_url: "https://gitpusher.ai",
     support_email: "support@gitpusher.ai",
     max_upload_size_mb: 100,
@@ -39,7 +39,7 @@ export function AdminSettingsPanel() {
   // Paramètres Email
   const [emailSettings, setEmailSettings] = useState({
     welcome_email_enabled: true,
-    welcome_email_subject: "Bienvenue sur GitPusher !",
+    welcome_email_subject: "Bienvenue sur GitPusher™ !",
     credit_alert_enabled: true,
     credit_alert_threshold: 2,
     newsletter_enabled: false
