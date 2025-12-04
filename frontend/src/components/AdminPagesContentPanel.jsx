@@ -244,9 +244,9 @@ export function AdminPagesContentPanel() {
                     {statusMap[p.slug] === "error" && <span className="w-2 h-2 rounded-full bg-red-500" />}
                   </span>
                 </div>
-                <div className="text-[10px] text-slate-400 truncate">{p.title}</div>
+                <div className="text-[10px] text-emerald-300 truncate">{p.title}</div>
                 {p.body && (
-                  <div className="text-[10px] text-slate-500 truncate mt-0.5">
+                  <div className="text-[10px] text-emerald-200 truncate mt-0.5">
                     {p.body.length > 120 ? p.body.slice(0, 120) + "…" : p.body}
                   </div>
                 )}
