@@ -24,9 +24,7 @@ export function AdminFeaturesPanel() {
     setFixing(true);
     setMessage("");
     try {
-      const res = await axios.post(`${API}/admin/features/autofix`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.post(`${API}/admin/features/autofix`, {});
       
       setMessage(`✅ ${res.data.status}: ${res.data.fixes_applied.filter(f => f.fixed).length}/${res.data.fixes_applied.length} réparations`);
       await checkHealth();
