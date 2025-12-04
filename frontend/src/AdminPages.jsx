@@ -371,8 +371,8 @@ export function AdminDashboardPage() {
           console.error("Stripe stats failed, using fallback", err);
           // Fallback to DB data
           const [transactionsRes, statsRes] = await Promise.all([
-            axios.get(`${API}/admin/transactions`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: [] })),
-            axios.get(`${API}/admin/financial-stats`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: {} }))
+            axios.get(`${API}/admin/transactions`).catch(() => ({ data: [] })),
+            axios.get(`${API}/admin/financial-stats`).catch(() => ({ data: {} }))
           ]);
 
           const transactions = transactionsRes.data || [];
