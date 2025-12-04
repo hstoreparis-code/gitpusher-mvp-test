@@ -266,26 +266,24 @@ export default function AiDiscoveryManagerPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-xs text-slate-300">
-            <div className="flex items-center justify-between">
-              <span>Priority map</span>
-              <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/knowledge/priority-map</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Tool catalog</span>
-              <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/knowledge/tool-catalog</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Toolpack</span>
-              <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/agents/toolpack</Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>OpenAI tools</span>
-              <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/agents/openai-tools</Badge>
-            </div>
-            <p className="text-[11px] text-slate-500 mt-2">
-              Page publique synchronisée :
-              <code className="ml-1 bg-slate-900 px-1 rounded">/for-agents-devtools</code>
-            </p>
+            {topAiSources7d && topAiSources7d.length > 0 ? (
+              <div className="space-y-1">
+                {topAiSources7d.map((s) => (
+                  <div key={s._id || s.source} className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono bg-slate-900 px-2 py-0.5 rounded truncate max-w-[260px] sm:max-w-md">
+                      {s._id || s.source}
+                    </span>
+                    <span className="text-[11px] text-slate-400 ml-2">
+                      {s.total || s.count} requêtes
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-[11px] text-slate-500">
+                Aucune IA détectée dans les journaux de trafic sur les 7 derniers jours (ou trafic insuffisant).
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>
