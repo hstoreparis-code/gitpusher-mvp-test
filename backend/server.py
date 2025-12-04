@@ -4093,6 +4093,10 @@ api_router.include_router(smtp_config_router)
 from routes.admin_pages import router as admin_pages_router
 api_router.include_router(admin_pages_router)
 
+# Mount AI Knowledge router
+from routes.ai_knowledge import router as ai_knowledge_router
+api_router.include_router(ai_knowledge_router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
