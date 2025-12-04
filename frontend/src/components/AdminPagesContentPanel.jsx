@@ -49,7 +49,6 @@ export function AdminPagesContentPanel() {
   };
 
   const onSave = async () => {
-    if (!token) return;
     setSaving(true);
     try {
       const res = await axios.post(
