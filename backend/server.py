@@ -1431,10 +1431,11 @@ async def admin_get_credit_settings(
 @api_router.patch("/admin/credit-settings")
 async def admin_update_credit_settings(
     payload: dict,
+    request: Request,
     authorization: Optional[str] = Header(default=None),
 ):
     """Update credit settings"""
-    admin = await require_admin(authorization)
+    admin = await require_admin(authorization, request)
     _ = admin
     
     updates = {}
