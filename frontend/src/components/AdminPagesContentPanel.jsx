@@ -112,7 +112,6 @@ export function AdminPagesContentPanel() {
               body: p.body,
               status: "active",
             },
-            { headers: { Authorization: `Bearer ${token}` } },
           );
           updated.push(res.data);
           hints.push(`Page ${p.slug} normalisée en ${fixedSlug} et marquée active.`);
