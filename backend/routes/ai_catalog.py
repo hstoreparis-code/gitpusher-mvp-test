@@ -29,5 +29,5 @@ async def get_toolpack():
 
 @router.get("/ai/agents/openai-tools")
 async def get_openai_tools():
-    path = os.path.join(BASE_PUBLIC, "agents", "openai-tools.json")
-    return FileResponse(path)
+    path = BASE_PUBLIC / "agents" / "openai-tools.json"
+    return FileResponse(str(path))
