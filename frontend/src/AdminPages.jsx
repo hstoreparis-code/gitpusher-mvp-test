@@ -452,9 +452,7 @@ export function AdminDashboardPage() {
       // Fetch full stats every 5 seconds
       const statsInterval = setInterval(async () => {
         try {
-          const res = await axios.get(`${API}/admin/traffic/stats`, {
-            headers: { Authorization: `Bearer ${token}` }
-          });
+          const res = await axios.get(`${API}/admin/traffic/stats`);
           setTrafficStats(prev => ({
             ...prev,
             top_endpoints: res.data.top_endpoints || {},
