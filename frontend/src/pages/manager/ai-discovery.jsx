@@ -265,7 +265,7 @@ export default function AiDiscoveryManagerPage() {
               IA actives (7 jours)
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2 text-xs text-slate-300">
+          <CardContent className="space-y-3 text-xs text-slate-300">
             <div className="flex items-center justify-between">
               <span>Priority map</span>
               <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/knowledge/priority-map</Badge>
