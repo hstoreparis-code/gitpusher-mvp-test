@@ -62,18 +62,7 @@ export default function AdminFeaturesDashboard() {
     return "OK";
   }, [status, health, providers]);
 
-  const StatusPill = ({ label, status }) => {
-    const color =
-      status === "OK" ? "bg-emerald-500/10 text-emerald-300 border-emerald-400/50" :
-      status === "WARN" ? "bg-amber-500/10 text-amber-300 border-amber-400/50" :
-      "bg-red-500/10 text-red-300 border-red-400/50";
-
-    return (
-      <Badge className={`text-xs px-3 py-1 rounded-full border ${color}`}>
-        {label}: {status}
-      </Badge>
-    );
-  };
+  // StatusPill component removed - using inline Badge instead
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50 p-6 sm:p-8 space-y-6">
