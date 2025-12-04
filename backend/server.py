@@ -492,8 +492,34 @@ from models.schemas import (
 )
 # from routes.admin_credit_safety import admin_dashboard_router  # Commented out to fix circular import
 
-
-
+# Routers modulaires (admin, AI, SEO, etc.)
+from routes import (
+    admin_credit_safety,
+    admin_pages,
+    admin_users,
+    ai_autofix,
+    ai_catalog,
+    ai_health,
+    ai_indexers_extended,
+    ai_knowledge,
+    backlinks,
+    email_routes,
+    features_health,
+    ping_ai,
+    seo_monitor,
+    smtp_config,
+    stripe_stats,
+    tiktok_monitor,
+    traffic_routes,
+    v1_auth,
+    v1_autopush,
+    v1_billing,
+    v1_jobs,
+    v1_partner,
+    v1_repos,
+    v1_uploads,
+    v1_webhooks,
+)
 
 
 class I18nTranslateRequest(BaseModel):
