@@ -11,8 +11,8 @@ BASE_PUBLIC = Path(__file__).resolve().parents[2] / "frontend" / "public" / "ai"
 
 @router.get("/ai/knowledge/priority-map")
 async def get_priority_map():
-    path = os.path.join(BASE_PUBLIC, "knowledge", "priority-map.json")
-    return FileResponse(path)
+    path = BASE_PUBLIC / "knowledge" / "priority-map.json"
+    return FileResponse(str(path))
 
 
 @router.get("/ai/knowledge/tool-catalog")
