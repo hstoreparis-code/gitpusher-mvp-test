@@ -1800,9 +1800,7 @@ export function AdminDashboardPage() {
                     className="text-xs border-cyan-400/60 text-cyan-400"
                     onClick={async () => {
                       try {
-                        const res = await axios.get(`${API}/admin/traffic/stats`, {
-                          headers: { Authorization: `Bearer ${token}` }
-                        });
+                        const res = await axios.get(`${API}/admin/traffic/stats`);
                         setTrafficStats(prev => ({
                           ...prev,
                           ...res.data,
