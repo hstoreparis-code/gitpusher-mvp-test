@@ -263,7 +263,7 @@ export function AdminPagesContentPanel() {
                 value={form.slug}
                 onChange={(e) => onChange("slug", e.target.value)}
                 placeholder="seo/push-automatically"
-                className="h-8 text-xs bg-slate-950/60 border-slate-700"
+                className="h-8 text-xs bg-slate-950/60 border-emerald-500 text-emerald-300"
               />
             </div>
             <div>
@@ -285,7 +285,7 @@ export function AdminPagesContentPanel() {
               <Input
                 value={form.title}
                 onChange={(e) => onChange("title", e.target.value)}
-                className="h-8 text-xs bg-slate-950/60 border-slate-700"
+                className="h-8 text-xs bg-slate-950/60 border-emerald-500 text-emerald-300"
               />
             </div>
             <div>
