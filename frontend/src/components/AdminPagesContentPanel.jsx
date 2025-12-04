@@ -308,7 +308,7 @@ export function AdminPagesContentPanel() {
               value={form.description}
               onChange={(e) => onChange("description", e.target.value)}
               rows={2}
-              className="text-xs bg-slate-950/60 border-slate-700"
+              className="text-xs bg-slate-950/60 border-emerald-500 text-emerald-300"
             />
           </div>
 
