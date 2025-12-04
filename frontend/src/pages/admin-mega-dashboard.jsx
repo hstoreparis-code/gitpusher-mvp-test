@@ -121,7 +121,9 @@ export default function AdminMegaDashboard() {
   const memory = typeof perf?.memory === "number" ? perf.memory : null;
 
   const aiScore = typeof ai?.score === "number" ? ai.score : 0;
-  const aiIssues = ai?.autofix && ai.autofix !== "No issues detected.";
+  const autofixText = typeof ai?.autofix === "string" ? ai.autofix : "";
+  // On considère qu'il y a un "problème" tant que le message ne contient pas explicitement OK
+  const aiIssues = autofixText && !autofixText.toLowerCase().includes("ok");
 
   const totalPushes = useMemo(() => {
     if (!analytics) return 0;
