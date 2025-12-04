@@ -1998,14 +1998,24 @@ function AdminUserRow({ user, onUpdate, onDelete }) {
             </Button>
           </div>
         ) : (
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-7 px-3 rounded-full border-slate-700 hover:border-cyan-500 text-[11px]"
-            onClick={() => setIsEditing(true)}
-          >
-            ✎ Modifier
-          </Button>
+          <div className="flex gap-1 justify-end">
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-7 px-3 rounded-full border-slate-700 hover:border-cyan-500 text-[11px]"
+              onClick={() => setIsEditing(true)}
+            >
+              ✎ Modifier
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-7 px-3 rounded-full border-red-500/60 text-[11px] text-red-300 hover:bg-red-500/10"
+              onClick={() => onDelete(user.id)}
+            >
+              🗑 Supprimer
+            </Button>
+          </div>
         )}
       </td>
     </tr>
