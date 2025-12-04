@@ -614,6 +614,26 @@ export function AdminDashboardPage() {
                     <span>Autofix</span>
                   </button>
                   <button
+                    className="w-full flex items-center px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 gap-2"
+                    onClick={() => {
+                      setShowAdminMenu(false);
+                      navigate("/admin/performance");
+                    }}
+                  >
+                    <Zap className="w-3 h-3 text-cyan-300" />
+                    <span>Performance</span>
+                  </button>
+                  <button
+                    className="w-full flex items-center px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 gap-2"
+                    onClick={() => {
+                      setShowAdminMenu(false);
+                      navigate("/admin/ai-indexing");
+                    }}
+                  >
+                    <Zap className="w-3 h-3 text-sky-300" />
+                    <span>AI Indexing</span>
+                  </button>
+                  <button
                     className="w-full flex items-center justify-between px-3 py-2 text-xs text-slate-200 hover:bg-slate-800"
                     onClick={() => {
                       setShowAdminMenu(false);
