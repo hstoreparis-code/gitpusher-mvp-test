@@ -85,7 +85,13 @@ export default function AdminFeaturesDashboard() {
           </div>
         </div>
         <div className="flex flex-wrap gap-2 items-center">
-          <StatusPill label="Global" status={overallStatus} />
+          <Badge className={`text-xs px-3 py-1 rounded-full border ${
+            overallStatus === "OK" ? "bg-emerald-500/10 text-emerald-300 border-emerald-400/50" :
+            overallStatus === "WARN" ? "bg-amber-500/10 text-amber-300 border-amber-400/50" :
+            "bg-red-500/10 text-red-300 border-red-400/50"
+          }`}>
+            Global: {overallStatus}
+          </Badge>
         </div>
       </header>
 
