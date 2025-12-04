@@ -97,9 +97,36 @@ export function AdminPagesContentPanel() {
     <Card className="bg-slate-900/80 border-white/10">
       <CardHeader className="flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-base">Pages SEO / AEO</CardTitle>
-        <Button variant="outline" size="sm" className="rounded-full text-xs" onClick={onExportJson}>
-          <Download className="w-4 h-4 mr-1" /> Export JSON
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full text-xs"
+            onClick={async () => {
+              if (!token || checking) return;
+              setChecking(true);
+              try {
+                const results = {};
+                for (const p of pages) {
+                  try {
+                    const res = await axios.get(`${window.location.origin}/${p.slug.replace(/^seo\//, "seo/")}`);
+                    results[p.slug] = res.status === 200 ? "active" : "error";
+                  } catch (e) {
+                    results[p.slug] = "error";
+                  }
+                }
+                setStatusMap(results);
+              } finally {
+                setChecking(false);
+              }
+            }}
+          >
+            {checking ? "Vérification…" : "Vérifier statut"}
+          </Button>
+          <Button variant="outline" size="sm" className="rounded-full text-xs" onClick={onExportJson}>
+            <Download className="w-4 h-4 mr-1" /> Export JSON
+          </Button>
+        </div>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-4">
         <div className="space-y-2 max-h-80 overflow-y-auto border border-slate-800 rounded-lg p-2 text-xs">
