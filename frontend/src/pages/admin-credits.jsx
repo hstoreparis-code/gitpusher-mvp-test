@@ -73,7 +73,7 @@ export default function AdminCreditsBillingDashboard() {
 
       {/* Top cards */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_24px_rgba(56,189,248,0.45)] shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               Credit System
@@ -93,7 +93,7 @@ export default function AdminCreditsBillingDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-900/70 border-slate-700/70">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_24px_rgba(56,189,248,0.45)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               Stripe Health
@@ -114,7 +114,7 @@ export default function AdminCreditsBillingDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-900/70 border-slate-700/70">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_24px_rgba(56,189,248,0.45)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               MRR / ARR
@@ -138,7 +138,7 @@ export default function AdminCreditsBillingDashboard() {
 
       {/* Detailed sections */}
       <div className="grid gap-4 md:grid-cols-2">
-        <Card className="bg-slate-900/70 border-slate-700/70">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_24px_rgba(56,189,248,0.45)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               User Credit Usage
@@ -159,7 +159,7 @@ export default function AdminCreditsBillingDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-900/70 border-slate-700/70">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_24px_rgba(56,189,248,0.45)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               Alerts
@@ -175,7 +175,7 @@ export default function AdminCreditsBillingDashboard() {
         </Card>
       </div>
 
-      <Card className="bg-slate-900/70 border-slate-700/70">
+      <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_24px_rgba(56,189,248,0.45)]">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
             Revenue Trend (Light Graph)
