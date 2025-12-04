@@ -68,6 +68,7 @@ export default function AiDiscoveryManagerPage() {
   const eventsLast24h = health?.checks?.find((c) => c.name === "mongodb")?.events_last_24h || 0;
   const totalAiVisits7d = health?.ai_traffic?.total_ai_visits_7d || 0;
   const topAiPages7d = health?.ai_traffic?.top_ai_pages_7d || [];
+  const topAiSources7d = health?.ai_traffic?.top_ai_sources_7d || [];
 
   const miniSeries = useMemo(() => {
     // On n'a pas d'historique détaillé, mais on peut simuler une petite série à partir du score
