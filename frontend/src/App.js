@@ -21,6 +21,7 @@ import ForAgentsDevtoolsPage from "./pages/for-agents-devtools";
 import AiDiscoveryManagerPage from "./pages/manager/ai-discovery";
 import SeoMonitorManagerPage from "./pages/manager/seo-monitor";
 import TiktokSeoMonitorManagerPage from "./pages/manager/tiktok-monitor";
+import ForNocodeBuildersPage from "./pages/for-nocode-builders";
 import ForNocodeBuildersFRPage from "./pages/for-nocode-builders-fr";
 import SeoPushAutomaticallyPage from "./pages/seo/push-automatically";
 import SeoDeployAiCodePage from "./pages/seo/deploy-ai-code";
