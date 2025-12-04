@@ -467,6 +467,27 @@ export function AdminDashboardPage() {
     }
   };
 
+  const handleDeleteUser = async (userId) => {
+    if (!token) return;
+    if (!window.confirm("Supprimer définitivement ce compte utilisateur ?")) return;
+    try {
+      await axios.delete(`${API}/admin/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const updatedUsers = users.filter((u) => u.id !== userId);
+      setUsers(updatedUsers);
+      const totalCredits = updatedUsers.reduce((sum, u) => sum + (u.credits || 0), 0);
+      const planDist = updatedUsers.reduce((acc, u) => {
+        const p = u.plan || 'free';
+        acc[p] = (acc[p] || 0) + 1;
+        return acc;
+      }, {});
+      setStats((prev) => ({ ...prev, totalUsers: updatedUsers.length, totalCredits, planDistribution: planDist }));
+    } catch (err) {
+      alert(err?.response?.data?.detail || "Échec de la suppression de l'utilisateur.");
+    }
+  };
+
   // Filter users
   const filteredUsers = users.filter(u => {
     const matchesSearch = u.email?.toLowerCase().includes(searchTerm.toLowerCase()) || 
