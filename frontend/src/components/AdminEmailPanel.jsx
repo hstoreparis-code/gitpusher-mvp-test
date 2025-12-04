@@ -76,7 +76,6 @@ export function AdminEmailPanel() {
     try {
       await axios.post(`${API}/admin/email/templates/${key}/send-test`, 
         { to: testEmail, name: "Test User" },
-        { headers: { Authorization: `Bearer ${token}` } }
       );
       setMessage("✅ Email test envoyé");
       setTimeout(() => setMessage(""), 3000);
