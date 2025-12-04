@@ -229,31 +229,23 @@ export default function AiDiscoveryManagerPage() {
         <Card className="bg-slate-900/70 border-slate-700/70">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
-              IA actives (7 jours)
+              Visites IA &amp; pages consultées (7 jours)
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-xs text-slate-300">
-            {topAiSources7d && topAiSources7d.length > 0 ? (
+            <p className="text-sm text-slate-200">
+              <span className="font-semibold text-emerald-300 mr-1">{totalAiVisits7d}</span>
+              actions détectées depuis des IA (trafic marqué <code className="bg-slate-900 px-1 rounded">is_ai = true</code>)
+              dans <span className="font-mono">traffic_logs</span> sur les 7 derniers jours.
+            </p>
+            {topAiPages7d && topAiPages7d.length > 0 ? (
               <div className="space-y-1">
-                {topAiSources7d.map((s) => (
-                  <div key={s._id || s.source} className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono bg-slate-900 px-2 py-0.5 rounded truncate max-w-[260px] sm:max-w-md">
-                      {s._id || s.source}
-                    </span>
+                {topAiPages7d.map((p) => (
+                  <div key={p._id} className="flex items-center justify-between">
+                    <code className="bg-slate-900 px-2 py-0.5 rounded text-[11px] truncate max-w-[260px] sm:max-w-md">
+                      {p._id}
+                    </code>
                     <span className="text-[11px] text-slate-400 ml-2">
-                      {s.total || s.count} requêtes
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-[11px] text-slate-500">
-                Aucune IA détectée dans les journaux de trafic sur les 7 derniers jours (ou trafic insuffisant).
-              </p>
-            )}
-          </CardContent>
-        </Card>
-
                       {p.visits} visites IA
                     </span>
                   </div>
@@ -264,9 +256,6 @@ export default function AiDiscoveryManagerPage() {
                 Aucune page marquée comme visitée par une IA sur les 7 derniers jours (ou trafic insuffisant).
               </p>
             )}
-          </CardContent>
-        </Card>
-
           </CardContent>
         </Card>
 
