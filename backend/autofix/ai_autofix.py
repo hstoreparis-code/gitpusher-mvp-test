@@ -2,6 +2,8 @@ import json
 import os
 from datetime import datetime
 
+from autofix.seo_aeo_autofix import autofix_seo_aeo
+
 AI_INDEXERS_REQUIRED = [
     "openai","anthropic","google","perplexity","groq","mistral",
     "meta","xai","inflection","cohere","reka","aws"
