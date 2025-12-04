@@ -78,10 +78,7 @@ export function AdminPagesContentPanel() {
   };
 
   const onExportJson = async () => {
-    if (!token) return;
-    const res = await axios.get(`${API}/admin/pages/export/json`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await axios.get(`${API}/admin/pages/export/json`);
     const blob = new Blob([JSON.stringify(res.data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
