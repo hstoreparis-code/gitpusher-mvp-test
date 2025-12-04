@@ -18,6 +18,7 @@ import ForAIAssistants from "./pages/ForAIAssistants";
 import { HelpPage } from "./pages/HelpPage";
 import { AdminMonitorPage } from "./pages/AdminMonitorPage";
 import ForAgentsDevtoolsPage from "./pages/for-agents-devtools";
+import AiDiscoveryManagerPage from "./pages/manager/ai-discovery";
 import SeoPushAutomaticallyPage from "./pages/seo/push-automatically";
 import SeoDeployAiCodePage from "./pages/seo/deploy-ai-code";
 import SeoPushWithoutGitPage from "./pages/seo/push-without-git";
@@ -4147,6 +4148,7 @@ function AppShell() {
       <Route path="/admin/support" element={<AdminSupportPanel />} />
       <Route path="/admin/autofix" element={<AdminAutofixPanel />} />
       <Route path="/for-ai-assistants" element={<ForAIAssistants />} />
+      <Route path="/manager/ai-discovery" element={<AiDiscoveryManagerPage />} />
       <Route 
         path="/auth/callback" 
         element={<OAuthCallback />} 
