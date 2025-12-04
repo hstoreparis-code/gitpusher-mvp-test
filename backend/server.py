@@ -847,6 +847,8 @@ class SEOAEOAutoFixMiddleware(BaseHTTPMiddleware):
         path = request.url.path
         if (path.startswith("/seo/") or path.startswith("/aeo/")) and response.status_code == 404:
             run_autofix()
+        if path == "/sitemap.xml" and response.status_code == 404:
+            run_autofix()
 
         return response
 
