@@ -140,7 +140,7 @@ export function AdminPagesContentPanel() {
         <CardTitle className="text-base">Pages SEO / AEO</CardTitle>
         <div className="flex items-center gap-2">
           <span className="hidden md:inline text-[10px] text-slate-400">
-            Vert = page accessible (HTTP 200) · Rouge = erreur d’accès (404/500…)
+            Vert = page accessible (HTTP 200) · Rouge = erreur d’accès (404/500…) · Autofix = marque les pages en erreur comme inactives.
           </span>
           <Button
             variant="outline"
