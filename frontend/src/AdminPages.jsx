@@ -1549,7 +1549,8 @@ export function AdminDashboardPage() {
                       ))}
                       {users.filter(u => {
                         const created = new Date(u.created_at);
-                        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                        const now = new Date();
+                        const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
                         return created >= sevenDaysAgo;
                       }).length === 0 && (
                         <p className="text-slate-500 text-center py-4 text-xs">Aucun nouvel inscrit cette semaine</p>
