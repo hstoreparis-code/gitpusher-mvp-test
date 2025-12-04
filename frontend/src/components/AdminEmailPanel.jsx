@@ -245,8 +245,6 @@ export function AdminEmailPanel() {
                     smtp_user: smtpConfig.SMTP_USER,
                     smtp_pass: smtpConfig.SMTP_PASS,
                     email_from: smtpConfig.EMAIL_FROM
-                  }, {
-                    headers: { Authorization: `Bearer ${token}` }
                   });
                   setMessage("✅ Config SMTP sauvegardée. Redémarrez le backend pour appliquer.");
                   setTimeout(() => setMessage(""), 5000);
