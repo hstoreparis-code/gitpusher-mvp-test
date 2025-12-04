@@ -913,6 +913,10 @@ export function AdminDashboardPage() {
                   <Settings className="w-4 h-4 mr-2" />
                   Sécurité
                 </TabsTrigger>
+                <TabsTrigger value="security-pages" className="flex-shrink-0">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Sec. Pages
+                </TabsTrigger>
                 <TabsTrigger value="emails" className="flex-shrink-0">
                   <Mail className="w-4 h-4 mr-2" />
                   Emails
