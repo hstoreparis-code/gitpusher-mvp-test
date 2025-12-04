@@ -98,7 +98,7 @@ async def compute_ai_health(db) -> Dict[str, Any]:
                 ]
             ).to_list(8)
         )
-        # Map raw ai_source labels to normalized provider names
+        # Map raw ai_source labels to normalized provider names (Python-side)
         ai_source_map = {
             "ChatGPT": "OpenAI",
             "OpenAI": "OpenAI",
@@ -120,31 +120,28 @@ async def compute_ai_health(db) -> Dict[str, Any]:
             "Grok": "xAI",
         }
 
-        top_ai_sources = (
+        raw_sources = (
             await db.traffic_logs.aggregate(
                 [
                     {"$match": {"timestamp": {"$gte": week_ago}, "is_ai": True, "ai_source": {"$ne": None}}},
-                    {
-                        "$addFields": {
-                            "ai_provider": {
-                                "$ifNull": [
-                                    {"$arrayElemAt": [
-                                        [
-                                            {"$ifNull": [ai_source_map.get("$ai_source"), "$ai_source"]}
-                                        ],
-                                        0,
-                                    ]},
-                                    "$ai_source",
-                                ]
-                            }
-                        }
-                    },
-                    {"$group": {"_id": "$ai_provider", "total": {"$sum": 1}}},
+                    {"$group": {"_id": "$ai_source", "total": {"$sum": 1}}},
                     {"$sort": {"total": -1}},
-                    {"$limit": 8},
+                    {"$limit": 32},
                 ]
-            ).to_list(8)
+            ).to_list(32)
         )
+
+        provider_totals: dict[str, int] = {}
+        for item in raw_sources:
+            raw_name = item.get("_id")
+            total = int(item.get("total", 0))
+            provider = ai_source_map.get(raw_name, raw_name) if raw_name else "Unknown"
+            provider_totals[provider] = provider_totals.get(provider, 0) + total
+
+        top_ai_sources = [
+            {"_id": name, "total": total}
+            for name, total in sorted(provider_totals.items(), key=lambda x: x[1], reverse=True)[:8]
+        ]
     except Exception as exc:  # noqa: BLE001
         total_ai_visits = 0
         top_ai_pages = []
