@@ -15,6 +15,8 @@ export function AdminPagesContentPanel() {
   const [form, setForm] = useState({ slug: "", page_type: "seo", title: "", description: "", body: "" });
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [statusMap, setStatusMap] = useState({});
+  const [checking, setChecking] = useState(false);
 
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
