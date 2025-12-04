@@ -114,7 +114,8 @@ export default function AdminMegaDashboard() {
     loadAll();
   }, []);
 
-  const apiHealthy = perf && !perf.error;
+  // API considérée "stable" tant qu'aucune erreur explicite n'est renvoyée
+  const apiHealthy = perf && perf.error === false;
   const uptime = perf?.uptime || "N/A";
   const cpu = typeof perf?.cpu === "number" ? perf.cpu : null;
   const memory = typeof perf?.memory === "number" ? perf.memory : null;
