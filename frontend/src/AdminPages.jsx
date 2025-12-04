@@ -485,12 +485,10 @@ export function AdminDashboardPage() {
   }, [navigate]);
 
   const handleUpdateUser = async (userId, plan, credits) => {
-    if (!token) return;
     try {
       await axios.patch(
         `${API}/admin/users/${userId}/plan-credits`,
         { plan: plan || undefined, credits: credits !== "" ? Number(credits) : undefined },
-        { headers: { Authorization: `Bearer ${token}` } },
       );
       setUsers((prev) =>
         prev.map((u) => (u.id === userId ? { ...u, plan: plan || u.plan, credits: credits !== "" ? Number(credits) : u.credits } : u)),
