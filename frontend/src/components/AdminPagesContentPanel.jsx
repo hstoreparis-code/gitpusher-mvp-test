@@ -145,8 +145,10 @@ export function AdminPagesContentPanel() {
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="truncate">{p.slug}</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full border border-slate-600 text-slate-300">
-                    {p.page_type}
+                  <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full border border-slate-600 text-slate-300">
+                    <span>{p.page_type}</span>
+                    {statusMap[p.slug] === "active" && <span className="w-2 h-2 rounded-full bg-emerald-400" />}
+                    {statusMap[p.slug] === "error" && <span className="w-2 h-2 rounded-full bg-red-500" />}
                   </span>
                 </div>
                 <div className="text-[10px] text-slate-400 truncate">{p.title}</div>
