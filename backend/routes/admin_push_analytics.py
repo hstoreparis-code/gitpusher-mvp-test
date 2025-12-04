@@ -17,8 +17,9 @@ async def require_admin_auth(authorization: Optional[str] = Header(None)):
 async def get_push_analytics(authorization: Optional[str] = Header(None)):
     """Analytics de pushes Git & activité utilisateur basées sur la base Mongo.
 
-    - Volume de jobs (jobs_v1) sur les 30 derniers jours
+    - Volume de jobs (jobs_v1) sur les 30 derniers jours (push_samples)
     - Répartition par provider (repos_v1.provider)
+    - Répartition par pays et par utilisateur dérivée des `traffic_logs`
 
     Cette route alimente la section "Push Analytics & User Intelligence" de :
     - /admin/mega
@@ -80,19 +81,53 @@ async def get_push_analytics(authorization: Optional[str] = Header(None)):
             {"name": "bitbucket", "count": 7},
         ]
 
-    # 3) Pays & utilisateurs : pour l'instant, on garde un fallback simple
-    #    (il faudra connecter à une vraie géolocalisation plus tard)
+    # 3) Pays & utilisateurs : basés sur traffic_logs (+ fallback si trop peu de données)
+    thirty_days_ago_ts = threshold
+    traffic_cursor = db.traffic_logs.find(
+        {"timestamp": {"$gte": thirty_days_ago_ts}},
+        {"_id": 0, "ip": 1, "country": 1, "user_id": 1},
+    )
+    traffic = await traffic_cursor.to_list(5000)
+
+    by_country: dict[str, int] = defaultdict(int)
+    user_hits: dict[str, int] = defaultdict(int)
+
+    for log in traffic:
+        country = log.get("country") or "Unknown"
+        by_country[country] += 1
+
+        user_id = log.get("user_id")
+        if user_id:
+            user_hits[str(user_id)] += 1
+
+    # Construire la liste de pays
     countries = [
-        {"country": "France", "count": 27},
-        {"country": "USA", "count": 16},
-        {"country": "Germany", "count": 9},
+        {"country": c, "count": int(count)} for c, count in sorted(by_country.items(), key=lambda kv: kv[1], reverse=True)[:5]
     ]
 
-    users = [
-        {"email": "founder@gitpusher.ai", "pushes": 23},
-        {"email": "agency@example.com", "pushes": 14},
-        {"email": "student@example.com", "pushes": 7},
-    ]
+    if not countries:
+        countries = [
+            {"country": "France", "count": 27},
+            {"country": "USA", "count": 16},
+            {"country": "Germany", "count": 9},
+        ]
+
+    # Construire la liste d'utilisateurs à partir de users + hits
+    users: list[dict] = []
+    if user_hits:
+        ids = list(user_hits.keys())
+        user_docs = await db.users.find({"_id": {"$in": ids}}, {"_id": 1, "email": 1}).to_list(500)
+        email_map = {str(u["_id"]): u.get("email") or "unknown" for u in user_docs}
+
+        for uid, count in sorted(user_hits.items(), key=lambda kv: kv[1], reverse=True)[:5]:
+            users.append({"email": email_map.get(uid, "unknown"), "pushes": int(count)})
+
+    if not users:
+        users = [
+            {"email": "founder@gitpusher.ai", "pushes": 23},
+            {"email": "agency@example.com", "pushes": 14},
+            {"email": "student@example.com", "pushes": 7},
+        ]
 
     # 4) Indicateurs business (toujours mockés pour l'instant)
     conversion = 38.5
