@@ -45,7 +45,7 @@ function ForAIAssistants() {
     document.head.appendChild(script);
 
     // Update page title
-    document.title = "GitPusher — For AI Assistants";
+    document.title = "GitPusher™ — For AI Assistants";
 
     return () => {
       const toRemove = document.querySelector('script[data-ai-schema]');
