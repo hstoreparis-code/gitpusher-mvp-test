@@ -93,7 +93,7 @@ export default function AdminCreditsBillingDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-900/70 border-slate-700/70">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               Stripe Health
