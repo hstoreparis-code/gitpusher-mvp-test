@@ -4134,6 +4134,9 @@ app.include_router(seo_monitor_router)
 
 from routes.ai_catalog import router as ai_catalog_router
 app.include_router(ai_catalog_router)
+from routes.tiktok_monitor import router as tiktok_monitor_router
+app.include_router(tiktok_monitor_router)
+
 
 # Mount AI Score / Health / Autofix router
 from routes.ai_health import router as ai_health_router
