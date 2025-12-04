@@ -9,6 +9,7 @@ import { Activity, ArrowLeft, HeartPulse, Radar, Rocket, ShieldCheck, Wrench } f
 const API_BASE = process.env.REACT_APP_BACKEND_URL || "";
 
 export default function AiDiscoveryManagerPage() {
+  const navigate = useNavigate();
   const [result, setResult] = useState(null);
   const [health, setHealth] = useState(null);
   const [loading, setLoading] = useState(false);
