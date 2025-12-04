@@ -193,7 +193,7 @@ export default function AdminFeaturesDashboard() {
           </CardHeader>
           <CardContent className="space-y-1 text-xs text-slate-300">
             <p>AI Manifest (/ai/actions.json): OK</p>
-            <p>OpenAPI Exposure (link rel="openapi"): OK</p>
+            <p>OpenAPI Exposure (link rel=&quot;openapi&quot;): OK</p>
             <p>AI Toolpacks: OK</p>
             <p>Sitemap Integrity: OK</p>
             <p>Robots.txt: OK</p>
