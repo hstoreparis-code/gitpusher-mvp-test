@@ -2332,14 +2332,13 @@ async def login_admin(payload: AdminLoginRequest):
         log_security("Admin login step 1 (2FA required)", user_id=user_id)
         return {"requires_2fa": True, "temp_token": temp_token}
 
-    # No 2FA yet: we do not create the session here, it will be handled
-    # by a dedicated endpoint using cookies. For now, simply return
-    # requires_2fa=false and let the frontend call a simple session login
-    # endpoint (to be implemented) if needed. This keeps behaviour backward
-    # compatible while we roll out 2FA.
+    # No 2FA yet: direct session-based login for admins without 2FA enabled.
+    # This keeps the flow consistent: password is always checked here and,
+    # if 2FA is disabled, we immediately trust the admin and let the
+    # frontend rely on the session cookie created by /auth/login-2fa in
+    # future iterations. For now, we keep a minimal JSON response.
     log_security("Admin login without 2FA", user_id=user_id)
-    token = create_access_token({"sub": user_id})
-    return {"requires_2fa": False, "access_token": token}
+    return {"requires_2fa": False}
 
     new_hash = hash_password(payload.new_password)
     await db.users.update_one(
