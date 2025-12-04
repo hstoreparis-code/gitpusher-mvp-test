@@ -81,9 +81,7 @@ export function AdminSecurityPanel() {
     }
     if (!window.confirm(`Supprimer définitivement le compte ${email} ?`)) return;
     try {
-      await axios.delete(`${API}/admin/users/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(`${API}/admin/users/${userId}`);
       setMessage("✅ Utilisateur supprimé");
       loadUsers();
       setTimeout(() => setMessage(""), 3000);
