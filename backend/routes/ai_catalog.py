@@ -17,8 +17,8 @@ async def get_priority_map():
 
 @router.get("/ai/knowledge/tool-catalog")
 async def get_tool_catalog():
-    path = os.path.join(BASE_PUBLIC, "knowledge", "tool-catalog.json")
-    return FileResponse(path)
+    path = BASE_PUBLIC / "knowledge" / "tool-catalog.json"
+    return FileResponse(str(path))
 
 
 @router.get("/ai/agents/toolpack")
