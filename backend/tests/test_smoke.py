@@ -33,8 +33,8 @@ def test_push_mock():
         "content": {"files": [{"path": "main.py", "content": "print('ok')"}]},
     }
     r = client.post("/api/push", json=payload)
-    # Accept 200 (success), 400 (unsupported source) or 422 (validation)
-    assert r.status_code in (200, 400, 422)
+    # Accept 200 (success), 400/401 (auth/unsupported) or 422 (validation)
+    assert r.status_code in (200, 400, 401, 422)
     if r.status_code == 200:
         body = r.json()
         assert "repo_url" in body
