@@ -78,13 +78,12 @@ export function AdminCreditsPanel() {
   };
 
   const handleAddCredits = async () => {
-    if (!token || !selectedUser || !creditsToAdd || parseInt(creditsToAdd) <= 0) return;
+    if (!selectedUser || !creditsToAdd || parseInt(creditsToAdd) <= 0) return;
     setAddingCredits(true);
     try {
       const res = await axios.post(
         `${API}/admin/users/${selectedUser.id}/add-credits`,
         { credits: parseInt(creditsToAdd) },
-        { headers: { Authorization: `Bearer ${token}` } }
       );
       setMessage(`✅ ${creditsToAdd} crédits ajoutés à ${selectedUser.email}. Nouveau total: ${res.data.new_credits}`);
       setCreditsToAdd("");
