@@ -45,6 +45,7 @@ import AeoDeployAiCodePage from "./pages/aeo/deploy-ai-code";
 import AeoPushWithoutGitPage from "./pages/aeo/push-without-git";
 import AeoAiToGitAutomationPage from "./pages/aeo/ai-to-git-automation";
 import AeoCreateRepoAutomaticallyPage from "./pages/aeo/create-repo-automatically";
+import SecurityCompliancePage from "./pages/SecurityCompliance";
 
 
 
