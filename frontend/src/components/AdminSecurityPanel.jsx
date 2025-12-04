@@ -79,6 +79,26 @@ export function AdminSecurityPanel() {
     }
   };
 
+  const deleteUser = async (userId, email) => {
+    if (email === "founder@gitpusher.ai") {
+      setMessage("❌ Impossible de supprimer le compte fondateur.");
+      setTimeout(() => setMessage(""), 3000);
+      return;
+    }
+    if (!window.confirm(`Supprimer définitivement le compte ${email} ?`)) return;
+    try {
+      await axios.delete(`${API}/admin/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setMessage("✅ Utilisateur supprimé");
+      loadUsers();
+      setTimeout(() => setMessage(""), 3000);
+    } catch (err) {
+      setMessage(`❌ ${err.response?.data?.detail || "Erreur suppression"}`);
+      setTimeout(() => setMessage(""), 3000);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {message && (
