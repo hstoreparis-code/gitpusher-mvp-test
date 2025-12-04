@@ -4173,6 +4173,8 @@ function AppShell() {
       <Route path="/aeo/create-repo-automatically" element={<AeoCreateRepoAutomaticallyPage />} />
       <Route path="/for-agents-devtools" element={<ForAgentsDevtoolsPage />} />
       <Route path="/fr/for-nocode-builders" element={<ForNocodeBuildersFRPage />} />
+      <Route path="/for-nocode-builders" element={<ForNocodeBuildersPage />} />
+
 
 
       <Route path="*" element={<Navigate to="/" replace />} />
