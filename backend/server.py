@@ -228,6 +228,16 @@ async def api_openapi():
     content = yaml_path.read_text(encoding="utf-8")
     return PlainTextResponse(content, media_type="application/yaml")
 
+
+# Health & admin analytics routers
+from routes.admin_health import router as admin_health_router
+from routes.admin_performance import router as admin_performance_router
+from routes.admin_ai_indexing import router as admin_ai_indexing_router
+
+app.include_router(admin_health_router)
+app.include_router(admin_performance_router)
+app.include_router(admin_ai_indexing_router)
+
 @app.get("/openapi.yaml")
 async def public_openapi():
     """Redirect to /api/openapi.yaml"""
