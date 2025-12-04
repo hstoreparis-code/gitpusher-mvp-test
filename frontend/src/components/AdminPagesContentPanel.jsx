@@ -246,7 +246,7 @@ export function AdminPagesContentPanel() {
                 </div>
                 <div className="text-[10px] text-cyan-300 truncate">{p.title}</div>
                 {p.body && (
-                  <div className="text-[10px] text-emerald-200 truncate mt-0.5">
+                  <div className="text-[10px] text-cyan-200 truncate mt-0.5">
                     {p.body.length > 120 ? p.body.slice(0, 120) + "…" : p.body}
                   </div>
                 )}
