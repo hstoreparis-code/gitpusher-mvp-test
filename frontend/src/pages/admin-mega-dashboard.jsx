@@ -101,7 +101,7 @@ export default function AdminMegaDashboard() {
       <div className="flex items-end gap-1 h-24">
         {normalized.map((h, i) => (
           <div
-            // eslint-disable-next-line react/no-array-index-key
+             
             key={i}
             style={{
               width: `${100 / normalized.length - 2}%`,
@@ -273,7 +273,7 @@ export default function AdminMegaDashboard() {
                 <ul className="space-y-1">
                   {analytics?.providers?.length ? (
                     analytics.providers.map((p, i) => (
-                      // eslint-disable-next-line react/no-array-index-key
+                       
                       <li key={i} className="flex items-center justify-between">
                         <span className="truncate max-w-[120px]">{p.name}</span>
                         <span className="ml-2 text-slate-400">{p.count}</span>
@@ -289,7 +289,7 @@ export default function AdminMegaDashboard() {
                 <ul className="space-y-1">
                   {analytics?.countries?.length ? (
                     analytics.countries.map((c, i) => (
-                      // eslint-disable-next-line react/no-array-index-key
+                       
                       <li key={i} className="flex items-center justify-between">
                         <span className="truncate max-w-[120px]">{c.country}</span>
                         <span className="ml-2 text-slate-400">{c.count}</span>
