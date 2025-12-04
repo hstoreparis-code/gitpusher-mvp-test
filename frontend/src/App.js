@@ -4157,6 +4157,8 @@ function AppShell() {
       <Route path="/admin" element={<AdminDashboardPage />} />
       <Route path="/admin/support" element={<AdminSupportPanel />} />
       <Route path="/admin/autofix" element={<AdminAutofixPanel />} />
+      <Route path="/admin/features" element={<AdminFeaturesDashboard />} />
+
       <Route path="/manager/tiktok-monitor" element={<TiktokSeoMonitorManagerPage />} />
 
       <Route path="/for-ai-assistants" element={<ForAIAssistants />} />
