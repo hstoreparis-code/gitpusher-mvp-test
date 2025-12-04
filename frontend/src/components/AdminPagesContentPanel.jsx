@@ -88,7 +88,7 @@ export function AdminPagesContentPanel() {
   };
 
   const onAutofix = async () => {
-    if (!token || autofixing) return;
+    if (autofixing) return;
     setAutofixing(true);
     try {
       const updated = [];
