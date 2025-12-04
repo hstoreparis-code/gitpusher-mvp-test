@@ -2297,14 +2297,14 @@ class AdminLoginRequest(BaseModel):
 
 
 @api_router.post("/auth/login-admin")
-async def login_admin(payload: AdminLoginRequest):
+async def login_admin(payload: AdminLoginRequest, response: Response):
     """Two-step admin login.
 
     Step 1: password check and optional 2FA requirement.
     - If user has 2FA enabled, return a short-lived temp token and
       requires_2fa=true. Frontend must then call /auth/login-2fa.
-    - Otherwise, immediately create a session cookie via /auth/login-2fa
-      equivalent and return requires_2fa=false.
+    - Otherwise, create a session cookie directly (no 2FA) and return
+      requires_2fa=false so the frontend peut rediriger vers /admin.
     """
     user = await db.users.find_one({"email": payload.email})
     if not user or not user.get("password_hash"):
