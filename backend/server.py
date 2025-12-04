@@ -181,6 +181,34 @@ class PlanUpdate(BaseModel):
 # FastAPI app
 app = FastAPI(title="GitPusher API")
 
+# CORS configuration - stricter in staging/prod
+if is_secure_env():
+    _origins = ["https://gitpusher.ai"]
+else:
+    _origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["Referrer-Policy"] = "no-referrer-when-downgrade"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        return response
+
+
+app.add_middleware(SecurityHeadersMiddleware)
+
+
 class PushRequest(BaseModel):
     source: str  # "url" or "base64"
     provider: str  # "github", "gitlab", etc.
