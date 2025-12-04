@@ -4179,6 +4179,12 @@ function AppShell() {
       <Route path="/for-agents-devtools" element={<ForAgentsDevtoolsPage />} />
       <Route path="/fr/for-nocode-builders" element={<ForNocodeBuildersFRPage />} />
       <Route path="/for-nocode-builders" element={<ForNocodeBuildersPage />} />
+      <Route path="/es/for-nocode-builders" element={<ForNocodeBuildersESPage />} />
+      <Route path="/pt/for-nocode-builders" element={<ForNocodeBuildersPTPage />} />
+      <Route path="/de/for-nocode-builders" element={<ForNocodeBuildersDEPage />} />
+      <Route path="/in/for-nocode-builders" element={<ForNocodeBuildersINPage />} />
+      <Route path="/cn/for-nocode-builders" element={<ForNocodeBuildersCNPage />} />
+
 
 
 
