@@ -1410,10 +1410,11 @@ async def admin_add_credits_to_user(
 
 @api_router.get("/admin/credit-settings")
 async def admin_get_credit_settings(
+    request: Request,
     authorization: Optional[str] = Header(default=None),
 ):
     """Get credit settings (initial credits for new users and packs)"""
-    admin = await require_admin(authorization)
+    admin = await require_admin(authorization, request)
     _ = admin
     
     settings = await db.admin_settings.find_one({"_id": "credit_settings"})
