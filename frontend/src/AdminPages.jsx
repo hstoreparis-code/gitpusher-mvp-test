@@ -370,6 +370,13 @@ export function AdminDashboardPage() {
     };
     fetchData();
 
+    const handleClickOutside = (event) => {
+      if (!event.target.closest("#admin-quick-menu")) {
+        setShowAdminMenu(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
     // SSE for AI Monitor realtime
     let eventSource;
     try {
