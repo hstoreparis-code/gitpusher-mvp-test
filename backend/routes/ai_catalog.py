@@ -4,7 +4,9 @@ import os
 
 router = APIRouter()
 
-BASE_PUBLIC = os.path.join("frontend", "public", "ai")
+from pathlib import Path
+
+BASE_PUBLIC = Path(__file__).resolve().parents[2] / "frontend" / "public" / "ai"
 
 
 @router.get("/ai/knowledge/priority-map")
