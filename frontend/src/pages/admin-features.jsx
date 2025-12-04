@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Activity, ArrowLeft, HeartPulse, ServerCog, GitBranch, Zap, Globe2, ShieldCheck } from "lucide-react";
 import AIMeta from "../components/AIMeta";
 
 export const metadata = {
@@ -8,74 +13,92 @@ export const metadata = {
   robots: "noindex, nofollow",
 };
 
+const API_BASE = process.env.REACT_APP_BACKEND_URL || "";
+
 export default function AdminFeaturesDashboard() {
+  const navigate = useNavigate();
   const [status, setStatus] = useState(null);
   const [providers, setProviders] = useState([]);
   const [health, setHealth] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
-    fetch("/api/status")
-      .then((r) => r.json())
-      .then(setStatus)
-      .catch(() => setStatus({ error: true }));
+    async function bootstrap() {
+      try {
+        setLoading(true);
+        const [statusRes, providersRes, healthRes] = await Promise.all([
+          fetch("/api/status"),
+          fetch("/providers"),
+          fetch(`${API_BASE}/api/v1/push/health"),
+        ]);
 
-    fetch("/providers")
-      .then((r) => r.json())
-      .then(setProviders)
-      .catch(() => setProviders([]));
+        const [statusJson, providersJson, healthJson] = await Promise.all([
+          statusRes.json().catch(() => ({ error: true })),
+          providersRes.json().catch(() => []),
+          healthRes.json().catch(() => ({ ok: false })),
+        ]);
 
-    fetch("/api/v1/push/health")
-      .then((r) => r.json())
-      .then(setHealth)
-      .catch(() => setHealth({ ok: false }));
+        setStatus(statusJson);
+        setProviders(Array.isArray(providersJson) ? providersJson : []);
+        setHealth(healthJson);
+      } catch (e) {
+        setStatus((prev) => prev || { error: true });
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    bootstrap();
   }, []);
 
-  const Box = ({ title, children }) => (
-    <div
-      style={{
-        padding: "16px",
-        marginBottom: "16px",
-        borderRadius: "10px",
-        background: "#0d1117",
-        border: "1px solid #222",
-        color: "white",
-      }}
-    >
-      <h2 style={{ marginBottom: "8px" }}>{title}</h2>
-      {children}
-    </div>
-  );
+  const overallStatus = useMemo(() => {
+    const apiOk = status && !status.error;
+    const pushOk = health && health.ok !== false && health.push_ok !== false;
+    const anyProviderDown = providers && providers.some((p) => p.ok === false);
 
-  const StatusTag = ({ ok }) => (
-    <span
-      style={{
-        padding: "4px 10px",
-        borderRadius: "8px",
-        background: ok ? "#0f0a" : "#f002",
-        color: ok ? "lime" : "red",
-        fontSize: "0.8rem",
-        marginLeft: "8px",
-      }}
-    >
-      {ok ? "OK" : "ERROR"}
-    </span>
-  );
+    if (!apiOk || !pushOk) return "CRITICAL";
+    if (anyProviderDown) return "WARN";
+    return "OK";
+  }, [status, health, providers]);
+
+  const StatusPill = ({ label, status }) => {
+    const color =
+      status === "OK" ? "bg-emerald-500/10 text-emerald-300 border-emerald-400/50" :
+      status === "WARN" ? "bg-amber-500/10 text-amber-300 border-amber-400/50" :
+      "bg-red-500/10 text-red-300 border-red-400/50";
+
+    return (
+      <Badge className={`text-xs px-3 py-1 rounded-full border ${color}`}>
+        {label}: {status}
+      </Badge>
+    );
+  };
 
   return (
-    <main
-      style={{
-        padding: "24px",
-        maxWidth: "1100px",
-        margin: "0 auto",
-        color: "#fff",
-      }}
-    >
+    <main className="min-h-screen bg-slate-950 text-slate-50 p-6 sm:p-8 space-y-6">
       <AIMeta />
 
-      <h1>GitPusher — Features Admin Dashboard</h1>
-      <p style={{ opacity: 0.7 }}>
-        Centralized monitoring of all GitPusher features, endpoints, providers & AI/SEO integrity.
-      </p>
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <Button
+            size="icon"
+            className="h-9 w-9 rounded-full bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.9)] border border-cyan-300/80"
+            onClick={() => navigate("/admin")}
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">Features Admin Dashboard</h1>
+            <p className="text-sm text-slate-400 mt-1">
+              Vue unifiée de l’état des APIs, providers Git, pipeline push et intégrité AI/SEO.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 items-center">
+          <StatusPill label="Global" status={overallStatus} />
+        </div>
+      </header>
 
       {/* ========== SYSTEM STATUS ========== */}
       <Box title="System Status Overview">
