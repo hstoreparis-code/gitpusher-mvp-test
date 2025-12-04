@@ -515,10 +515,10 @@ export function AdminDashboardPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-cyan-300">
               Manager Dashboard
             </h1>
-            <p className="text-sm text-slate-400 mt-1">Gérez l'intégralité de votre plateforme</p>
+            <p className="text-sm text-cyan-300 mt-1">Gérez l'intégralité de votre plateforme</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="relative" id="admin-quick-menu">
