@@ -1725,9 +1725,9 @@ async def mark_messages_read(user_id: str, request: Request, authorization: Opti
 
 
 @api_router.patch("/support/admin-status")
-async def update_admin_status(payload: dict, authorization: Optional[str] = Header(default=None)):
+async def update_admin_status(payload: dict, request: Request, authorization: Optional[str] = Header(default=None)):
     """Admin: Update online/offline status"""
-    admin = await require_admin(authorization)
+    admin = await require_admin(authorization, request)
     
     # Store admin status in database
     await db.admin_settings.update_one(
