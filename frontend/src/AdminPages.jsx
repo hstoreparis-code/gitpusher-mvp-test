@@ -127,6 +127,7 @@ export function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={requires2FA}
                 className="mt-1 h-9 text-sm bg-slate-950/60 border-slate-700"
               />
             </div>
@@ -140,16 +141,45 @@ export function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={requires2FA}
                 className="mt-1 h-9 text-sm bg-slate-950/60 border-slate-700"
               />
             </div>
+
+            {requires2FA && (
+              <div>
+                <label className="text-xs text-slate-300" htmlFor="admin-otp">
+                  Code 2FA (TOTP)
+                </label>
+                <Input
+                  id="admin-otp"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={6}
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  required
+                  className="mt-1 h-9 text-sm bg-slate-950/60 border-slate-700 tracking-[0.3em] text-center"
+                />
+                <p className="mt-1 text-[10px] text-slate-500">
+                  Ouvre ton application d&apos;authentification (Google Authenticator, 1Password, etc.)
+                  et saisis le code à 6 chiffres.
+                </p>
+              </div>
+            )}
+
             {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
             <Button
               type="submit"
               className="w-full mt-4 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white text-sm font-semibold shadow-[0_0_20px_rgba(56,189,248,0.7)] hover:shadow-[0_0_30px_rgba(56,189,248,1)] transition-all"
               disabled={loading}
             >
-              {loading ? "Connexion en cours..." : "🔐 Se connecter"}
+              {loading
+                ? "Connexion en cours..."
+                : requires2FA
+                ? "✔️ Vérifier le code 2FA"
+                : "🔐 Se connecter"}
             </Button>
           </form>
         </CardContent>
