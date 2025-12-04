@@ -15,14 +15,13 @@ export function AdminSecurityPanel() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem("admin_token");
+  // Admin APIs now rely on secure HttpOnly session cookies; no need
+  // to send an Authorization header from the browser.
 
   const loadUsers = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API}/admin/users`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.get(`${API}/admin/users`);
       setUsers(res.data || []);
     } catch (err) {
       console.error(err);
