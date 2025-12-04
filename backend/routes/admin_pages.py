@@ -21,6 +21,7 @@ class PageDocument(BaseModel):
     body: str
     created_at: str
     updated_at: str
+    status: Optional[str] = None
 
 
 class PageUpsertPayload(BaseModel):
@@ -29,6 +30,7 @@ class PageUpsertPayload(BaseModel):
     title: str
     description: str
     body: str
+    status: Optional[str] = None
 
 
 async def require_admin_auth(authorization: Optional[str] = Header(None)):
@@ -71,6 +73,7 @@ async def upsert_page(payload: PageUpsertPayload, authorization: Optional[str] =
         "title": payload.title,
         "description": payload.description,
         "body": payload.body,
+        "status": payload.status or existing.get("status") if existing else None,
         "created_at": existing.get("created_at") if existing else now,
         "updated_at": now,
     }
