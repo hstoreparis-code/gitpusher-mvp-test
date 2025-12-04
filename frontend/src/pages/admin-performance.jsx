@@ -25,7 +25,7 @@ function GraphBars({ values, color }) {
   return (
     <div className="flex items-end gap-1 h-24">
       {normalized.map((h, i) => (
-        // eslint-disable-next-line react/no-array-index-key
+         
         <div
           key={i}
           style={{
