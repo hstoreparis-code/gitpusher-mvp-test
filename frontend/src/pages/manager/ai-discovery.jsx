@@ -51,7 +51,6 @@ export default function AiDiscoveryManagerPage() {
       }
     }
     bootstrap();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const visibilityScore = useMemo(() => {
