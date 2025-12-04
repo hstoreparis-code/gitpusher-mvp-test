@@ -101,7 +101,7 @@ export default function AdminFeaturesDashboard() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               API Status
             </CardTitle>
             <ServerCog className="w-4 h-4 text-emerald-400" />
@@ -117,7 +117,7 @@ export default function AdminFeaturesDashboard() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Push Pipeline
             </CardTitle>
             <GitBranch className="w-4 h-4 text-cyan-400" />
@@ -140,7 +140,7 @@ export default function AdminFeaturesDashboard() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Providers
             </CardTitle>
             <Globe2 className="w-4 h-4 text-violet-400" />
@@ -166,7 +166,7 @@ export default function AdminFeaturesDashboard() {
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Pages / Features Monitoring
             </CardTitle>
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -186,7 +186,7 @@ export default function AdminFeaturesDashboard() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               AI &amp; SEO Indexation Integrity
             </CardTitle>
             <HeartPulse className="w-4 h-4 text-cyan-400" />
@@ -203,7 +203,7 @@ export default function AdminFeaturesDashboard() {
 
       <Card className="bg-slate-900/70 border-slate-700/70">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+          <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
             Light Usage Graph (Simulated)
           </CardTitle>
           <Activity className="w-4 h-4 text-emerald-400" />
@@ -228,7 +228,7 @@ export default function AdminFeaturesDashboard() {
 
       <Card className="bg-slate-900/70 border-slate-700/70">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+          <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
             Error Logs (Last 10)
           </CardTitle>
           <Zap className="w-4 h-4 text-amber-400" />

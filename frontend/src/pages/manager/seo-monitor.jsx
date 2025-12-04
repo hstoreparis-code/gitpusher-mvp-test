@@ -92,7 +92,7 @@ export default function SeoMonitorManagerPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(34,211,238,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Clics (28 jours)
             </CardTitle>
             <Activity className="w-4 h-4 text-emerald-400" />
@@ -105,7 +105,7 @@ export default function SeoMonitorManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Impressions (28 jours)
             </CardTitle>
             <Search className="w-4 h-4 text-cyan-400" />
@@ -118,7 +118,7 @@ export default function SeoMonitorManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               CTR moyen
             </CardTitle>
           </CardHeader>
@@ -130,7 +130,7 @@ export default function SeoMonitorManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Position moyenne
             </CardTitle>
             <TrendingUp className="w-4 h-4 text-violet-400" />

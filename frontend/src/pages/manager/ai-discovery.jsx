@@ -132,7 +132,7 @@ export default function AiDiscoveryManagerPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               AI Visibility Score
             </CardTitle>
             <Activity className="w-4 h-4 text-emerald-400" />
@@ -178,7 +178,7 @@ export default function AiDiscoveryManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               AI Events (24h)
             </CardTitle>
             <ShieldCheck className="w-4 h-4 text-cyan-400" />
@@ -194,7 +194,7 @@ export default function AiDiscoveryManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               V3/V4 Discovery Files
             </CardTitle>
             <Rocket className="w-4 h-4 text-violet-400" />
@@ -228,7 +228,7 @@ export default function AiDiscoveryManagerPage() {
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Visites IA &amp; pages consultées (7 jours)
             </CardTitle>
           </CardHeader>
@@ -261,7 +261,7 @@ export default function AiDiscoveryManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               IA actives (7 jours)
             </CardTitle>
           </CardHeader>
@@ -291,7 +291,7 @@ export default function AiDiscoveryManagerPage() {
       {/* V3/V4 Discovery Files */}
       <Card className="bg-slate-900/70 border-slate-700/70">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+          <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
             V3/V4 Discovery Files
           </CardTitle>
           <Rocket className="w-4 h-4 text-violet-400" />

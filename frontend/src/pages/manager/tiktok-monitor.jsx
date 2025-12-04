@@ -90,7 +90,7 @@ export default function TiktokSeoMonitorManagerPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Vues (28 jours)
             </CardTitle>
             <Play className="w-4 h-4 text-emerald-400" />
@@ -103,7 +103,7 @@ export default function TiktokSeoMonitorManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Clics (28 jours)
             </CardTitle>
             <Activity className="w-4 h-4 text-cyan-400" />
@@ -116,7 +116,7 @@ export default function TiktokSeoMonitorManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Watch time moyen
             </CardTitle>
           </CardHeader>
@@ -128,7 +128,7 @@ export default function TiktokSeoMonitorManagerPage() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Taux d’engagement
             </CardTitle>
             <TrendingUp className="w-4 h-4 text-violet-400" />
