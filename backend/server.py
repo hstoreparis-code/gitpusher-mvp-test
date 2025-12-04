@@ -208,6 +208,17 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         # Basic CSP to reduce XSS risk. Adapt if needed.
         response.headers["Content-Security-Policy"] = (
             "default-src 'self'; "
+            "script-src 'self'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data:; "
+            "connect-src 'self' https://api.github.com; "
+            "frame-ancestors 'none'; "
+            "base-uri 'self';"
+        )
+        return response
+
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 class SecurityMiddleware(BaseHTTPMiddleware):
