@@ -445,6 +445,7 @@ export function AdminDashboardPage() {
     return () => {
       if (eventSource) eventSource.close();
       if (trafficSource) trafficSource.close();
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [navigate, token]);
 
