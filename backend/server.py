@@ -2273,6 +2273,58 @@ async def change_password(payload: ChangePasswordRequest, authorization: Optiona
     if not verify_password(payload.current_password, user["password_hash"]):
         raise HTTPException(status_code=400, detail="Current password is incorrect")
 
+
+
+class AdminLoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+
+@api_router.post("/auth/login-admin")
+async def login_admin(payload: AdminLoginRequest):
+    """Two-step admin login.
+
+    Step 1: password check and optional 2FA requirement.
+    - If user has 2FA enabled, return a short-lived temp token and
+      requires_2fa=true. Frontend must then call /auth/login-2fa.
+    - Otherwise, immediately create a session cookie via /auth/login-2fa
+      equivalent and return requires_2fa=false.
+    """
+    user = await db.users.find_one({"email": payload.email})
+    if not user or not user.get("password_hash"):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    if not verify_password(payload.password, user["password_hash"]):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    if not user.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+
+    user_id = user["_id"]
+    two_fa_enabled = bool(user.get("two_fa_enabled"))
+
+    # 2FA enabled: return a temp token to be used with /auth/login-2fa
+    if two_fa_enabled:
+        # Short-lived JWT (5 minutes) with scope="admin_2fa"
+        now = datetime.now(timezone.utc)
+        exp = now + timedelta(minutes=5)
+        temp_token = jwt.encode(
+            {"sub": user_id, "scope": "admin_2fa", "exp": exp},
+            SECRET_KEY,
+            algorithm=ALGORITHM,
+        )
+        log_security("Admin login step 1 (2FA required)", user_id=user_id)
+        return {"requires_2fa": True, "temp_token": temp_token}
+
+    # No 2FA yet: we do not create the session here, it will be handled
+    # by a dedicated endpoint using cookies. For now, simply return
+    # requires_2fa=false and let the frontend call a simple session login
+    # endpoint (to be implemented) if needed. This keeps behaviour backward
+    # compatible while we roll out 2FA.
+    log_security("Admin login without 2FA", user_id=user_id)
+    token = create_access_token({"sub": user_id})
+    return {"requires_2fa": False, "access_token": token}
+
     new_hash = hash_password(payload.new_password)
     await db.users.update_one(
         {"_id": user["_id"]},
