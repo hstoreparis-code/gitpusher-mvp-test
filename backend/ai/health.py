@@ -117,9 +117,8 @@ async def compute_ai_health(db) -> Dict[str, Any]:
         })
 
 
-    # 3) Fold visibility score into overall status
+    # 4) Fold visibility score into overall status
     score = visibility.get("score", 0)
-    grade = visibility.get("grade", "unknown")
 
     # Overall status heuristic
     if not db_ok or score < 50:
@@ -129,9 +128,16 @@ async def compute_ai_health(db) -> Dict[str, Any]:
     else:
         status = "OK"
 
+    # Surface AI traffic data in the payload (aggregated above)
+    ai_traffic = {
+        "total_ai_visits_7d": int(total_ai_visits),
+        "top_ai_pages_7d": top_ai_pages,
+    }
+
     return {
         "status": status,
         "timestamp": now.isoformat(),
         "visibility": visibility,
         "checks": checks,
+        "ai_traffic": ai_traffic,
     }
