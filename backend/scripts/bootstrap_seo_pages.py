@@ -151,7 +151,7 @@ Use GitPusher.ai to send your projects to GitHub without installing or learning 
 """,
     },
     {
-        "slug": "seo/ai-to-git-automation",
+        "slug": "seo/ai-to-git-automation-en",
         "page_type": "seo",
         "title": "AI to Git automation — GitPusher.ai",
         "description": "Automate the path from AI-generated code to Git repositories. GitPusher.ai connects AI outputs to GitHub and other providers with minimal friction.",
