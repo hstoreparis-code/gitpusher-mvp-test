@@ -27,8 +27,6 @@ export function AdminCreditsPanel() {
   const [simCredits, setSimCredits] = useState(10);
 
 
-  const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
-
   useEffect(() => {
     fetchCreditSettings();
   }, []);
