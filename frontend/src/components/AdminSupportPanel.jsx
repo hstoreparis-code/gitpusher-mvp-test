@@ -111,8 +111,7 @@ export function AdminSupportPanel() {
     try {
       await axios.post(
         `${API}/support/messages`,
-        { message: messageInput, user_id: selectedUser.user_id },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { message: messageInput, user_id: selectedUser.user_id }
       );
       setMessageInput("");
       loadConversations();
