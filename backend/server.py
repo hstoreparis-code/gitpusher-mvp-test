@@ -1183,6 +1183,52 @@ class AdminUserSummary(BaseModel):
     email: str  # Use plain str to allow GitHub-provided pseudo emails like *.local
     display_name: Optional[str] = None
     plan: Optional[str] = None
+
+
+async def get_user_from_session_cookie(request: Request) -> Optional[dict]:
+    """Resolve current user from gitpusher_session cookie, if present and valid.
+
+    This helper is primarily used for admin flows, but can be reused for
+    regular users later. It falls back to None if no valid session is found.
+    """
+    from services.session_store import get_session  # type: ignore
+
+    session_id = request.cookies.get("gitpusher_session")
+    if not session_id:
+        return None
+
+    session = await get_session(session_id)
+    if not session:
+        return None
+
+    user = await db.users.find_one({"_id": session.user_id})
+    if not user:
+        return None
+
+    return user
+
+
+async def get_current_user_from_any(request: Request, authorization: Optional[str]) -> Optional[dict]:
+    """Try session cookie first, then Bearer token.
+
+    Returns None if nothing is valid. This is useful for endpoints like
+    /auth/admin-status that should support both mechanisms during
+    the transition phase.
+    """
+    # 1) Try session cookie
+    user = await get_user_from_session_cookie(request)
+    if user is not None:
+        return user
+
+    # 2) Try Authorization header with JWT token
+    if authorization:
+        try:
+            return await get_user_from_token(authorization)
+        except HTTPException:
+            return None
+
+    return None
+
     credits: Optional[int] = None
     created_at: Optional[datetime] = None
 
