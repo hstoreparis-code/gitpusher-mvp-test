@@ -129,45 +129,7 @@ export default function AdminMegaDashboard() {
     return 0;
   }, [analytics]);
 
-  const GraphBars = ({ values, color }) => {
-    if (!values || !values.length) {
-      return <p className="text-xs text-slate-500">Pas encore de données disponibles.</p>;
-    }
-
-    const normalized = values.map((v) => {
-      const n = typeof v === "number" ? v : 0;
-      return Math.max(4, Math.min(100, n));
-    });
-
-    return (
-      <div className="flex items-end gap-1 h-24">
-        {normalized.map((h, i) => (
-          <div
-             
-            key={i}
-            style={{
-              width: `${100 / normalized.length - 2}%`,
-              height: `${h}%`,
-              background: color,
-              borderRadius: 4,
-            }}
-          />
-        ))}
-      </div>
-    );
-  };
-
-  const Tag = ({ ok, labelOk = "OK", labelError = "ERROR" }) => (
-    <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold ${
-        ok
-          ? "bg-emerald-500/10 text-emerald-300 border border-emerald-400/40"
-          : "bg-red-500/10 text-red-300 border border-red-400/40"
-      }`}
-    >
-      {ok ? labelOk : labelError}
-    </span>
-  );
+ 
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50 p-6 sm:p-8 space-y-6">
