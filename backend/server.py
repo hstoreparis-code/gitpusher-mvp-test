@@ -239,6 +239,10 @@ class SecurityMiddleware(BaseHTTPMiddleware):
                     log_security("Invalid admin OTP", ip=client_ip, path=path)
 from routes.admin_security import router as admin_security_router
 
+from routes.admin_security_status import router as admin_security_status_router
+
+app.include_router(admin_security_status_router)
+
 app.include_router(admin_security_router)
 
                     raise HTTPException(status_code=403, detail="Invalid admin OTP")
