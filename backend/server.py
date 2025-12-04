@@ -1866,7 +1866,7 @@ async def admin_autofix_list_incidents(request: Request, authorization: Optional
     - Seeds a few demo incidents server-side if collection is empty (MVP).
     - Returns a stable schema consumed by AdminAutofixPanel.
     """
-    await require_admin(authorization)
+    await require_admin(authorization, request)
 
     # Seed demo incidents once
     await _seed_mock_autofix_incidents()
