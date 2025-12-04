@@ -1,4 +1,4 @@
-export default function AIMeta() {
+export function AIMeta() {
   return (
     <>
       <link rel="openapi" href="/api/openapi.yaml" />
@@ -8,3 +8,5 @@ export default function AIMeta() {
     </>
   );
 }
+
+export default AIMeta;
