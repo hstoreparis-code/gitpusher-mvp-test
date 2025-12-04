@@ -44,18 +44,8 @@ export function AdminLoginPage() {
           return;
         }
 
-        // No 2FA yet: fallback to legacy admin-status check using JWT (legacy JWT mode)
-        const token = res.data.access_token;
-        const status = await axios.get(`${API}/auth/admin-status`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!status.data.is_admin) {
-          setError("Ce compte n'est pas admin.");
-          setLoading(false);
-          return;
-        }
-
-        localStorage.setItem("admin_token", token);
+        // Pas de 2FA activé : le backend a vérifié is_admin et posé un cookie de session.
+        // On peut rediriger vers le dashboard admin.
         navigate("/admin");
         return;
       }
