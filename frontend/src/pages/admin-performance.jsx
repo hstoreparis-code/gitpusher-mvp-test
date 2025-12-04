@@ -68,7 +68,8 @@ export default function AdminPerformanceDashboard() {
       .catch(() => setPerf({ error: true }));
   }, []);
 
-  const apiOk = perf && !perf.error;
+  // Statut adouci : on considère l'API stable tant qu'aucun flag d'erreur explicite n'est renvoyé
+  const apiOk = perf && perf.error === false;
   const uptime = perf?.uptime || "N/A";
   const cpu = typeof perf?.cpu === "number" ? perf.cpu : null;
   const memory = typeof perf?.memory === "number" ? perf.memory : null;
