@@ -57,9 +57,7 @@ export function AdminAutofixPanel() {
 
   const loadIncidents = async () => {
     try {
-      const res = await axios.get(`${API}/admin/autofix/incidents`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.get(`${API}/admin/autofix/incidents`);
       setIncidents(res.data);
       setLoading(false);
     } catch (err) {
