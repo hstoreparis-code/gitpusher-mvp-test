@@ -482,7 +482,7 @@ export function AdminDashboardPage() {
       if (trafficSource) trafficSource.close();
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [navigate, token]);
+  }, [navigate]);
 
   const handleUpdateUser = async (userId, plan, credits) => {
     if (!token) return;
