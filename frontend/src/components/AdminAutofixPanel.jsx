@@ -107,7 +107,6 @@ export function AdminAutofixPanel() {
       await axios.patch(
         `${API}/admin/autofix/settings`,
         { auto_mode: !autoMode },
-        { headers: { Authorization: `Bearer ${token}` } }
       );
       setAutoMode(!autoMode);
     } catch (err) {
