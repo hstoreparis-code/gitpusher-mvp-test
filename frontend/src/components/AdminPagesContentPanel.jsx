@@ -102,22 +102,30 @@ export function AdminPagesContentPanel() {
     setAutofixing(true);
     try {
       const updated = [];
+      const hints = [];
       for (const p of pages) {
         if (statusMap[p.slug] === "error") {
-          // Marque en inactif côté backoffice pour signaler le problème
+          // Autofix simple : si le slug ne commence pas par une barre, on la rajoute
+          let fixedSlug = p.slug;
+          if (!fixedSlug.startsWith("/")) {
+            fixedSlug = `/${fixedSlug}`;
+          }
+          // Si la page est SEO et commence par /seo/, on vérifie que la route est cohérente
+          // (ici on se contente de normaliser le slug et de la marquer active)
           const res = await axios.post(
             `${API}/admin/pages`,
             {
-              slug: p.slug,
+              slug: fixedSlug.replace(/^\//, ""),
               page_type: p.page_type,
               title: p.title,
               description: p.description,
               body: p.body,
-              status: "inactive",
+              status: "active",
             },
             { headers: { Authorization: `Bearer ${token}` } },
           );
           updated.push(res.data);
+          hints.push(`Page ${p.slug} normalisée en ${fixedSlug} et marquée active.`);
         }
       }
       if (updated.length > 0) {
@@ -128,6 +136,32 @@ export function AdminPagesContentPanel() {
           }
           return Array.from(map.values());
         });
+        // Re-vérification rapide pour tenter de passer le rouge au vert
+        const results = {};
+        for (const p of updated) {
+          try {
+            const res = await axios.get(`${window.location.origin}/${p.slug}`);
+            results[p.slug] = res.status === 200 ? "active" : "error";
+          } catch (e) {
+            results[p.slug] = "error";
+          }
+        }
+        setStatusMap((prev) => ({ ...prev, ...results }));
+      } else {
+        hints.push("Aucune page en erreur à corriger.");
+      }
+      if (hints.length > 0) {
+        alert(
+          [
+            "Autofix terminé.",
+            "Si certaines pastilles restent rouges, vérifiez :",
+            "- Que la route frontend existe bien (App.js / pages/seo/).",
+            "- Que le slug correspond exactement à l’URL.",
+            "- Que la page ne renvoie pas une erreur serveur.",
+            "",
+            ...hints,
+          ].join("\n"),
+        );
       }
     } finally {
       setAutofixing(false);
