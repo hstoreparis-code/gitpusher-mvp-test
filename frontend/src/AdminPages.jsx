@@ -544,7 +544,7 @@ export function AdminDashboardPage() {
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
               Manager Dashboard
             </h1>
-            <p className="text-sm text-slate-400 mt-1">Gérez l'intégralité de votre plateforme</p>
+            <p className="text-sm text-slate-400 mt-1">Gérez l&apos;intégralité de votre plateforme</p>
           </div>
           <div className="hidden sm:flex items-center gap-2">
             <button
