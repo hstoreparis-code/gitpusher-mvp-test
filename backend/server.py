@@ -1459,9 +1459,9 @@ async def admin_update_credit_settings(
 
 
 @api_router.get("/admin/transactions", response_model=List[AdminTransactionSummary])
-async def admin_list_transactions(authorization: Optional[str] = Header(default=None)):
+async def admin_list_transactions(request: Request, authorization: Optional[str] = Header(default=None)):
     """List all financial transactions (real + mock data for demo)"""
-    admin = await require_admin(authorization)
+    admin = await require_admin(authorization, request)
     _ = admin
     
     # For now, generate mock data
