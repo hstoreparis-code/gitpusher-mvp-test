@@ -95,7 +95,6 @@ export function AdminAutofixPanel() {
       await axios.post(
         `${API}/admin/autofix/incidents/${incidentId}/reject`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
       );
       loadIncidents();
     } catch (err) {
