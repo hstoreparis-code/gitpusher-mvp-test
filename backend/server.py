@@ -4123,6 +4123,9 @@ api_router.include_router(ai_knowledge_router)
 from routes.ai_autofix import router as ai_autofix_router
 api_router.include_router(ai_autofix_router)
 
+from routes import backlinks
+api_router.include_router(backlinks.router)
+
 
 # ---------- BASIC ROOT & HEALTH ----------
 
