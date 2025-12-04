@@ -49,13 +49,9 @@ export default function AdminLegalPage() {
     try {
       setSaving(true);
       setStatus("");
-      const token = typeof window !== "undefined" ? window.localStorage.getItem("admin_token") : null;
       const headers = {
         "Content-Type": "application/json",
       };
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
-      }
       const body = {};
       if (sectionKey === "legalInfo") body.legalInfo = legalInfo;
       if (sectionKey === "cgu") body.cgu = cgu;
