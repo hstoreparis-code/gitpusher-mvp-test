@@ -1946,9 +1946,9 @@ async def admin_autofix_update_settings(payload: AutofixSettings, request: Reque
 
 
 @api_router.get("/admin/autofix/settings", response_model=AutofixSettings)
-async def admin_autofix_get_settings(authorization: Optional[str] = Header(default=None)):
+async def admin_autofix_get_settings(request: Request, authorization: Optional[str] = Header(default=None)):
     """Return current Autofix settings for the admin UI."""
-    await require_admin(authorization)
+    await require_admin(authorization, request)
     return await _get_autofix_settings()
 
 
