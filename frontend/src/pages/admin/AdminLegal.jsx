@@ -33,6 +33,9 @@ export default function AdminLegalPage() {
     "Texte sur la politique de contact & réclamations (section 3).",
   );
 
+  const [saving, setSaving] = useState(false);
+  const [status, setStatus] = useState("");
+
   const handleCopy = () => {
     const full = `### Informations légales\n\n${JSON.stringify(legalInfo, null, 2)}\n\n### CGU\n\n${JSON.stringify(
       cgu,
@@ -40,6 +43,42 @@ export default function AdminLegalPage() {
       2,
     )}\n\n### Contact & réclamations\n\n${contact}`;
     navigator.clipboard.writeText(full).catch(() => {});
+  };
+
+  const handleSaveSection = async (sectionKey) => {
+    try {
+      setSaving(true);
+      setStatus("");
+      const token = typeof window !== "undefined" ? window.localStorage.getItem("admin_token") : null;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+      const body = {};
+      if (sectionKey === "legalInfo") body.legalInfo = legalInfo;
+      if (sectionKey === "cgu") body.cgu = cgu;
+      if (sectionKey === "contact") body.contact = contact;
+
+      const res = await fetch("/api/admin/legal/terms", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      if (data.legalInfo) setLegalInfo(data.legalInfo);
+      if (data.cgu) setCgu(data.cgu);
+      if (data.contact) setContact(data.contact);
+      setStatus("Modifications enregistrées.");
+    } catch (e) {
+      setStatus("Erreur lors de l'enregistrement.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
