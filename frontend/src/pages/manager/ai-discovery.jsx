@@ -177,6 +177,39 @@ export default function AiDiscoveryManagerPage() {
             <p className="text-[11px] text-slate-500 mt-3">
               Utilisé pour estimer le trafic IA réel (agents qui appellent les endpoints discovery / autofix).
             </p>
+        <Card className="bg-slate-900/70 border-slate-700/70 md:col-span-3">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+              Visites IA &amp; pages consultées (7 jours)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-xs text-slate-300">
+            <p className="text-sm text-slate-200">
+              <span className="font-semibold text-emerald-300 mr-1">{totalAiVisits7d}</span>
+              actions détectées depuis des IA (trafic marqué <code className="bg-slate-900 px-1 rounded">is_ai = true</code>)
+              dans <span className="font-mono">traffic_logs</span> sur les 7 derniers jours.
+            </p>
+            {topAiPages7d && topAiPages7d.length > 0 ? (
+              <div className="space-y-1">
+                {topAiPages7d.map((p) => (
+                  <div key={p._id} className="flex items-center justify-between">
+                    <code className="bg-slate-900 px-2 py-0.5 rounded text-[11px] truncate max-w-[260px] sm:max-w-md">
+                      {p._id}
+                    </code>
+                    <span className="text-[11px] text-slate-400 ml-2">
+                      {p.visits} visites IA
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-[11px] text-slate-500">
+                Aucune page marquée comme visitée par une IA sur les 7 derniers jours (ou trafic insuffisant).
+              </p>
+            )}
+          </CardContent>
+        </Card>
+
           </CardContent>
         </Card>
 
