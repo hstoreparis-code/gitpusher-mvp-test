@@ -291,6 +291,38 @@ export default function AiDiscoveryManagerPage() {
         </Card>
       </div>
 
+      {/* V3/V4 Discovery Files */}
+      <Card className="bg-slate-900/70 border-slate-700/70">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            V3/V4 Discovery Files
+          </CardTitle>
+          <Rocket className="w-4 h-4 text-violet-400" />
+        </CardHeader>
+        <CardContent className="space-y-2 text-xs text-slate-300">
+          <div className="flex items-center justify-between">
+            <span>Priority map</span>
+            <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/knowledge/priority-map</Badge>
+          </div>
+          <div className="flex items-center justify-between">
+            <span>Tool catalog</span>
+            <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/knowledge/tool-catalog</Badge>
+          </div>
+          <div className="flex items-center justify-between">
+            <span>Toolpack</span>
+            <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/agents/toolpack</Badge>
+          </div>
+          <div className="flex items-center justify-between">
+            <span>OpenAI tools</span>
+            <Badge className="bg-emerald-500/10 border-emerald-400/40 text-emerald-300">/ai/agents/openai-tools</Badge>
+          </div>
+          <p className="text-[11px] text-slate-500 mt-2">
+            Page publique synchronisée :
+            <code className="ml-1 bg-slate-900 px-1 rounded">/for-agents-devtools</code>
+          </p>
+        </CardContent>
+      </Card>
+
       {/* Actions */}
       <section className="space-y-3">
         <h2 className="text-sm font-semibold text-slate-200 flex items-center gap-2">
