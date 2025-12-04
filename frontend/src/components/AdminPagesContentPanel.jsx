@@ -12,7 +12,7 @@ const API = `${BACKEND_URL}/api`;
 export function AdminPagesContentPanel() {
   const [pages, setPages] = useState([]);
   const [selected, setSelected] = useState(null);
-  const [form, setForm] = useState({ slug: "", page_type: "seo", title: "", description: "", body: "" });
+  const [form, setForm] = useState({ slug: "", page_type: "seo", title: "", description: "", body: "", status: "" });
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusMap, setStatusMap] = useState({});
