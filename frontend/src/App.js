@@ -4219,6 +4219,8 @@ function AppShell() {
 
       <Route path="/admin/mega" element={<AdminMegaDashboard />} />
       <Route path="/admin/ai-qa" element={<AdminAIQA />} />
+      <Route path="/admin/legal" element={<AdminLegalPage />} />
+
 
 
 
