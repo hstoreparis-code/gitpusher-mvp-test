@@ -12,6 +12,48 @@ export const metadata = {
   robots: "noindex, nofollow",
 };
 
+function GraphBars({ values, color }) {
+  if (!values || !values.length) {
+    return <p className="text-xs text-slate-500">Pas encore de données disponibles.</p>;
+  }
+
+  const normalized = values.map((v) => {
+    const n = typeof v === "number" ? v : 0;
+    return Math.max(4, Math.min(100, n));
+  });
+
+  return (
+    <div className="flex items-end gap-1 h-24">
+      {normalized.map((h, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <div
+          key={i}
+          style={{
+            width: `${100 / normalized.length - 2}%`,
+            height: `${h}%`,
+            background: color,
+            borderRadius: 4,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function StatusPill({ ok }) {
+  return (
+    <span
+      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+        ok
+          ? "bg-emerald-500/10 text-emerald-300 border border-emerald-400/40"
+          : "bg-red-500/10 text-red-300 border border-red-400/40"
+      }`}
+    >
+      {ok ? "OK" : "ERROR"}
+    </span>
+  );
+}
+
 export default function AdminPerformanceDashboard() {
   const navigate = useNavigate();
   const [perf, setPerf] = useState(null);
@@ -26,92 +68,145 @@ export default function AdminPerformanceDashboard() {
       .catch(() => setPerf({ error: true }));
   }, []);
 
-  const Box = ({ title, children }) => (
-    <div style={{
-      padding: "18px",
-      marginBottom: "18px",
-      borderRadius: "10px",
-      background: "#0d1117",
-      border: "1px solid #222",
-      color: "white"
-    }}>
-      <h2>{title}</h2>
-      {children}
-    </div>
-  );
-
-  const Tag = ({ ok }) => (
-    <span style={{
-      padding: "3px 8px",
-      borderRadius: "8px",
-      background: ok ? "#0f0a" : "#f002",
-      color: ok ? "lime" : "red",
-      marginLeft: "8px"
-    }}>
-      {ok ? "OK" : "ERROR"}
-    </span>
-  );
-
-  const MiniBar = ({ values, color }) => (
-    <div style={{ display: "flex", gap: "6px", alignItems: "flex-end", height: "110px" }}>
-      {values.map((h, i) => (
-        <div key={i} style={{
-          width: `${100 / values.length - 2}%`,
-          height: h,
-          background: color,
-          borderRadius: "4px"
-        }}></div>
-      ))}
-    </div>
-  );
+  const apiOk = perf && !perf.error;
+  const uptime = perf?.uptime || "N/A";
+  const cpu = typeof perf?.cpu === "number" ? perf.cpu : null;
+  const memory = typeof perf?.memory === "number" ? perf.memory : null;
+  const rps = typeof perf?.rps === "number" ? perf.rps : null;
+  const avgLatency = typeof perf?.avg_latency_ms === "number" ? perf.avg_latency_ms : null;
 
   return (
-    <main style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+    <main className="min-h-screen bg-slate-950 text-slate-50 p-6 sm:p-8 space-y-6">
       <AIMeta />
-      <h1>Performance Dashboard</h1>
-      <p style={{ opacity: 0.7 }}>Backend metrics, latency, uptime & system resources.</p>
 
-      <Box title="Backend Health">
-        {perf ? (
-          <>
-            <p>API Health: <Tag ok={!perf.error} /></p>
-            <p>Uptime: {perf.uptime || "N/A"}</p>
-            <p>CPU Load: {perf.cpu || "N/A"}%</p>
-            <p>Memory Usage: {perf.memory || "N/A"}%</p>
-            <p>Job Queue Size: {perf.queue_size || 0}</p>
-          </>
-        ) : (
-          <p>Loading…</p>
-        )}
-      </Box>
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <Button
+            size="icon"
+            className="h-9 w-9 rounded-full bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.9)] border border-cyan-300/80"
+            onClick={() => navigate("/admin")}
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">Backend Performance</h1>
+            <p className="text-sm text-slate-400 mt-1">
+              Latence, uptime, ressources et file de jobs calculés à partir du trafic réel.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 items-center">
+          <Badge
+            className={`text-xs px-3 py-1 rounded-full border ${
+              apiOk
+                ? "bg-emerald-500/10 border-emerald-400/50 text-emerald-300"
+                : "bg-red-500/10 border-red-400/50 text-red-300"
+            }`}
+          >
+            <span className="inline-flex items-center gap-1">
+              <GaugeCircle className="w-3 h-3" />
+              <span>{apiOk ? "API Stable" : "Incidents détectés"}</span>
+            </span>
+          </Badge>
+        </div>
+      </header>
 
-      <Box title="Latency">
-        {perf && perf.latency_samples ? (
-          <>
-            <MiniBar values={perf.latency_samples} color="linear-gradient(180deg,#58a6ff,#1f6feb)" />
-            <p style={{ opacity: 0.7 }}>Requests latency (ms)</p>
-          </>
-        ) : <p>No latency data.</p>}
-      </Box>
+      {/* Top cards */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              System & API
+            </CardTitle>
+            <Server className="w-4 h-4 text-emerald-400" />
+          </CardHeader>
+          <CardContent className="space-y-1 text-xs text-slate-300">
+            <p>
+              Statut API : <StatusPill ok={!!apiOk} />
+            </p>
+            <p>Uptime : {uptime}</p>
+            <p>RPS (dernière minute) : {rps != null ? rps.toFixed(2) : "N/A"}</p>
+            <p>Latence moyenne : {avgLatency != null ? `${avgLatency.toFixed(1)} ms` : "N/A"}</p>
+          </CardContent>
+        </Card>
 
-      <Box title="CPU Load (Graph)">
-        {perf && perf.cpu_samples ? (
-          <>
-            <MiniBar values={perf.cpu_samples} color="linear-gradient(180deg,#ffb340,#ff8c00)" />
-            <p style={{ opacity: 0.7 }}>CPU usage samples</p>
-          </>
-        ) : <p>No CPU data.</p>}
-      </Box>
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              Ressources
+            </CardTitle>
+            <Cpu className="w-4 h-4 text-cyan-400" />
+          </CardHeader>
+          <CardContent className="space-y-1 text-xs text-slate-300">
+            <p>CPU Load estimé : {cpu != null ? `${cpu}%` : "N/A"}</p>
+            <p>Memory Usage estimée : {memory != null ? `${memory}%` : "N/A"}</p>
+            <p>Jobs en file : {perf?.queue_size != null ? perf.queue_size : "N/A"}</p>
+          </CardContent>
+        </Card>
 
-      <Box title="Memory Usage (Graph)">
-        {perf && perf.memory_samples ? (
-          <>
-            <MiniBar values={perf.memory_samples} color="linear-gradient(180deg,#40ffbf,#00c78c)" />
-            <p style={{ opacity: 0.7 }}>Memory usage over time</p>
-          </>
-        ) : <p>No memory samples.</p>}
-      </Box>
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              Synthèse rapide
+            </CardTitle>
+            <Activity className="w-4 h-4 text-violet-400" />
+          </CardHeader>
+          <CardContent className="space-y-1 text-xs text-slate-300">
+            <p>
+              {apiOk
+                ? "Le backend répond correctement et les métriques sont dans des plages normales."
+                : "Des erreurs ont été détectées récemment sur l'API. Vérifie les logs et les jobs en erreur."}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
+      {/* Graphs */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              Latence des requêtes (ms)
+            </CardTitle>
+            <Activity className="w-4 h-4 text-cyan-400" />
+          </CardHeader>
+          <CardContent className="space-y-2 text-xs text-slate-300">
+            <GraphBars
+              values={Array.isArray(perf?.latency_samples) ? perf.latency_samples : []}
+              color="linear-gradient(180deg,#58a6ff,#1f6feb)"
+            />
+            <p className="text-[11px] text-slate-500 mt-1">
+              Calculée sur les 10 dernières minutes de trafic réel.
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              Charge CPU & Mémoire (indices)
+            </CardTitle>
+            <MemoryStick className="w-4 h-4 text-emerald-400" />
+          </CardHeader>
+          <CardContent className="space-y-4 text-xs text-slate-300">
+            <div>
+              <p className="mb-1 text-[11px] text-slate-400">CPU (échantillons)</p>
+              <GraphBars
+                values={Array.isArray(perf?.cpu_samples) ? perf.cpu_samples : []}
+                color="linear-gradient(180deg,#ffb340,#ff8c00)"
+              />
+            </div>
+            <div>
+              <p className="mb-1 text-[11px] text-slate-400">Mémoire (échantillons)</p>
+              <GraphBars
+                values={Array.isArray(perf?.memory_samples) ? perf.memory_samples : []}
+                color="linear-gradient(180deg,#40ffbf,#00c78c)"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </main>
   );
 }
