@@ -1696,9 +1696,9 @@ async def get_my_support_messages(authorization: Optional[str] = Header(default=
 
 
 @api_router.get("/support/unread-count")
-async def get_unread_support_messages(authorization: Optional[str] = Header(default=None)):
+async def get_unread_support_messages(request: Request, authorization: Optional[str] = Header(default=None)):
     """Admin: Get count of unread support messages"""
-    admin = await require_admin(authorization)
+    admin = await require_admin(authorization, request)
     _ = admin
     
     # Count messages from users that haven't been read
