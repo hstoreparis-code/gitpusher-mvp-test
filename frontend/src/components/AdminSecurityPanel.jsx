@@ -198,21 +198,34 @@ export function AdminSecurityPanel() {
         <CardContent>
           <div className="space-y-2 max-h-96 overflow-y-auto">
             {users.slice(0, 20).map(user => (
-              <div key={user.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800">
+              <div key={user.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-950/60 border border-slate-800 gap-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-slate-200 truncate">{user.email}</p>
                   <p className="text-xs text-slate-400">{user.display_name || "-"}</p>
                 </div>
-                <select
-                  value={user.role || "VIEWER"}
-                  onChange={(e) => updateUserRole(user.id, e.target.value)}
-                  className="px-2 py-1 rounded bg-slate-900 border border-slate-700 text-xs"
-                >
-                  <option value="VIEWER">VIEWER</option>
-                  <option value="STAFF">STAFF</option>
-                  <option value="ADMIN">ADMIN</option>
-                  <option value="FOUNDER_ADMIN">FOUNDER_ADMIN</option>
-                </select>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={user.role || "VIEWER"}
+                    onChange={(e) => updateUserRole(user.id, e.target.value)}
+                    className="px-2 py-1 rounded bg-slate-900 border border-slate-700 text-xs"
+                    disabled={user.email === "founder@gitpusher.ai"}
+                  >
+                    <option value="VIEWER">VIEWER</option>
+                    <option value="STAFF">STAFF</option>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="FOUNDER_ADMIN">FOUNDER_ADMIN</option>
+                  </select>
+                  {user.email !== "founder@gitpusher.ai" && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-7 px-2 text-[11px] border-red-500/60 text-red-300 hover:bg-red-500/10"
+                      onClick={() => deleteUser(user.id, user.email)}
+                    >
+                      Supprimer
+                    </Button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
