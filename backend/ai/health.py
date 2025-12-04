@@ -98,9 +98,20 @@ async def compute_ai_health(db) -> Dict[str, Any]:
                 ]
             ).to_list(8)
         )
+        top_ai_sources = (
+            await db.traffic_logs.aggregate(
+                [
+                    {"$match": {"timestamp": {"$gte": week_ago}, "is_ai": True, "ai_source": {"$ne": None}}},
+                    {"$group": {"_id": "$ai_source", "total": {"$sum": 1}}},
+                    {"$sort": {"total": -1}},
+                    {"$limit": 8},
+                ]
+            ).to_list(8)
+        )
     except Exception as exc:  # noqa: BLE001
         total_ai_visits = 0
         top_ai_pages = []
+        top_ai_sources = []
         checks.append({
             "name": "ai_traffic",
             "ok": False,
@@ -129,6 +140,7 @@ async def compute_ai_health(db) -> Dict[str, Any]:
     ai_traffic = {
         "total_ai_visits_7d": int(total_ai_visits),
         "top_ai_pages_7d": top_ai_pages,
+        "top_ai_sources_7d": top_ai_sources,
     }
 
     return {
