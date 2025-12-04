@@ -1132,9 +1132,21 @@ async def get_initial_credits() -> int:
     return credit_settings.get("initial_credits_free", 5) if credit_settings else 5
 
 
-async def require_admin(authorization: Optional[str]) -> dict:
-    """Ensure the current user is an admin. Raises 403 otherwise."""
-    user = await get_user_from_token(authorization)
+async def require_admin(authorization: Optional[str], request: Optional[Request] = None) -> dict:
+    """Ensure the current user is an admin.
+
+    - If a Request is provided, try resolving the user from session cookie
+      or Bearer token using `get_current_user_from_any`.
+    - Otherwise, fall back to the legacy JWT-only behaviour.
+    """
+    if request is not None:
+        user = await get_current_user_from_any(request, authorization)
+    else:
+        user = await get_user_from_token(authorization)
+
+    if not user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
     if not user.get("is_admin"):
         raise HTTPException(status_code=403, detail="Admin access required")
     return user
@@ -1298,8 +1310,8 @@ class SendMessageRequest(BaseModel):
 
 
 @api_router.get("/admin/users", response_model=List[AdminUserSummary])
-async def admin_list_users(authorization: Optional[str] = Header(default=None)):
-    admin = await require_admin(authorization)
+async def admin_list_users(request: Request, authorization: Optional[str] = Header(default=None)):
+    admin = await require_admin(authorization, request)
     _ = admin
     cur = db.users.find({}, {"_id": 1, "email": 1, "display_name": 1, "plan": 1, "credits": 1, "created_at": 1}).limit(100)
     users: List[AdminUserSummary] = []
@@ -1318,8 +1330,8 @@ async def admin_list_users(authorization: Optional[str] = Header(default=None)):
 
 
 @api_router.get("/admin/jobs", response_model=List[AdminJobSummary])
-async def admin_list_jobs(authorization: Optional[str] = Header(default=None)):
-    admin = await require_admin(authorization)
+async def admin_list_jobs(request: Request, authorization: Optional[str] = Header(default=None)):
+    admin = await require_admin(authorization, request)
     _ = admin
     cur = db.jobs.find({}, {"_id": 1, "user_id": 1, "project_id": 1, "status": 1, "error": 1, "created_at": 1}).sort(
         "created_at", -1
