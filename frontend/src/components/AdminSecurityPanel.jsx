@@ -34,14 +34,10 @@ export function AdminSecurityPanel() {
     setCreating(true);
     setMessage("");
     try {
-      await axios.post(`${API}/auth/register`, newUser, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.post(`${API}/auth/register`, newUser);
       
       // Update role after creation
-      const usersList = await axios.get(`${API}/admin/users`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const usersList = await axios.get(`${API}/admin/users`);
       const createdUser = usersList.data.find(u => u.email === newUser.email);
       
       if (createdUser && newUser.role !== "VIEWER") {
