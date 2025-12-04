@@ -24,27 +24,56 @@ export function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [requires2FA, setRequires2FA] = useState(false);
+  const [tempToken, setTempToken] = useState("");
+  const [otp, setOtp] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      const res = await axios.post(`${API}/auth/login`, { email, password });
-      const token = res.data.access_token;
-      // Vérifier que ce compte est bien admin
-      const status = await axios.get(`${API}/auth/admin-status`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!status.data.is_admin) {
-        setError("Ce compte n'est pas admin.");
-        setLoading(false);
+      if (!requires2FA) {
+        // Step 1: password check + 2FA requirement detection
+        const res = await axios.post(`${API}/auth/login-admin`, { email, password });
+        if (res.data.requires_2fa) {
+          setRequires2FA(true);
+          setTempToken(res.data.temp_token);
+          setLoading(false);
+          return;
+        }
+
+        // No 2FA yet: fallback to legacy admin-status check using JWT
+        const token = res.data.access_token;
+        const status = await axios.get(`${API}/auth/admin-status`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!status.data.is_admin) {
+          setError("Ce compte n'est pas admin.");
+          setLoading(false);
+          return;
+        }
+
+        localStorage.setItem("admin_token", token);
+        navigate("/admin");
         return;
       }
-      localStorage.setItem("admin_token", token);
-      navigate("/admin");
+
+      // Step 2: 2FA verification + session cookie
+      const res = await axios.post(`${API}/auth/login-2fa`, {
+        code: otp,
+        temp_token: tempToken,
+      });
+
+      if (res.data.status === "ok") {
+        // Session cookie is now set by the backend; no need for localStorage
+        navigate("/admin");
+        return;
+      }
     } catch (err) {
       setError(err?.response?.data?.detail || "Échec de la connexion admin.");
+    } finally {
       setLoading(false);
     }
   };
