@@ -1886,7 +1886,7 @@ async def admin_autofix_approve_incident(incident_id: str, request: Request, aut
     close to the original mock UI. Later we can plug real AutoFix actions
     and LLM decisions here.
     """
-    await require_admin(authorization)
+    await require_admin(authorization, request)
 
     doc = await db.autofix_incidents.find_one({"_id": incident_id})
     if not doc:
