@@ -19,12 +19,14 @@ export function TermsPage() {
           </div>
           <button
             type="button"
-            onClick={() => window.history.back()}
-            className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/70 bg-gradient-to-r from-cyan-500 via-sky-500 to-cyan-400 text-slate-950 shadow-[0_0_22px_rgba(34,211,238,0.9)] hover:shadow-[0_0_32px_rgba(34,211,238,1)] transition-all overflow-hidden"
-            aria-label="Retour"
+            onClick={() => {
+              window.location.href = "/";
+            }}
+            className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/80 bg-gradient-to-r from-cyan-400 via-sky-500 to-cyan-300 text-slate-950 shadow-[0_0_26px_rgba(56,189,248,0.95)] hover:shadow-[0_0_40px_rgba(56,189,248,1)] transition-all overflow-hidden"
+            aria-label="Retour à l'accueil"
           >
-            <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(244,244,245,0.45),transparent_60%)] opacity-70 group-hover:opacity-100 transition-opacity" />
-            <ArrowLeft className="relative z-10 h-4 w-4 drop-shadow-[0_0_8px_rgba(15,23,42,0.9)]" />
+            <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(244,244,245,0.55),transparent_65%)] opacity-80 group-hover:opacity-100 transition-opacity" />
+            <ArrowLeft className="relative z-10 h-4 w-4 text-cyan-50 drop-shadow-[0_0_10px_rgba(15,23,42,0.9)]" />
           </button>
         </div>
       </header>
