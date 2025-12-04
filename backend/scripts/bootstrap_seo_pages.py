@@ -1,7 +1,7 @@
 import asyncio
 from datetime import datetime, timezone
 
-from server import db
+from backend.server import db
 
 
 PAGES = [
