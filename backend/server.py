@@ -237,6 +237,10 @@ class SecurityMiddleware(BaseHTTPMiddleware):
                 otp_header = request.headers.get("X-Admin-OTP")
                 if otp_header != ADMIN_OTP:
                     log_security("Invalid admin OTP", ip=client_ip, path=path)
+from routes.admin_security import router as admin_security_router
+
+app.include_router(admin_security_router)
+
                     raise HTTPException(status_code=403, detail="Invalid admin OTP")
 
         response = await call_next(request)
