@@ -98,11 +98,48 @@ async def compute_ai_health(db) -> Dict[str, Any]:
                 ]
             ).to_list(8)
         )
+        # Map raw ai_source labels to normalized provider names
+        ai_source_map = {
+            "ChatGPT": "OpenAI",
+            "OpenAI": "OpenAI",
+            "Claude": "Anthropic",
+            "Anthropic": "Anthropic",
+            "Gemini": "Google",
+            "Google-Extended": "Google",
+            "Perplexity": "Perplexity",
+            "PerplexityBot": "Perplexity",
+            "Mistral": "Mistral",
+            "MistralBot": "Mistral",
+            "Meta": "Meta",
+            "Llama": "Meta",
+            "Meta-ExternalAgent": "Meta",
+            "Microsoft": "Microsoft",
+            "BingBot": "Microsoft",
+            "Copilot": "Microsoft",
+            "xAI": "xAI",
+            "Grok": "xAI",
+        }
+
         top_ai_sources = (
             await db.traffic_logs.aggregate(
                 [
                     {"$match": {"timestamp": {"$gte": week_ago}, "is_ai": True, "ai_source": {"$ne": None}}},
-                    {"$group": {"_id": "$ai_source", "total": {"$sum": 1}}},
+                    {
+                        "$addFields": {
+                            "ai_provider": {
+                                "$ifNull": [
+                                    {"$arrayElemAt": [
+                                        [
+                                            {"$ifNull": [ai_source_map.get("$ai_source"), "$ai_source"]}
+                                        ],
+                                        0,
+                                    ]},
+                                    "$ai_source",
+                                ]
+                            }
+                        }
+                    },
+                    {"$group": {"_id": "$ai_provider", "total": {"$sum": 1}}},
                     {"$sort": {"total": -1}},
                     {"$limit": 8},
                 ]
