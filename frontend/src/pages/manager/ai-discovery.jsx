@@ -64,6 +64,8 @@ export default function AiDiscoveryManagerPage() {
     healthStatus === "OK" ? "text-emerald-400" : healthStatus === "WARN" ? "text-amber-400" : "text-red-400";
 
   const eventsLast24h = health?.checks?.find((c) => c.name === "mongodb")?.events_last_24h || 0;
+  const totalAiVisits7d = health?.ai_traffic?.total_ai_visits_7d || 0;
+  const topAiPages7d = health?.ai_traffic?.top_ai_pages_7d || [];
 
   const miniSeries = useMemo(() => {
     // On n'a pas d'historique détaillé, mais on peut simuler une petite série à partir du score
