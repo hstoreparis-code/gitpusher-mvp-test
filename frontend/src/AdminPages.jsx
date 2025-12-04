@@ -175,6 +175,7 @@ export function AdminDashboardPage() {
   const [showAlerts, setShowAlerts] = useState(false);
   const [unreadAlerts, setUnreadAlerts] = useState(0);
   const [supportUnreadCount, setSupportUnreadCount] = useState(0);
+  const [showAdminMenu, setShowAdminMenu] = useState(false);
 
   const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
 
