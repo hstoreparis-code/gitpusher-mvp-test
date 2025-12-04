@@ -148,6 +148,19 @@ export default function AiDiscoveryManagerPage() {
           Lancer AI AutoFix (public)
         </button>
       </div>
+      <div className="mt-4 text-xs text-slate-300 space-y-1">
+        <p>
+          <span className="font-semibold text-emerald-400">V3/V4 AI files OK</span> —
+          priority map, tool catalog, toolpack &amp; OpenAI tools sont servis via&nbsp;
+          <code className="bg-slate-900 px-1 rounded">/ai/knowledge/*</code> et
+          <code className="bg-slate-900 px-1 rounded">/ai/agents/*</code>.
+        </p>
+        <p>
+          Page publique synchronisée :
+          <code className="ml-1 bg-slate-900 px-1 rounded">/for-agents-devtools</code>
+        </p>
+      </div>
+
 
       <p className="text-sm text-slate-400">
         This dashboard ensures all AI indexers and knowledge files stay valid so that AI discovery of GitPusher.ai
