@@ -167,6 +167,15 @@ export function AdminPagesContentPanel() {
           >
             {checking ? "Vérification…" : "Vérifier statut"}
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-full text-xs bg-orange-500 hover:bg-orange-400 text-slate-950 border-orange-400"
+            onClick={onAutofix}
+            disabled={autofixing || Object.values(statusMap).filter(s => s === "error").length === 0}
+          >
+            {autofixing ? "Correction…" : "Autofix"}
+          </Button>
           <Button variant="outline" size="sm" className="rounded-full text-xs" onClick={onExportJson}>
             <Download className="w-4 h-4 mr-1" /> Export JSON
           </Button>
