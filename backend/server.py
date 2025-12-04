@@ -205,6 +205,16 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer-when-downgrade"
         response.headers["X-XSS-Protection"] = "1; mode=block"
+        # Basic CSP to reduce XSS risk. Adapt if needed.
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data:; "
+            "connect-src 'self' https://api.github.com; "
+            "frame-ancestors 'none'; "
+            "base-uri 'self';"
+        )
         return response
 
 
