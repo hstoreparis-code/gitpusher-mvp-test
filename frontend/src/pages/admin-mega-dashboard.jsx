@@ -196,14 +196,39 @@ export default function AdminMegaDashboard() {
             </CardTitle>
             <Activity className="w-4 h-4 text-violet-400" />
           </CardHeader>
-          <CardContent className="space-y-1 text-xs text-slate-300">
+          <CardContent className="space-y-2 text-xs text-slate-300">
             <p>
               Score global :
               <span className="ml-1 font-semibold text-emerald-300">{aiScore}</span>
               <span className="text-[10px] text-slate-500 ml-1">/ 100</span>
             </p>
-            <p>
-              AutoFix : <Tag ok={!aiIssues} labelOk="OK" labelError="À corriger" />
+            <p className="flex items-center justify-between gap-2">
+              <span>
+                AutoFix : <Tag ok={!aiIssues} labelOk="OK" labelError="À corriger" />
+              </span>
+              <Button
+                size="xs"
+                className="h-7 px-2 text-[10px] bg-violet-600 hover:bg-violet-500 border border-violet-400/60"
+                onClick={async () => {
+                  try {
+                    const res = await fetch("/api/ai/autofix", { method: "POST" });
+                    // Après autofix, on recharge les données AI pour refléter la correction
+                    const token = typeof window !== "undefined" ? window.localStorage.getItem("admin_token") : null;
+                    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+                    const refreshed = await fetch(`${API_BASE}/api/admin/ai-indexing`, { headers });
+                    if (refreshed.ok) {
+                      const data = await refreshed.json();
+                      setAI(data || {});
+                    }
+                  } catch (e) {
+                    // On garde silencieux pour ne pas casser l'UI si l'autofix échoue
+                    // eslint-disable-next-line no-console
+                    console.warn("AI autofix failed", e);
+                  }
+                }}
+              >
+                Lancer l&apos;autofix
+              </Button>
             </p>
           </CardContent>
         </Card>
