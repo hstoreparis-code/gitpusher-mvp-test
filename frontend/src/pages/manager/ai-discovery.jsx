@@ -93,17 +93,15 @@ export default function AiDiscoveryManagerPage() {
             onClick={() => navigate("/admin")}
           >
             <ArrowLeft className="w-4 h-4" />
-          </div>
-        </div>
-
           </Button>
           <div>
             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-            AI Discovery &amp; Health
-          </h1>
-          <p className="text-sm text-slate-400 mt-1">
-            Surveille l’exposition de GitPusher aux IA : score de visibilité, santé des fichiers V3/V4, et AutoFix.
-          </p>
+              AI Discovery &amp; Health
+            </h1>
+            <p className="text-sm text-slate-400 mt-1">
+              Surveille l’exposition de GitPusher aux IA : score de visibilité, santé des fichiers V3/V4, et AutoFix.
+            </p>
+          </div>
         </div>
         <div className="flex flex-wrap gap-2 items-center">
           <Badge
