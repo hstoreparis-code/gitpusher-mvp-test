@@ -74,11 +74,6 @@ export function AdminSupportPanel() {
   };
 
   useEffect(() => {
-    if (!token) {
-      navigate("/admin-login", { replace: true });
-      return;
-    }
-
     const run = () => {
       loadAdminStatus();
       loadConversations();
@@ -87,7 +82,7 @@ export function AdminSupportPanel() {
     run();
     const interval = setInterval(run, 5000);
     return () => clearInterval(interval);
-  }, [token, navigate]);
+  }, [navigate]);
   const selectedConversation = conversations.find(c => c.user_id === selectedUser?.user_id);
 
 
