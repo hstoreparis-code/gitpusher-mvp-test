@@ -4115,6 +4115,8 @@ function AppShell() {
     const storedToken = localStorage.getItem("token");
     if (storedToken) navigate("/app");
     else navigate("/");
+        <Route path="/security" element={<SecurityCompliancePage />} />
+
   };
 
   return (
