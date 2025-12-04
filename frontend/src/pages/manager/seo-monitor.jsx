@@ -63,7 +63,7 @@ export default function SeoMonitorManagerPage() {
           </Button>
           <div>
             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-              SEO Monitor
+              Google Search SEO Monitor
             </h1>
             <p className="text-sm text-slate-400 mt-1">
               Vue d’ensemble SEO préparée pour Google Search Console : clics, impressions et pages les plus performantes.
