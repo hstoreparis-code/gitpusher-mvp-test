@@ -771,7 +771,6 @@ app.include_router(v1_autopush.router, prefix="/api")
 app.include_router(v1_partner.router, prefix="/api")
 app.include_router(v1_webhooks.router, prefix="/api")
 
-app.include_router(admin_credit_safety.router, prefix="/api")
 app.include_router(admin_pages.router, prefix="/api")
 app.include_router(admin_users.router, prefix="/api")
 app.include_router(features_health.router, prefix="/api")
