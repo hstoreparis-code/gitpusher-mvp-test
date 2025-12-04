@@ -84,6 +84,38 @@ async def compute_ai_health(db) -> Dict[str, Any]:
             "path": str(ping_log_path),
         }
     checks.append(ping_info)
+    # 3) Aggregate AI traffic & visited paths (last 7 days)
+    try:
+        week_ago = (now - timedelta(days=7)).isoformat()
+        total_ai_visits = await db.traffic_logs.count_documents({
+            "timestamp": {"$gte": week_ago},
+            "is_ai": True,
+        })
+        top_ai_pages = (
+            await db.traffic_logs.aggregate(
+                [
+                    {"$match": {"timestamp": {"$gte": week_ago}, "is_ai": True}},
+                    {"$group": {"_id": "$path", "visits": {"$sum": 1}}},
+                    {"$sort": {"visits": -1}},
+                    {"$limit": 8},
+                ]
+            ).to_list(8)
+        )
+    except Exception as exc:  # noqa: BLE001
+        total_ai_visits = 0
+        top_ai_pages = []
+        checks.append({
+            "name": "ai_traffic",
+            "ok": False,
+            "error": f"traffic_query_error: {exc}",
+        })
+    else:
+        checks.append({
+            "name": "ai_traffic",
+            "ok": True,
+            "total_ai_visits_7d": int(total_ai_visits),
+        })
+
 
     # 3) Fold visibility score into overall status
     score = visibility.get("score", 0)
