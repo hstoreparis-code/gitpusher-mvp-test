@@ -1860,7 +1860,7 @@ def _serialize_incident(doc: dict) -> AutofixIncident:
 
 
 @api_router.get("/admin/autofix/incidents", response_model=List[AutofixIncident])
-async def admin_autofix_list_incidents(authorization: Optional[str] = Header(default=None)):
+async def admin_autofix_list_incidents(request: Request, authorization: Optional[str] = Header(default=None)):
     """List Autofix incidents for the admin dashboard.
 
     - Seeds a few demo incidents server-side if collection is empty (MVP).
