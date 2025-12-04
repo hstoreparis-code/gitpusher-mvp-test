@@ -32,11 +32,8 @@ export function AdminCreditsPanel() {
   }, []);
 
   const fetchCreditSettings = async () => {
-    if (!token) return;
     try {
-      const res = await axios.get(`${API}/admin/credit-settings`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.get(`${API}/admin/credit-settings`);
       setCreditSettings({
         initial_credits_free: res.data.initial_credits_free || 5,
         initial_credits_business_pack: res.data.initial_credits_business_pack || 200
