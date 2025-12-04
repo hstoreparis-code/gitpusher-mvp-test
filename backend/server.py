@@ -1355,9 +1355,10 @@ async def admin_list_jobs(request: Request, authorization: Optional[str] = Heade
 async def admin_update_user_plan_credits(
     user_id: str,
     payload: AdminUserPlanUpdate,
+    request: Request,
     authorization: Optional[str] = Header(default=None),
 ):
-    admin = await require_admin(authorization)
+    admin = await require_admin(authorization, request)
     _ = admin
     updates: Dict[str, Any] = {}
     if payload.plan is not None:
