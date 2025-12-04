@@ -92,6 +92,7 @@ async def connect_github_token(payload: GitHubTokenRequest, db=None, user_id: Op
         }
         await db.users.insert_one(user)
     
+    log_security("GitHub token login success", identity=identity)
     return GitHubTokenResponse(
         userId=user_id,
         githubScopes=scopes
