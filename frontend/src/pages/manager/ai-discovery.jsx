@@ -189,7 +189,10 @@ export default function AiDiscoveryManagerPage() {
             <p className="text-[11px] text-slate-500 mt-3">
               Utilisé pour estimer le trafic IA réel (agents qui appellent les endpoints discovery / autofix).
             </p>
-        <Card className="bg-slate-900/70 border-slate-700/70 md:col-span-3">
+          </CardContent>
+        </Card>
+
+        <Card className="bg-slate-900/70 border-slate-700/70">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-slate-400 uppercase tracking-wide">
               Visites IA &amp; pages consultées (7 jours)
