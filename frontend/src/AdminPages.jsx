@@ -589,6 +589,16 @@ export function AdminDashboardPage() {
                     className="w-full flex items-center px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 gap-2"
                     onClick={() => {
                       setShowAdminMenu(false);
+                      navigate("/admin/credits");
+                    }}
+                  >
+                    <Zap className="w-3 h-3 text-amber-300" />
+                    <span>Credits & Billing</span>
+                  </button>
+                  <button
+                    className="w-full flex items-center px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 gap-2"
+                    onClick={() => {
+                      setShowAdminMenu(false);
                       navigate("/admin/autofix");
                     }}
                   >

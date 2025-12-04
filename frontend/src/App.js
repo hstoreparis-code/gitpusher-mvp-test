@@ -29,6 +29,7 @@ import ForNocodeBuildersDEPage from "./pages/for-nocode-builders-de";
 import ForNocodeBuildersINPage from "./pages/for-nocode-builders-in";
 import ForNocodeBuildersCNPage from "./pages/for-nocode-builders-cn";
 import AdminFeaturesDashboard from "./pages/admin-features";
+import AdminCreditsBillingDashboard from "./pages/admin-credits";
 import SeoPushAutomaticallyPage from "./pages/seo/push-automatically";
 import SeoDeployAiCodePage from "./pages/seo/deploy-ai-code";
 import SeoPushWithoutGitPage from "./pages/seo/push-without-git";
