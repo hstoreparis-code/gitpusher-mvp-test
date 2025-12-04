@@ -11,6 +11,23 @@ import os
 import io
 import zipfile
 
+
+def _validate_upload_size(content_bytes: bytes):
+    max_bytes = MAX_UPLOAD_SIZE_MB * 1024 * 1024
+    if len(content_bytes) > max_bytes:
+        raise HTTPException(status_code=413, detail="Uploaded file too large")
+
+
+def _safe_extract_zip(zip_bytes: bytes, target_dir: str):
+    zf = zipfile.ZipFile(io.BytesIO(zip_bytes))
+    for member in zf.infolist():
+        member_path = os.path.normpath(member.filename)
+        if member_path.startswith("..") or os.path.isabs(member_path):
+            raise HTTPException(status_code=400, detail="Unsafe path in ZIP")
+    zf.extractall(target_dir)
+
+
+
 from security_config import MAX_UPLOAD_SIZE_MB, ALLOWED_UPLOAD_EXTENSIONS
 
 router = APIRouter(prefix="/uploads", tags=["uploads"])
