@@ -31,9 +31,7 @@ export function AdminEmailPanel() {
 
   const loadSMTPConfig = async () => {
     try {
-      const res = await axios.get(`${API}/admin/smtp/config`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await axios.get(`${API}/admin/smtp/config`);
       setSmtpConfig({
         SMTP_HOST: res.data.smtp_host || "",
         SMTP_PORT: res.data.smtp_port || "587",
