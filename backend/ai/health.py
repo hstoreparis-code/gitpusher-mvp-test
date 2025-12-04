@@ -5,9 +5,6 @@ from typing import Dict, Any
 from .visibility_score import compute_ai_visibility_score
 
 
-from .visibility_score import compute_ai_visibility_score
-
-
 async def compute_ai_health(db) -> Dict[str, Any]:
     """Aggregate AI health signals (files + events + ping logs).
 
