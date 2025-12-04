@@ -1,7 +1,8 @@
 import os
 import json
 
-TEMPLATES_PATH = "backend/autofix/templates/seo_aeo_templates.json"
+BASE_DIR = os.path.dirname(__file__)
+TEMPLATES_PATH = os.path.join(BASE_DIR, "templates", "seo_aeo_templates.json")
 
 SEO_DIR = "frontend/src/pages/seo"
 AEO_DIR = "frontend/src/pages/aeo"
