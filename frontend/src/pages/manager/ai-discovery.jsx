@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
+import { Activity, HeartPulse, Radar, Rocket, ShieldCheck, Wrench } from "lucide-react";
 
 const API_BASE = process.env.REACT_APP_BACKEND_URL || "";
 
 export default function AiDiscoveryManagerPage() {
   const [result, setResult] = useState(null);
+  const [health, setHealth] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   async function callApi(path, options) {
     try {
