@@ -554,7 +554,15 @@ export function AdminDashboardPage() {
                 <span className="w-5 h-0.5 bg-cyan-400 rounded-full mb-0.5" />
                 <span className="w-5 h-0.5 bg-cyan-400 rounded-full" />
               </button>
-              <span className="hidden sm:inline-block text-xs font-medium text-cyan-300">Menu Admin</span>
+              <span
+                className="hidden sm:inline-block text-xs font-medium text-cyan-300 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowAdminMenu((prev) => !prev);
+                }}
+              >
+                Menu Admin
+              </span>
               {/* Menu déroulant des actions admin (alertes, autofix, support, déconnexion) */}
               {showAdminMenu && (
                 <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-slate-700 rounded-lg shadow-2xl z-40">
