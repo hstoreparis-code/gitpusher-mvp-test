@@ -15,8 +15,6 @@ export function AdminPasswordChange() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
-
   const handleChangePassword = async (e) => {
     e.preventDefault();
     
