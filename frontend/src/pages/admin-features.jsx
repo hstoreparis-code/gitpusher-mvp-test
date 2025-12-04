@@ -150,7 +150,7 @@ export default function AdminFeaturesDashboard() {
               providers.map((p, i) => (
                 <p key={i} className="flex items-center justify-between">
                   <span>{p.name}</span>
-                  <span className={`text-[11px] ${p.ok === false ? "text-red-400" : "text-emerald-300"}`}>
+                  <span className={p.ok === false ? "text-[11px] text-red-400" : "text-[11px] text-emerald-300"}>
                     {p.ok === false ? "ERROR" : "OK"}
                   </span>
                 </p>
