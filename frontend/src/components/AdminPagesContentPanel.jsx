@@ -224,9 +224,9 @@ export function AdminPagesContentPanel() {
       <CardContent className="grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-4">
         <div className="space-y-2 max-h-80 overflow-y-auto border border-slate-800 rounded-lg p-2 text-xs">
           {loading ? (
-            <p className="text-emerald-300">Chargement…</p>
+            <p className="text-cyan-300">Chargement…</p>
           ) : pages.length === 0 ? (
-            <p className="text-emerald-300">Aucune page enregistrée pour l’instant.</p>
+            <p className="text-cyan-300">Aucune page enregistrée pour l’instant.</p>
           ) : (
             pages.map((p) => (
               <button
@@ -237,14 +237,14 @@ export function AdminPagesContentPanel() {
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="truncate text-emerald-300">{p.slug}</span>
-                  <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full border border-emerald-400 text-emerald-300">
+                  <span className="truncate text-cyan-300">{p.slug}</span>
+                  <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full border border-emerald-400 text-cyan-300">
                     <span>{p.page_type}</span>
                     {statusMap[p.slug] === "active" && <span className="w-2 h-2 rounded-full bg-emerald-400" />}
                     {statusMap[p.slug] === "error" && <span className="w-2 h-2 rounded-full bg-red-500" />}
                   </span>
                 </div>
-                <div className="text-[10px] text-emerald-300 truncate">{p.title}</div>
+                <div className="text-[10px] text-cyan-300 truncate">{p.title}</div>
                 {p.body && (
                   <div className="text-[10px] text-emerald-200 truncate mt-0.5">
                     {p.body.length > 120 ? p.body.slice(0, 120) + "…" : p.body}
@@ -258,12 +258,12 @@ export function AdminPagesContentPanel() {
         <div className="space-y-3 text-xs">
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="block mb-1 text-emerald-300">Slug</label>
+              <label className="block mb-1 text-cyan-300">Slug</label>
               <Input
                 value={form.slug}
                 onChange={(e) => onChange("slug", e.target.value)}
                 placeholder="seo/push-automatically"
-                className="h-8 text-xs bg-slate-950/60 border-emerald-500 text-emerald-300"
+                className="h-8 text-xs bg-slate-950/60 border-emerald-500 text-cyan-300"
               />
             </div>
             <div>
@@ -285,7 +285,7 @@ export function AdminPagesContentPanel() {
               <Input
                 value={form.title}
                 onChange={(e) => onChange("title", e.target.value)}
-                className="h-8 text-xs bg-slate-950/60 border-emerald-500 text-emerald-300"
+                className="h-8 text-xs bg-slate-950/60 border-emerald-500 text-cyan-300"
               />
             </div>
             <div>
@@ -303,17 +303,17 @@ export function AdminPagesContentPanel() {
           </div>
 
           <div>
-            <label className="block mb-1 text-emerald-300">Description</label>
+            <label className="block mb-1 text-cyan-300">Description</label>
             <Textarea
               value={form.description}
               onChange={(e) => onChange("description", e.target.value)}
               rows={2}
-              className="text-xs bg-slate-950/60 border-emerald-500 text-emerald-300"
+              className="text-xs bg-slate-950/60 border-emerald-500 text-cyan-300"
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-emerald-300">Contenu (Markdown ou HTML léger)</label>
+            <label className="block mb-1 text-cyan-300">Contenu (Markdown ou HTML léger)</label>
             <Textarea
               value={form.body}
               onChange={(e) => onChange("body", e.target.value)}
@@ -326,7 +326,7 @@ export function AdminPagesContentPanel() {
             {form.status && (
               <span className={`text-[10px] px-2 py-1 rounded-full border ${
                 form.status === "active"
-                  ? "border-emerald-400 text-emerald-300"
+                  ? "border-emerald-400 text-cyan-300"
                   : "border-slate-500 text-slate-300"
               }`}>
                 {form.status === "active" ? "Actif" : "Inactif"}
