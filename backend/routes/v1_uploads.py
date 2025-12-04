@@ -7,6 +7,11 @@ from models.schemas import (
 from services.storage_service import StorageService
 from datetime import datetime, timezone
 import uuid
+import os
+import io
+import zipfile
+
+from security_config import MAX_UPLOAD_SIZE_MB, ALLOWED_UPLOAD_EXTENSIONS
 
 router = APIRouter(prefix="/uploads", tags=["uploads"])
 storage = StorageService()
