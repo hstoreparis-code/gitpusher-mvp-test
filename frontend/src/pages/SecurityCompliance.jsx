@@ -84,8 +84,8 @@ export default function SecurityCompliancePage() {
         <li>Automatic sanitization and validation</li>
       </ul>
 
-      <h2>6. AI-Driven Quality &amp; Security Monitoring</h2>
-      <ul>
+      <h2 className="mt-8 mb-3 text-lg font-semibold text-slate-100">6. AI-Driven Quality &amp; Security Monitoring</h2>
+      <ul className="space-y-1 text-sm text-slate-300 list-disc list-inside">
         <li>Daily QA cron with email alert</li>
         <li>AI-based log analysis (Anomaly detection + risk score)</li>
         <li>Autofix engine for backend integrity issues</li>
