@@ -7,13 +7,41 @@ export const metadata = {
 
 export default function SecurityCompliancePage() {
   return (
-    <main style={{ padding: "2rem", maxWidth: 900, margin: "0 auto" }}>
-      <h1>Security &amp; Compliance at GitPusher.ai</h1>
-      <p>
-        GitPusher.ai is built with a security-first architecture. We protect your repositories,
-        credentials, and assets with modern industry-grade security practices. Below is an overview
-        of the safeguards used across the platform.
-      </p>
+    <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 px-4 py-10">
+      <div className="max-w-5xl mx-auto space-y-8">
+        {/* Header */}
+        <header className="space-y-3">
+          <p className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-400/40 shadow-[0_0_18px_rgba(16,185,129,0.35)]">
+            Security &amp; Compliance
+          </p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(45,212,191,0.8)]">
+            Security &amp; Compliance at GitPusher.ai
+          </h1>
+          <p className="text-sm sm:text-base text-slate-300 max-w-3xl">
+            GitPusher.ai is built with a security-first architecture. We protect your repositories,
+            credentials and assets with modern, industry-grade security practices. Below is an overview
+            of the safeguards used across the platform.
+          </p>
+        </header>
+
+        <section className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-emerald-400/30 bg-slate-900/70 p-5 shadow-[0_0_30px_rgba(16,185,129,0.35)]">
+            <p className="text-xs font-semibold text-emerald-300 mb-2">Enterprise-grade posture</p>
+            <p className="text-sm text-slate-200">
+              GitPusher.ai treats every project as production-critical. Authentication, encryption,
+              observability and incident response are designed to match modern SaaS expectations.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-cyan-400/30 bg-slate-900/70 p-5 shadow-[0_0_30px_rgba(56,189,248,0.35)]">
+            <p className="text-xs font-semibold text-cyan-300 mb-2">Quick overview</p>
+            <ul className="text-sm text-slate-200 space-y-1 list-disc list-inside">
+              <li>Secure sessions (HttpOnly, SameSite, optional Secure)</li>
+              <li>Optional TOTP 2FA for admins</li>
+              <li>Strict rate limiting and IP allow-list for admin</li>
+              <li>Security headers + CSP hardened by default</li>
+            </ul>
+          </div>
+        </section>
 
       <h2>1. Secure Authentication</h2>
       <ul>
