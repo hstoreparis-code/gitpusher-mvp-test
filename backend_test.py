@@ -1000,8 +1000,8 @@ class BackendAPITester:
         # Test endpoints without authentication (should fail)
         protected_endpoints = [
             "/admin/users",
-            "/admin/performance", 
-            "/admin/ai-indexing"
+            "/admin/jobs", 
+            "/admin/transactions"
         ]
         
         for endpoint in protected_endpoints:
