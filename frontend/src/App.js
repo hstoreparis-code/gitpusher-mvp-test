@@ -774,7 +774,9 @@ function AuthCard({ t, onSuccess, onClose, initialTab = "login" }) {
       if (onSuccess) onSuccess();
       else navigate("/app");
     } catch (err) {
-      setError(err?.response?.data?.detail || "Signup failed");
+      const detail = err?.response?.data?.detail;
+      const msg = typeof detail === "string" ? detail : detail?.msg || "Signup failed";
+      setError(msg);
     } finally {
       setLoading(false);
     }
