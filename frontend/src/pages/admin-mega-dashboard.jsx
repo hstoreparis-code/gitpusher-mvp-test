@@ -190,13 +190,59 @@ export default function AdminMegaDashboard() {
             </CardTitle>
             <Server className="w-4 h-4 text-emerald-400" />
           </CardHeader>
-          <CardContent className="space-y-1 text-xs text-slate-300">
+          <CardContent className="space-y-2 text-xs text-slate-300">
             <p>
               Statut API : <Tag ok={!!apiHealthy} />
             </p>
             <p>Uptime : {uptime}</p>
             <p>CPU : {cpu != null ? `${cpu}%` : "N/A"}</p>
             <p>Mémoire : {memory != null ? `${memory}%` : "N/A"}</p>
+            <div className="pt-2 border-t border-slate-800 mt-2 flex items-center justify-between gap-2">
+              <div className="space-y-0.5">
+                <p className="text-[11px] text-slate-400">Features health (Stripe, email, AI, DB…)</p>
+                <p className="text-[11px]">
+                  <span className="mr-1">AutoFix :</span>
+                  <Tag ok={!hasFeaturesIssues} labelOk="OK" labelError="ISSUES" />
+                </p>
+              </div>
+              <Button
+                size="xs"
+                className="h-7 px-2 text-[10px] bg-emerald-600 hover:bg-emerald-500 border border-emerald-400/60 disabled:opacity-60"
+                disabled={featuresAutofixing}
+                onClick={async () => {
+                  try {
+                    setFeaturesAutofixing(true);
+                    const res = await fetch(`${API_BASE}/api/admin/features/autofix`, {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      credentials: "include",
+                    });
+                    // On relit la santé des features après tentative d'autofix
+                    const refreshed = await fetch(`${API_BASE}/api/admin/features/health`, {
+                      credentials: "include",
+                    });
+                    if (refreshed.ok) {
+                      const data = await refreshed.json();
+                      setFeatures(data || {});
+                    }
+                    // Optionnel : journaliser en console pour debug admin
+                    if (res && res.ok) {
+                      // eslint-disable-next-line no-console
+                      console.info("Features autofix applied");
+                    }
+                  } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.warn("Features autofix failed", e);
+                  } finally {
+                    setFeaturesAutofixing(false);
+                  }
+                }}
+              >
+                {featuresAutofixing ? "Autofix…" : "Lancer l'autofix"}
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
