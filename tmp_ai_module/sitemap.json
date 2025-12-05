@@ -1,0 +1,21 @@
+{
+  "site": "https://example.com",
+  "pages": [
+    {
+      "url": "/",
+      "priority": 1.0
+    },
+    {
+      "url": "/dashboard",
+      "priority": 0.9
+    },
+    {
+      "url": "/pricing",
+      "priority": 0.8
+    },
+    {
+      "url": "/blog",
+      "priority": 0.7
+    }
+  ]
+}
