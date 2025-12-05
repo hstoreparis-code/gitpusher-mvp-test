@@ -142,6 +142,12 @@ export default function AdminAIIndexingDashboard() {
           <CardContent className="text-xs text-slate-300 space-y-1">
             <p className="text-[11px] text-slate-400 mb-1">Couverture principale :</p>
             <ul className="space-y-0.5">
+            {hasError && (
+              <p className="text-[11px] text-red-400">
+                Impossible de charger les données d'indexation IA. Vérifiez /api/admin/ai-indexing.
+              </p>
+            )}
+
               <li>
                 ChatGPT / OpenAI <Tag ok={!!indexing?.chatgpt} />
               </li>
