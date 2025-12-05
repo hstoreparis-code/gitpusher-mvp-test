@@ -1,0 +1,15 @@
+{
+  "ai_endpoints": [
+    "/ai/ping"
+  ],
+  "pages": [
+    "/",
+    "/status",
+    "/for-ai-assistants",
+    "/seo/push-automatically",
+    "/seo/deploy-ai-code",
+    "/seo/push-without-git",
+    "/seo/ai-to-git-automation",
+    "/seo/create-repo-automatically"
+  ]
+}
