@@ -125,7 +125,7 @@ export default function DemoRequestForm({ onClose }) {
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs text-slate-300">Taille d'équipe</label>
+        <label className="text-xs text-slate-300">Taille d&apos;équipe</label>
         <select
           name="team_size"
           value={form.team_size}
