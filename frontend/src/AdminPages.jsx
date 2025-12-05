@@ -16,6 +16,7 @@ import { Admin2FAPanel } from "./components/Admin2FAPanel";
 
 import { AdminFeaturesPanel } from "./components/AdminFeaturesPanel";
 import { AdminPagesContentPanel } from "./components/AdminPagesContentPanel";
+import { safeRender } from "./utils/safeRender";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
