@@ -92,8 +92,8 @@ export default function SecurityCompliancePage() {
         <li>Security events dashboard (admin)</li>
       </ul>
 
-      <h2>7. Compliance &amp; Privacy</h2>
-      <ul>
+      <h2 className="mt-8 mb-3 text-lg font-semibold text-slate-100">7. Compliance &amp; Privacy</h2>
+      <ul className="space-y-1 text-sm text-slate-300 list-disc list-inside">
         <li>GDPR-aligned data handling</li>
         <li>Removal of data upon user request</li>
         <li>Minimal retention policy for logs</li>
