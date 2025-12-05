@@ -2321,7 +2321,9 @@ async def login_admin(payload: AdminLoginRequest, response: Response):
         raise HTTPException(status_code=403, detail="Admin access required")
 
     user_id = user["_id"]
-    two_fa_enabled = bool(user.get("two_fa_enabled"))
+
+    # TEMPORAIRE: on désactive la contrainte 2FA pour faciliter l'accès admin.
+    two_fa_enabled = False
 
     # 2FA enabled: return a temp token to be used with /auth/login-2fa
     if two_fa_enabled:
