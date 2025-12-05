@@ -201,7 +201,6 @@ function useI18n() {
   });
   const [dynamicTranslations, setDynamicTranslations] = useState({});
   const [isLoadingLang, setIsLoadingLang] = useState(false);
-  const [showDemoModal, setShowDemoModal] = useState(false);
 
   // Detect initial language from browser if no preference is stored.
   useEffect(() => {
