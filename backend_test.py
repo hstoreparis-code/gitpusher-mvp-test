@@ -840,8 +840,7 @@ class BackendAPITester:
                 code = totp.now()
                 
                 response = requests.post(
-                    f"{self.api_url}/auth/2fa/verify",
-                    json={"code": code},
+                    f"{self.api_url}/auth/2fa/verify?code={code}",
                     headers=headers,
                     cookies=cookies,
                     timeout=10
