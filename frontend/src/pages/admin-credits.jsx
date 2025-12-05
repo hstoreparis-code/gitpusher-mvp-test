@@ -26,78 +26,78 @@ export default function AdminCreditsBillingDashboard() {
   const [mintAllAmount, setMintAllAmount] = useState("");
   const [mintMessage, setMintMessage] = useState("");
 
-  useEffect(() => {
-    async function loadAll() {
-      try {
-        // récupérer le statut admin pour savoir si super admin
-        const statusRes = await fetch(`${API_BASE}/api/auth/admin-status`, { credentials: "include" });
-        if (statusRes.ok) {
-          const statusJson = await statusRes.json();
-          setIsSuperAdmin(!!statusJson.is_super_admin);
-        }
-
-        const [usersRes, statsRes, txRes, stripeHealthRes] = await Promise.all([
-          fetch(`${API_BASE}/api/admin/users`, { credentials: "include" }),
-          fetch(`${API_BASE}/api/admin/financial-stats`, { credentials: "include" }),
-          fetch(`${API_BASE}/api/admin/transactions`, { credentials: "include" }),
-          fetch(`${API_BASE}/api/admin/stripe/health`, { credentials: "include" }).catch(() => null),
-        ]);
-
-        const [usersJson, statsJson, txJson, stripeJson] = await Promise.all([
-          usersRes.ok ? usersRes.json() : Promise.resolve([]),
-          statsRes.ok ? statsRes.json() : Promise.resolve({}),
-          txRes.ok ? txRes.json() : Promise.resolve([]),
-          stripeHealthRes && stripeHealthRes.ok ? stripeHealthRes.json() : Promise.resolve(null),
-        ]);
-
-        const users = Array.isArray(usersJson) ? usersJson : [];
-        const transactions = Array.isArray(txJson) ? txJson : [];
-
-        // Crédit total et restant = somme des crédits utilisateurs
-        const totalCredits = users.reduce((sum, u) => sum + (u.credits || 0), 0);
-
-        // Utilisation par utilisateur = cumul des montants de transactions "consumption" ou "purchase" négatives
-        const usageByUser = {};
-        transactions.forEach((t) => {
-          if (!t.user_email) return;
-          const email = t.user_email;
-          const amount = typeof t.amount === "number" ? t.amount : 0;
-          if (!usageByUser[email]) usageByUser[email] = 0;
-          usageByUser[email] += amount;
-        });
-
-        const usageUsers = Object.entries(usageByUser)
-          .map(([email, amount]) => ({ email, credits_used: amount }))
-          .sort((a, b) => b.credits_used - a.credits_used)
-          .slice(0, 10);
-
-        setCredits({
-          total: totalCredits,
-          remaining: totalCredits,
-          used_today: 0, // TODO: dériver à partir des transactions du jour si besoin
-        });
-
-        setBilling({
-          subscribers: statsJson.total_transactions ?? 0,
-          mrr: statsJson.monthly_revenue ?? 0,
-          arr: (statsJson.monthly_revenue ?? 0) * 12,
-          revenue_30d: statsJson.total_revenue ?? 0,
-          transactions_by_day: statsJson.transactions_by_day || [],
-        });
-
-        setUsage({ users: usageUsers });
-
-        if (stripeJson) {
-          setStripe(stripeJson);
-        } else {
-          setStripe(null);
-        }
-      } catch (e) {
-        // en cas d'erreur globale, on affiche des messages d'attente dans l'UI
-        console.warn("Failed to load admin credits dashboard", e);
+  const loadAll = async () => {
+    try {
+      // récupérer le statut admin pour savoir si super admin
+      const statusRes = await fetch(`${API_BASE}/api/auth/admin-status`, { credentials: "include" });
+      if (statusRes.ok) {
+        const statusJson = await statusRes.json();
+        setIsSuperAdmin(!!statusJson.is_super_admin);
       }
-    }
 
+      const [usersRes, statsRes, txRes, stripeHealthRes] = await Promise.all([
+        fetch(`${API_BASE}/api/admin/users`, { credentials: "include" }),
+        fetch(`${API_BASE}/api/admin/financial-stats`, { credentials: "include" }),
+        fetch(`${API_BASE}/api/admin/transactions`, { credentials: "include" }),
+        fetch(`${API_BASE}/api/admin/stripe/health`, { credentials: "include" }).catch(() => null),
+      ]);
+
+      const [usersJson, statsJson, txJson, stripeJson] = await Promise.all([
+        usersRes.ok ? usersRes.json() : Promise.resolve([]),
+        statsRes.ok ? statsRes.json() : Promise.resolve({}),
+        txRes.ok ? txRes.json() : Promise.resolve([]),
+        stripeHealthRes && stripeHealthRes.ok ? stripeHealthRes.json() : Promise.resolve(null),
+      ]);
+
+      const users = Array.isArray(usersJson) ? usersJson : [];
+      const transactions = Array.isArray(txJson) ? txJson : [];
+
+      // Crédit total et restant = somme des crédits utilisateurs
+      const totalCredits = users.reduce((sum, u) => sum + (u.credits || 0), 0);
+
+      // Utilisation par utilisateur = cumul des montants de transactions "consumption" ou "purchase" négatives
+      const usageByUser = {};
+      transactions.forEach((t) => {
+        if (!t.user_email) return;
+        const email = t.user_email;
+        const amount = typeof t.amount === "number" ? t.amount : 0;
+        if (!usageByUser[email]) usageByUser[email] = 0;
+        usageByUser[email] += amount;
+      });
+
+      const usageUsers = Object.entries(usageByUser)
+        .map(([email, amount]) => ({ email, credits_used: amount }))
+        .sort((a, b) => b.credits_used - a.credits_used)
+        .slice(0, 10);
+
+      setCredits({
+        total: totalCredits,
+        remaining: totalCredits,
+        used_today: 0, // TODO: dériver à partir des transactions du jour si besoin
+      });
+
+      setBilling({
+        subscribers: statsJson.total_transactions ?? 0,
+        mrr: statsJson.monthly_revenue ?? 0,
+        arr: (statsJson.monthly_revenue ?? 0) * 12,
+        revenue_30d: statsJson.total_revenue ?? 0,
+        transactions_by_day: statsJson.transactions_by_day || [],
+      });
+
+      setUsage({ users: usageUsers });
+
+      if (stripeJson) {
+        setStripe(stripeJson);
+      } else {
+        setStripe(null);
+      }
+    } catch (e) {
+      // en cas d'erreur globale, on affiche des messages d'attente dans l'UI
+      console.warn("Failed to load admin credits dashboard", e);
+    }
+  };
+
+  useEffect(() => {
     loadAll();
   }, []);
 
