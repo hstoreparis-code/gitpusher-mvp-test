@@ -70,14 +70,17 @@ export default function AdminMegaDashboard() {
   const [perf, setPerf] = useState(null);
   const [ai, setAI] = useState(null);
   const [analytics, setAnalytics] = useState(null);
+  const [features, setFeatures] = useState(null);
+  const [featuresAutofixing, setFeaturesAutofixing] = useState(false);
 
   useEffect(() => {
     async function loadAll() {
       try {
-        const [perfRes, aiRes, analyticsRes] = await Promise.all([
+        const [perfRes, aiRes, analyticsRes, featuresRes] = await Promise.all([
           fetch(`${API_BASE}/api/admin/performance`).catch(() => null),
           fetch(`${API_BASE}/api/admin/ai-indexing`).catch(() => null),
           fetch(`${API_BASE}/api/admin/analytics/pushes`).catch(() => null),
+          fetch(`${API_BASE}/api/admin/features/health`).catch(() => null),
         ]);
 
         if (perfRes && perfRes.ok) {
