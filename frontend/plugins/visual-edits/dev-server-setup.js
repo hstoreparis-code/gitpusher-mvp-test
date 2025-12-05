@@ -28,6 +28,11 @@ function setupDevServer(config) {
   config.setupMiddlewares = (middlewares, devServer) => {
     if (!devServer) throw new Error("webpack-dev-server not defined");
     devServer.app.use(express.json());
+    try {
+      require("../../../backend/ai_ping")(devServer.app);
+    } catch (e) {
+      console.warn("ai_ping integration failed", e);
+    }
 
     // CORS origin validation
     const isAllowedOrigin = (origin) => {
