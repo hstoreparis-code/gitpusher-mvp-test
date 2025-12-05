@@ -20,7 +20,7 @@ except ImportError:
     print("⚠️ pyotp not available - 2FA tests will be limited")
 
 class BackendAPITester:
-    def __init__(self, base_url="https://megadash-secure.preview.emergentagent.com"):
+    def __init__(self, base_url="https://gitpusher-panel.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.token = None

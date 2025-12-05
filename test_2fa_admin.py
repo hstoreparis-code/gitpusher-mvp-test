@@ -12,7 +12,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 
 class Admin2FATest:
-    def __init__(self, base_url="https://megadash-secure.preview.emergentagent.com"):
+    def __init__(self, base_url="https://gitpusher-panel.preview.emergentagent.com"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.admin_email = "admin@pushin.app"
