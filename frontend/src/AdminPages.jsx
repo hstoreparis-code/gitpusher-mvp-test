@@ -163,7 +163,7 @@ export function AdminLoginPage() {
               </div>
             )}
 
-            {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+            {error && <p className="text-xs text-red-400 mt-1">{safeRender(error)}</p>}
             <Button
               type="submit"
               className="w-full mt-4 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white text-sm font-semibold shadow-[0_0_20px_rgba(56,189,248,0.7)] hover:shadow-[0_0_30px_rgba(56,189,248,1)] transition-all"
@@ -762,7 +762,7 @@ export function AdminDashboardPage() {
           </div>
         </div>
 
-        {error && <p className="text-xs text-red-400 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">{error}</p>}
+        {error && <p className="text-xs text-red-400 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">{safeRender(error)}</p>}
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
