@@ -181,8 +181,9 @@ export default function AdminCreditsBillingDashboard() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
-              MRR / ARR
+            <CardTitle className="flex items-center gap-1 text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              <span>MRR / ARR</span>
+              <InfoBadge text={"Chiffres clés de revenus : Monthly Recurring Revenue, Annual Recurring Revenue et revenus des 30 derniers jours. Utilise cette carte pour suivre la traction business globale."} />
             </CardTitle>
             <TrendingUp className="w-4 h-4 text-violet-400" />
           </CardHeader>
