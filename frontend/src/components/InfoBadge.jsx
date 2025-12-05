@@ -16,16 +16,19 @@ export function InfoBadge({ text }) {
       <button
         type="button"
         aria-label="Informations détaillées"
-        className="ml-2 inline-flex items-center justify-center h-5 w-5 rounded-full border border-cyan-400/70 bg-slate-900/80 text-cyan-300 hover:bg-cyan-500/10 hover:text-cyan-100 text-[10px] shadow-[0_0_10px_rgba(34,211,238,0.6)]"
+        className="ml-2 inline-flex items-center justify-center h-5 w-5 rounded-full border border-cyan-400/80 bg-slate-950 text-cyan-300 hover:bg-cyan-500/20 hover:text-cyan-50 text-[10px] shadow-[0_0_14px_rgba(34,211,238,0.9)]"
         onClick={() => setOpen((v) => !v)}
       >
         <Info className="w-3 h-3" />
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 w-72 max-w-xs rounded-xl border border-cyan-400/40 bg-slate-950/95 p-3 text-[11px] text-slate-200 shadow-[0_0_30px_rgba(34,211,238,0.55)] z-20">
-          <p className="leading-snug whitespace-pre-line">{text}</p>
+        <div className="absolute left-full top-1/2 ml-3 -translate-y-1/2 w-72 max-w-xs rounded-xl border border-cyan-400/60 bg-slate-950/95 p-3 text-[11px] text-slate-200 shadow-[0_0_40px_rgba(34,211,238,0.9)] z-40">
+          <p className="leading-snug whitespace-pre-line">
+            {text}
+          </p>
         </div>
       )}
     </div>
   );
 }
+
