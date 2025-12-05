@@ -133,8 +133,9 @@ export default function AdminPerformanceDashboard() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
-              Ressources
+            <CardTitle className="flex items-center gap-1 text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              <span>Ressources</span>
+              <InfoBadge text={"Charge estimée sur CPU et mémoire sur les derniers échantillons. Si ces valeurs restent élevées tout le temps, augmente les ressources ou optimise les jobs les plus lourds."} />
             </CardTitle>
             <Cpu className="w-4 h-4 text-cyan-400" />
           </CardHeader>
@@ -147,8 +148,9 @@ export default function AdminPerformanceDashboard() {
 
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
-              Synthèse rapide
+            <CardTitle className="flex items-center gap-1 text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              <span>Synthèse rapide</span>
+              <InfoBadge text={"Résumé narratif de l'état du backend sur les dernières minutes (OK vs incidents). Lis ceci en premier pour savoir rapidement si la plateforme est saine."} />
             </CardTitle>
             <Activity className="w-4 h-4 text-violet-400" />
           </CardHeader>
