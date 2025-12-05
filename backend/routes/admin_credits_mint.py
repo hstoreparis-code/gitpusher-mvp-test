@@ -7,13 +7,13 @@ router = APIRouter(prefix="/admin/credits", tags=["admin-credits-mint"])
 
 
 async def require_super_admin(authorization: Optional[str] = Header(None)) -> dict:
-  from server import require_admin
+    from server import require_admin
 
-  # require_admin renvoie déjà le document user
-  user = await require_admin(authorization, None)
-  if not user.get("is_super_admin"):
-      raise HTTPException(status_code=403, detail="Super admin access required")
-  return user
+    # require_admin renvoie déjà le document user
+    user = await require_admin(authorization, None)
+    if not user.get("is_super_admin"):
+        raise HTTPException(status_code=403, detail="Super admin access required")
+    return user
 
 
 @router.post("/mint/user")
