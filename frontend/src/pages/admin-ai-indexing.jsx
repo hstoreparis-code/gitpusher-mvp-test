@@ -223,6 +223,26 @@ export default function AdminAIIndexingDashboard() {
         </Box>
       </div>
 
+      {/* Raw AI sources (debug) */}
+      {rawSources.length > 0 && (
+        <section className="mt-4">
+          <h2 className="text-xs font-medium text-cyan-300 uppercase tracking-wide mb-2">
+            Sources IA brutes (7 derniers jours)
+          </h2>
+          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-3 max-h-64 overflow-auto text-[11px] text-slate-300 space-y-1">
+            {rawSources.map((src, idx) => (
+              <div key={idx} className="flex items-center justify-between gap-2">
+                <span className="font-mono text-[10px] text-slate-400 truncate max-w-[160px]">
+                  {src._id || "unknown"}
+                </span>
+                <span className="text-slate-300">{src.count ?? 0} hits</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+
       <div className="grid gap-4 md:grid-cols-2">
         <Box title="Developer Agents">
           <ul className="space-y-1">
