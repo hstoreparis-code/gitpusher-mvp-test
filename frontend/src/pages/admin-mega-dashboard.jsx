@@ -103,6 +103,13 @@ export default function AdminMegaDashboard() {
         } else {
           setAnalytics({ error: true });
         }
+
+        if (featuresRes && featuresRes.ok) {
+          const data = await featuresRes.json();
+          setFeatures(data || {});
+        } else {
+          setFeatures({ error: true });
+        }
       } catch {
         // Hard fail-safe: mark everything as error so UI stays lisible
         setPerf((prev) => prev || { error: true });
@@ -110,6 +117,10 @@ export default function AdminMegaDashboard() {
         setAnalytics((prev) => prev || { error: true });
       }
     }
+
+  const featuresOverall = features?.overall || null;
+  const featuresHealth = features?.health || {};
+  const hasFeaturesIssues = featuresOverall === "ISSUES";
 
     loadAll();
   }, []);
