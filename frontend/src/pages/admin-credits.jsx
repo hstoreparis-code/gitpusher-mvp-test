@@ -113,7 +113,7 @@ export default function AdminCreditsBillingDashboard() {
         </div>
         <div className="flex flex-wrap gap-2 items-center">
           <Badge className="text-xs px-3 py-1 rounded-full border bg-emerald-500/10 text-emerald-300 border-emerald-400/50">
-            Billing: OK (mock)
+            Billing: Live data
           </Badge>
         </div>
       </header>
