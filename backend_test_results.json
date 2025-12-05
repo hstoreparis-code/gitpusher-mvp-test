@@ -1,112 +1,175 @@
 {
-  "total_tests": 16,
-  "passed_tests": 0,
-  "success_rate": 0.0,
+  "total_tests": 25,
+  "passed_tests": 23,
+  "success_rate": 92.0,
   "test_results": [
     {
       "name": "API Health Check",
-      "success": false,
+      "success": true,
       "details": "API root endpoint accessible",
       "expected_status": 200,
-      "actual_status": 502
+      "actual_status": 200
     },
     {
       "name": "User Registration",
-      "success": false,
-      "details": "Email: test_058d3419@example.com",
+      "success": true,
+      "details": "Email: test_0030250a@example.com",
       "expected_status": 200,
-      "actual_status": 502
+      "actual_status": 200
     },
     {
       "name": "User Login",
-      "success": false,
-      "details": "No registered user available",
-      "expected_status": null,
-      "actual_status": null
+      "success": true,
+      "details": "Token received: Yes",
+      "expected_status": 200,
+      "actual_status": 200
     },
     {
       "name": "User Profile",
-      "success": false,
-      "details": "No authentication token available",
-      "expected_status": null,
-      "actual_status": null
+      "success": true,
+      "details": "User ID: 7148a8a0-33d9-40c1-939d-465980cea98d, Email: test_0030250a@example.com",
+      "expected_status": 200,
+      "actual_status": 200
     },
     {
       "name": "Create Project",
-      "success": false,
-      "details": "No authentication token available",
-      "expected_status": null,
-      "actual_status": null
+      "success": true,
+      "details": "Project ID: 587b9e39-c65b-47b1-817a-06406034355f",
+      "expected_status": 200,
+      "actual_status": 200
     },
     {
       "name": "List Projects",
-      "success": false,
-      "details": "No authentication token available",
-      "expected_status": null,
-      "actual_status": null
+      "success": true,
+      "details": "Projects found: 1",
+      "expected_status": 200,
+      "actual_status": 200
     },
     {
       "name": "File Upload",
-      "success": false,
-      "details": "No token or project available",
-      "expected_status": null,
-      "actual_status": null
+      "success": true,
+      "details": "Files uploaded: 1",
+      "expected_status": 200,
+      "actual_status": 200
     },
     {
       "name": "Process Project (No GitHub)",
-      "success": false,
-      "details": "No token or project available",
+      "success": true,
+      "details": "Error message: Git provider token not linked for this user (provider: github)",
+      "expected_status": 400,
+      "actual_status": 400
+    },
+    {
+      "name": "Admin Login",
+      "success": true,
+      "details": "Admin successfully logged in",
       "expected_status": null,
       "actual_status": null
     },
     {
-      "name": "Admin Login",
-      "success": false,
-      "details": "Admin login failed: ",
+      "name": "Admin Status Check",
+      "success": true,
+      "details": "Admin status confirmed",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Admin Users Endpoint",
+      "success": true,
+      "details": "Successfully retrieved 15 users, sample email: test_dc00fa07@example.com",
       "expected_status": 200,
-      "actual_status": 502
+      "actual_status": 200
     },
     {
       "name": "Invalid Auth Handling",
-      "success": false,
+      "success": true,
       "details": "Should reject invalid tokens",
       "expected_status": 401,
-      "actual_status": 502
+      "actual_status": 401
     },
     {
       "name": "Support Chat - Demo Login",
-      "success": false,
-      "details": "Demo login failed: ",
+      "success": true,
+      "details": "Demo user successfully logged in",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Support Chat - User Send Message",
+      "success": true,
+      "details": "Message sent successfully, ID: b10323d9-62cb-417f-b305-a03249a0c6c0",
       "expected_status": 200,
-      "actual_status": 502
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - Admin Login",
+      "success": true,
+      "details": "Admin successfully logged in",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "Support Chat - Admin Get Conversations",
+      "success": true,
+      "details": "Retrieved 2 conversation(s), found demo user message",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - Admin Send Response",
+      "success": true,
+      "details": "Admin response sent successfully, ID: 6b957f4f-fdd1-4b70-abda-b429a68dc900",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - User Get Messages",
+      "success": true,
+      "details": "Retrieved 11 message(s), both user and admin messages found",
+      "expected_status": 200,
+      "actual_status": 200
+    },
+    {
+      "name": "Support Chat - Admin Online Status",
+      "success": true,
+      "details": "Admin online status: False, Name: Support Team",
+      "expected_status": 200,
+      "actual_status": 200
     },
     {
       "name": "2FA - Admin User Exists",
+      "success": true,
+      "details": "Admin exists with valid credentials, requires_2fa: True",
+      "expected_status": null,
+      "actual_status": null
+    },
+    {
+      "name": "2FA - Setup",
       "success": false,
-      "details": "Admin login failed: ",
+      "details": "2FA setup failed: {\"detail\":\"Not authenticated\"}",
       "expected_status": 200,
-      "actual_status": 502
+      "actual_status": 401
     },
     {
       "name": "Protected Endpoint - /admin/users (No Auth)",
-      "success": false,
-      "details": "Endpoint not protected, returned 502",
+      "success": true,
+      "details": "Endpoint properly protected, returned 401",
       "expected_status": "401/403",
-      "actual_status": 502
+      "actual_status": 401
     },
     {
-      "name": "Protected Endpoint - /admin/performance (No Auth)",
-      "success": false,
-      "details": "Endpoint not protected, returned 502",
+      "name": "Protected Endpoint - /admin/jobs (No Auth)",
+      "success": true,
+      "details": "Endpoint properly protected, returned 401",
       "expected_status": "401/403",
-      "actual_status": 502
+      "actual_status": 401
     },
     {
-      "name": "Protected Endpoint - /admin/ai-indexing (No Auth)",
-      "success": false,
-      "details": "Endpoint not protected, returned 502",
+      "name": "Protected Endpoint - /admin/transactions (No Auth)",
+      "success": true,
+      "details": "Endpoint properly protected, returned 401",
       "expected_status": "401/403",
-      "actual_status": 502
+      "actual_status": 401
     },
     {
       "name": "Protected Endpoints (With Auth)",
