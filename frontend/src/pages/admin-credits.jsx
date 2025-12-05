@@ -192,11 +192,11 @@ export default function AdminCreditsBillingDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-1 text-xs text-slate-300">
-            {usage && usage.users ? (
+            {usage && usage.users && usage.users.length > 0 ? (
               <ul className="space-y-1">
                 {usage.users.map((u, i) => (
                   <li key={i}>
-                    {u.email} — {u.credits_used} credits
+                    {u.email} — {u.credits_used} crédits utilisés
                   </li>
                 ))}
               </ul>
