@@ -29,6 +29,13 @@ export default function AdminCreditsBillingDashboard() {
   useEffect(() => {
     async function loadAll() {
       try {
+        // récupérer le statut admin pour savoir si super admin
+        const statusRes = await fetch(`${API_BASE}/api/auth/admin-status`, { credentials: "include" });
+        if (statusRes.ok) {
+          const statusJson = await statusRes.json();
+          setIsSuperAdmin(!!statusJson.is_super_admin);
+        }
+
         const [usersRes, statsRes, txRes, stripeHealthRes] = await Promise.all([
           fetch(`${API_BASE}/api/admin/users`, { credentials: "include" }),
           fetch(`${API_BASE}/api/admin/financial-stats`, { credentials: "include" }),
