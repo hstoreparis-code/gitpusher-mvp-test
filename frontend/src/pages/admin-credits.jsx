@@ -21,6 +21,10 @@ export default function AdminCreditsBillingDashboard() {
   const [billing, setBilling] = useState(null);
   const [usage, setUsage] = useState(null);
   const [stripe, setStripe] = useState(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [mintUser, setMintUser] = useState({ email: "", amount: "" });
+  const [mintAllAmount, setMintAllAmount] = useState("");
+  const [mintMessage, setMintMessage] = useState("");
 
   useEffect(() => {
     async function loadAll() {
