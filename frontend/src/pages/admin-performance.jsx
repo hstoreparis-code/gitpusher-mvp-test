@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Activity, ArrowLeft, Cpu, GaugeCircle, MemoryStick, Server } from "lucide-react";
 import AIMeta from "../components/AIMeta";
+import { InfoBadge } from "../components/InfoBadge";
 
 export const metadata = {
   title: "Admin — Performance Dashboard",
@@ -114,8 +115,9 @@ export default function AdminPerformanceDashboard() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
-              System & API
+            <CardTitle className="flex items-center gap-1 text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              <span>System & API</span>
+              <InfoBadge text={"Vue temps réel de la stabilité du backend (statut API, uptime, RPS, latence moyenne). Utilise cette carte pour voir si le backend tient la charge ou sature (RPS élevé + latence qui grimpe = problème)."} />
             </CardTitle>
             <Server className="w-4 h-4 text-emerald-400" />
           </CardHeader>
