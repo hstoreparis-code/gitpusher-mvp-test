@@ -99,7 +99,7 @@ export function Admin2FAPanel() {
             }`}
           >
             <AlertCircle className="h-4 w-4" />
-            <span>{message}</span>
+            <span>{safeRender(message)}</span>
           </div>
         )}
 
