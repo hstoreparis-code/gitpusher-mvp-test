@@ -219,6 +219,122 @@ export default function AdminCreditsBillingDashboard() {
         </Card>
 
         <Card className="bg-slate-900/70 border-slate-700/70">
+      {isSuperAdmin && (
+        <Card className="bg-gradient-to-br from-emerald-500/10 via-slate-900 to-emerald-500/5 border border-emerald-500/40 mt-4">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-medium text-emerald-300 uppercase tracking-wide">
+              Super Admin — Recharge infinie du système de crédits
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-xs text-slate-200">
+            {mintMessage && (
+              <p className="text-[11px] text-emerald-300">{mintMessage}</p>
+            )}
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Mint ciblé sur un utilisateur */}
+              <div className="space-y-2">
+                <p className="text-[11px] text-slate-400">Ajouter des crédits à un utilisateur spécifique (mint hors Stripe).</p>
+                <input
+                  type="email"
+                  placeholder="Email utilisateur (exact)"
+                  value={mintUser.email}
+                  onChange={(e) => setMintUser({ ...mintUser, email: e.target.value })}
+                  className="w-full px-2 py-1.5 rounded-md bg-slate-950/70 border border-slate-700 text-xs"
+                />
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Montant à mint (crédits)"
+                  value={mintUser.amount}
+                  onChange={(e) => setMintUser({ ...mintUser, amount: e.target.value })}
+                  className="w-full px-2 py-1.5 rounded-md bg-slate-950/70 border border-slate-700 text-xs"
+                />
+                <Button
+                  size="sm"
+                  className="mt-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-semibold"
+                  onClick={async () => {
+                    try {
+                      setMintMessage("");
+                      if (!mintUser.email || !mintUser.amount) return;
+
+                      // récupérer l'utilisateur cible via /admin/users
+                      const usersRes = await fetch(`${API_BASE}/api/admin/users`, { credentials: "include" });
+                      const usersJson = usersRes.ok ? await usersRes.json() : [];
+                      const target = Array.isArray(usersJson)
+                        ? usersJson.find((u) => u.email === mintUser.email)
+                        : null;
+                      if (!target) {
+                        setMintMessage("Utilisateur introuvable pour cet email.");
+                        return;
+                      }
+
+                      const res = await fetch(`${API_BASE}/api/admin/credits/mint/user`, {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ user_id: target.id, amount: Number(mintUser.amount) || 0 }),
+                      });
+                      if (!res.ok) {
+                        setMintMessage("Erreur lors du mint ciblé.");
+                        return;
+                      }
+                      setMintMessage(`Mint de ${mintUser.amount} crédits appliqué à ${mintUser.email}.`);
+                      setMintUser({ email: "", amount: "" });
+                      // Recharger les données globales
+                      await loadAll();
+                    } catch (e) {
+                      setMintMessage("Erreur inattendue pendant le mint utilisateur.");
+                    }
+                  }}
+                >
+                  Mint utilisateur
+                </Button>
+              </div>
+
+              {/* Mint global sur tous les utilisateurs */}
+              <div className="space-y-2">
+                <p className="text-[11px] text-slate-400">Ajouter des crédits à tous les utilisateurs (attention, impact global).</p>
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Montant à mint pour chaque user"
+                  value={mintAllAmount}
+                  onChange={(e) => setMintAllAmount(e.target.value)}
+                  className="w-full px-2 py-1.5 rounded-md bg-slate-950/70 border border-slate-700 text-xs"
+                />
+                <Button
+                  size="sm"
+                  className="mt-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 text-xs font-semibold"
+                  onClick={async () => {
+                    try {
+                      setMintMessage("");
+                      if (!mintAllAmount) return;
+                      const res = await fetch(`${API_BASE}/api/admin/credits/mint/all`, {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ amount: Number(mintAllAmount) || 0 }),
+                      });
+                      if (!res.ok) {
+                        setMintMessage("Erreur lors du mint global.");
+                        return;
+                      }
+                      setMintMessage(`Mint global de ${mintAllAmount} crédits appliqué à tous les utilisateurs.`);
+                      setMintAllAmount("");
+                      await loadAll();
+                    } catch (e) {
+                      setMintMessage("Erreur inattendue pendant le mint global.");
+                    }
+                  }}
+                >
+                  Mint global
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
               Alerts
