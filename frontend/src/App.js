@@ -4145,9 +4145,10 @@ function AppShell() {
             setLang={setLang}
             dark={dark}
             setDark={setDark}
-            onGetStarted={handleGetStarted}
             currentLang={currentLang}
             languages={languages}
+            isLoadingLang={isLoadingLang}
+            onOpenDemoModal={() => setShowDemoModal(true)}
           />
         }
       />
