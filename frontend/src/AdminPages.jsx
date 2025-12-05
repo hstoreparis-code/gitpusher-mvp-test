@@ -1376,7 +1376,7 @@ export function AdminDashboardPage() {
                           <div className="flex items-center justify-between">
                             <div>
                               <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Transaction Moy.</p>
-                              <p className="text-3xl font-bold text-amber-300">{financialData.stats.average_transaction.toFixed(2)}€</p>
+                              <p className="text-3xl font-bold text-amber-300">{Number(financialData.stats.average_transaction || 0).toFixed(2)}€</p>
                             </div>
                             <Activity className="w-10 h-10 text-amber-400/40" />
                           </div>
