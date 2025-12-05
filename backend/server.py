@@ -1102,14 +1102,12 @@ async def ensure_admin_user():
         await db.users.update_one({"_id": super_admin["_id"]}, {"$set": updates})
         logger.info("Super admin user ensured for founder@gitpusher.ai")
 
-        logger.info("Admin user created with email %s", ADMIN_EMAIL)
-    else:
-        if not existing.get("is_admin"):
-            await db.users.update_one(
-                {"_id": existing["_id"]},
-                {"$set": {"is_admin": True, "updated_at": datetime.now(timezone.utc).isoformat()}},
-            )
-            logger.info("Existing user %s upgraded to admin", ADMIN_EMAIL)
+    if existing and not existing.get("is_admin"):
+        await db.users.update_one(
+            {"_id": existing["_id"]},
+            {"$set": {"is_admin": True, "updated_at": datetime.now(timezone.utc).isoformat()}},
+        )
+        logger.info("Existing user %s upgraded to admin", ADMIN_EMAIL)
     
     # Create welcome email template if not exists
     from services.email_service import EmailService
