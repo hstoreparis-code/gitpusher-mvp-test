@@ -137,7 +137,7 @@ export default function SeoMonitorManagerPage() {
             <TrendingUp className="w-4 h-4 text-violet-400" />
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-semibold text-violet-300">{position.toFixed(1)}</p>
+            <p className="text-3xl font-semibold text-violet-300">{Number(position || 0).toFixed(1)}</p>
             <p className="text-xs text-slate-400 mt-1">Rang moyen estimé sur Google.</p>
           </CardContent>
         </Card>
