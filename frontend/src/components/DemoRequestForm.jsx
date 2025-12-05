@@ -141,7 +141,7 @@ export default function DemoRequestForm({ onClose }) {
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs text-slate-300">Cas d'usage principal</label>
+        <label className="text-xs text-slate-300">Cas d&apos;usage principal</label>
         <input
           name="use_case"
           value={form.use_case}
