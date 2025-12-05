@@ -231,19 +231,23 @@ export default function AdminCreditsBillingDashboard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-end gap-1 h-24">
-            {[20, 40, 35, 60, 55, 80, 95].map((h, i) => (
-              <div
-                key={i}
-                style={{
-                  width: "12%",
-                  height: h,
-                  background: "linear-gradient(180deg, #ffb340, #ff8c00)",
-                  borderRadius: "4px",
-                }}
-              />
-            ))}
+            {(billing && Array.isArray(billing.transactions_by_day) ? billing.transactions_by_day : []).map((d, i) => {
+              const h = typeof d.amount === "number" ? Math.max(4, Math.min(100, d.amount)) : 4;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    width: "12%",
+                    height: `${h}%`,
+                    background: "linear-gradient(180deg, #ffb340, #ff8c00)",
+                    borderRadius: "4px",
+                  }}
+                  title={`${d.date}: ${d.amount?.toFixed ? d.amount.toFixed(2) : d.amount}€`}
+                />
+              );
+            })}
           </div>
-          <p className="text-[11px] text-slate-500 mt-2">Simulated 7-day revenue evolution</p>
+          <p className="text-[11px] text-slate-500 mt-2">Évolution réelle du revenu (30 derniers jours)</p>
         </CardContent>
       </Card>
     </main>
