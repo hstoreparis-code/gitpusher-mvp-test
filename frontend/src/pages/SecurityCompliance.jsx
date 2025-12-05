@@ -100,25 +100,32 @@ export default function SecurityCompliancePage() {
         <li>No storage of user code beyond the push operation</li>
       </ul>
 
-      <h2>8. Infrastructure</h2>
-      <ul>
+      <h2 className="mt-8 mb-3 text-lg font-semibold text-slate-100">8. Infrastructure</h2>
+      <ul className="space-y-1 text-sm text-slate-300 list-disc list-inside">
         <li>HTTPS enforced everywhere</li>
         <li>Optional IP allow-listing for administration</li>
         <li>Containerized backend with minimal attack surface</li>
       </ul>
-
-      <h2>Contact</h2>
-      <p>
-        For compliance questions or security disclosures, email:
-        <br />
-        <strong>security@gitpusher.ai</strong>
-      </p>
-
-      <h2>Commitment</h2>
-      <p>
-        GitPusher.ai aims to provide a safe, reliable and transparent environment for code
-        automation. We continuously upgrade our security posture as new threats emerge.
-      </p>
+      
+      <div className="mt-10 grid gap-6 md:grid-cols-2">
+        <section className="rounded-2xl border border-slate-700 bg-slate-900/70 p-5">
+          <h2 className="mb-2 text-base font-semibold text-slate-100">Contact</h2>
+          <p className="text-sm text-slate-300">
+            For compliance questions or responsible disclosure, contact:
+            <br />
+            <span className="font-semibold text-emerald-300">security@gitpusher.ai</span>
+          </p>
+        </section>
+        <section className="rounded-2xl border border-slate-700 bg-slate-900/70 p-5">
+          <h2 className="mb-2 text-base font-semibold text-slate-100">Commitment</h2>
+          <p className="text-sm text-slate-300">
+            GitPusher.ai aims to provide a safe, reliable and transparent environment for code
+            automation. Our security posture is continuously improved as new threats and best
+            practices emerge.
+          </p>
+        </section>
+      </div>
+      </div>
     </main>
   );
 }
