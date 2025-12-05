@@ -43,8 +43,8 @@ export default function SecurityCompliancePage() {
           </div>
         </section>
 
-      <h2>1. Secure Authentication</h2>
-      <ul>
+      <h2 className="mt-10 mb-3 text-lg font-semibold text-slate-100">1. Secure Authentication</h2>
+      <ul className="space-y-1 text-sm text-slate-300 list-disc list-inside">
         <li><strong>Secure session cookies (HttpOnly, Secure, SameSite)</strong></li>
         <li><strong>Optional 2FA (TOTP)</strong> for admin and sensitive operations</li>
         <li>Session expiration + automatic rotation</li>
