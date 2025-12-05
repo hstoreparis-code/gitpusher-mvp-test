@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Activity, ArrowLeft, HeartPulse, ServerCog, GitBranch, Zap, Globe2, ShieldCheck } from "lucide-react";
 import AIMeta from "../components/AIMeta";
+import { InfoBadge } from "../components/InfoBadge";
 
 export const metadata = {
   title: "GitPusher Admin — Features Dashboard",
