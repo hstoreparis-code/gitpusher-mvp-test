@@ -124,8 +124,8 @@ export default function AdminPerformanceDashboard() {
               Statut API : <StatusPill ok={!!apiOk} />
             </p>
             <p>Uptime : {uptime}</p>
-            <p>RPS (dernière minute) : {rps != null ? rps.toFixed(2) : "N/A"}</p>
-            <p>Latence moyenne : {avgLatency != null ? `${avgLatency.toFixed(1)} ms` : "N/A"}</p>
+            <p>RPS (dernière minute) : {typeof rps === "number" && Number.isFinite(rps) ? rps.toFixed(2) : "N/A"}</p>
+            <p>Latence moyenne : {typeof avgLatency === "number" && Number.isFinite(avgLatency) ? `${avgLatency.toFixed(1)} ms` : "N/A"}</p>
           </CardContent>
         </Card>
 
