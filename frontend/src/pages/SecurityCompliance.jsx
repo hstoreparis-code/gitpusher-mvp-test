@@ -57,8 +57,8 @@ export default function SecurityCompliancePage() {
         logs, validated, and stored with short TTL when possible.
       </p>
 
-      <h2>3. Rate Limiting &amp; Abuse Prevention</h2>
-      <ul>
+      <h2 className="mt-8 mb-3 text-lg font-semibold text-slate-100">3. Rate Limiting &amp; Abuse Prevention</h2>
+      <ul className="space-y-1 text-sm text-slate-300 list-disc list-inside">
         <li>Global rate-limit engine with Redis integration</li>
         <li>
           Per-IP and per-route limits for: <code>/push</code>, <code>/auth</code>, <code>/admin</code>
