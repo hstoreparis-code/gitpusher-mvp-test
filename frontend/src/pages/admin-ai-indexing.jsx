@@ -110,8 +110,9 @@ export default function AdminAIIndexingDashboard() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="bg-slate-900/70 border-slate-700/70 shadow-[0_0_25px_rgba(56,189,248,0.2)]">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-cyan-300 uppercase tracking-wide">
-              AI Visibility Score
+            <CardTitle className="flex items-center gap-1 text-xs font-medium text-cyan-300 uppercase tracking-wide">
+              <span>AI Visibility Score</span>
+              <InfoBadge text={"Score global (0–100) calculé à partir des logs IA réels (agents, crawlers, LLMs) : plus il est haut, plus GitPusher est bien compris et indexé par les IA. Utilise ce score pour suivre l'effet des changements de docs/SEO/AI-actions."} />
             </CardTitle>
             <Activity className="w-4 h-4 text-emerald-400" />
           </CardHeader>
