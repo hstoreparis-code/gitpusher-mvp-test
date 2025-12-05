@@ -14,6 +14,7 @@ class DemoRequestCreate(BaseModel):
     name: str = Field(..., max_length=200)
     email: EmailStr
     company: Optional[str] = Field(None, max_length=200)
+    website: str = Field(..., max_length=300)
     role: Optional[str] = Field(None, max_length=120)
     team_size: Optional[str] = Field(None, max_length=50)
     use_case: Optional[str] = Field(None, max_length=500)

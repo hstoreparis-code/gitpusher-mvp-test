@@ -9,6 +9,7 @@ export default function DemoRequestForm({ onClose }) {
     name: "",
     email: "",
     company: "",
+    website: "",
     role: "",
     team_size: "",
     use_case: "",
