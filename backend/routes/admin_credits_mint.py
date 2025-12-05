@@ -33,6 +33,7 @@ async def mint_credits_for_user(
 
     user_id = payload.get("user_id")
     amount = int(payload.get("amount", 0))
+    # Optional reason for audit logs (stored via CreditsService.add_credits)
     reason = payload.get("reason") or "super_admin_mint"
 
     if not user_id or amount <= 0:
