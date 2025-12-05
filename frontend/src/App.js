@@ -145,7 +145,7 @@ const baseTranslations = {
     landingDropDescription:
       "Zip, PDF, dossiers de code… GitPusher s’occupe de tout organiser et pousser sur Git.",
     landingDropTagline: "No Git, no CLI, juste ton navigateur.",
-    landingDemoCta: "Accéder à la démo",
+    landingDemoCta: "Voir une démo",
     landingPrimaryCta: "Commencer gratuitement",
     navPricing: "Tarifs",
     navWhitepaper: "Livre Blanc",
