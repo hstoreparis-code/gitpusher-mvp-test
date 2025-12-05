@@ -916,11 +916,7 @@ class BackendAPITester:
                     code = totp.now()
                     
                     response = requests.post(
-                        f"{self.api_url}/auth/login-2fa",
-                        json={
-                            "code": code,
-                            "temp_token": temp_token
-                        },
+                        f"{self.api_url}/auth/login-2fa?code={code}&temp_token={temp_token}",
                         timeout=10
                     )
                     
