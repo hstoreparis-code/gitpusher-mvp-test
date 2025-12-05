@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Activity, ArrowLeft, CreditCard, DollarSign, TrendingUp } from "lucide-react";
 import AIMeta from "../components/AIMeta";
+import { InfoBadge } from "../components/InfoBadge";
 
 const API_BASE = process.env.REACT_APP_BACKEND_URL || "";
 
