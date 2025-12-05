@@ -306,6 +306,8 @@ function Landing({ t, lang, setLang, dark, setDark, currentLang, languages, isLo
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(null);
 
+  const [localDemoOpen, setLocalDemoOpen] = useState(false);
+
   const handleGetStarted = () => {
     if (token) {
       // Utilisateur connecté : accès direct au dashboard
