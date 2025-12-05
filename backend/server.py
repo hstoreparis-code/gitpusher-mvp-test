@@ -883,6 +883,8 @@ app.include_router(admin_ai_indexing.router, prefix="/api")
 app.include_router(admin_push_analytics.router, prefix="/api")
 app.include_router(admin_billing.router, prefix="/api")
 app.include_router(admin_credits_mint.router, prefix="/api")
+app.include_router(demo_requests_public.router, prefix="/api")
+app.include_router(demo_requests_admin, prefix="/api")
 
 app.include_router(ai_catalog.router, prefix="/api")
 app.include_router(ai_health.router, prefix="/api")
