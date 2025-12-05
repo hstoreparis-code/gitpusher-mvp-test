@@ -98,7 +98,10 @@ export default function AdminCreditsBillingDashboard() {
   };
 
   useEffect(() => {
-    loadAll();
+    const initializeData = async () => {
+      await loadAll();
+    };
+    initializeData();
   }, []);
 
   return (
