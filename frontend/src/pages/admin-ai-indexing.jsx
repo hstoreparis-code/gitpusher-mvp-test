@@ -120,8 +120,15 @@ export default function AdminAIIndexingDashboard() {
               <span className="text-xs text-slate-500">/ 100</span>
             </div>
             <p className="text-[11px] text-slate-500">
-              Basé sur les fichiers V3/V4 et le trafic IA réel analysé par <code className="bg-slate-900 px-1 rounded">/api/ai/health</code>.
+              Basé sur les logs IA réels (agents et crawlers) agrégés par
+              <code className="bg-slate-900 px-1 ml-1 rounded">GET /api/ai/health</code>
+              et consolidés via <code className="bg-slate-900 px-1 ml-1 rounded">GET /api/admin/ai-indexing</code>.
             </p>
+            {updatedAt && (
+              <p className="text-[10px] text-slate-500">
+                Dernière mise à jour : <span className="font-mono">{updatedAt}</span>
+              </p>
+            )}
           </CardContent>
         </Card>
 
