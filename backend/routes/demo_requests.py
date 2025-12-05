@@ -62,7 +62,7 @@ async def create_demo_request(payload: DemoRequestCreate, db=Depends(_get_db)):
 
 
 @admin_router.get("", response_model=List[DemoRequest])
-async def list_demo_requests(db=Depends(get_db), admin=Depends(require_admin)):
+async def list_demo_requests(db=Depends(_get_db), admin=Depends(_require_admin)):
     _ = admin
     docs = await db.demo_requests.find({}, {"_id": 0}).sort("created_at", -1).to_list(200)
     return [DemoRequest(**doc) for doc in docs]
