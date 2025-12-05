@@ -314,6 +314,10 @@ export function AdminDashboardPage() {
           navigate("/admin-login", { replace: true });
           return;
         }
+
+        if (typeof status.data.two_fa_enabled === "boolean") {
+          setTwoFAEnabled(status.data.two_fa_enabled);
+        }
         const [usersRes, jobsRes, aiStatsRes, aiEventsRes] = await Promise.all([
           axios.get(`${API}/admin/users`),
           axios.get(`${API}/admin/jobs`),
