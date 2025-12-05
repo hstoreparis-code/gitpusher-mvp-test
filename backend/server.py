@@ -613,6 +613,7 @@ from routes import (
     admin_performance,
     admin_ai_indexing,
     admin_push_analytics,
+    admin_billing,
     v1_auth,
     v1_autopush,
     v1_billing,
