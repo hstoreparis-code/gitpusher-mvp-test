@@ -135,7 +135,7 @@ export default function TiktokSeoMonitorManagerPage() {
             <TrendingUp className="w-4 h-4 text-violet-400" />
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-semibold text-violet-300">{engagement.toFixed(1)}%</p>
+            <p className="text-3xl font-semibold text-violet-300">{Number(engagement || 0).toFixed(1)}%</p>
             <p className="text-xs text-slate-400 mt-1">Likes, commentaires, partages / vues.</p>
           </CardContent>
         </Card>
