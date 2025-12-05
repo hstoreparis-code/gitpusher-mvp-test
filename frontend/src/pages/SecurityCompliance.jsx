@@ -15,8 +15,24 @@ export default function SecurityCompliancePage() {
     <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 px-4 py-10">
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Header */}
-        <header className="space-y-3">
-          <p className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-400/40 shadow-[0_0_18px_rgba(16,185,129,0.35)]">
+        <header className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => navigate(-1)}
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-400/70 bg-cyan-500/15 text-xs text-cyan-200 px-3 py-1 shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:bg-cyan-500/25 hover:text-cyan-50"
+            >
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-cyan-400 text-slate-950 shadow-[0_0_12px_rgba(34,211,238,0.9)]">
+                <ArrowLeft className="w-3 h-3" />
+              </span>
+              <span>Back to app</span>
+            </Button>
+            <p className="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-400/40 shadow-[0_0_18px_rgba(16,185,129,0.35)]">
+              Security &amp; Compliance
+            </p>
+          </div>
+          <p className="sm:hidden inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-400/40 shadow-[0_0_18px_rgba(16,185,129,0.35)]">
             Security &amp; Compliance
           </p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(45,212,191,0.8)]">
