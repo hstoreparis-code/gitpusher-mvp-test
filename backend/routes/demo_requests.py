@@ -1,10 +1,10 @@
 from datetime import datetime, timezone
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, EmailStr, Field
 
-from server import get_db, require_admin
+from .dependencies import get_db, require_admin
 
 router = APIRouter(prefix="/public", tags=["demo-requests-public"])
 admin_router = APIRouter(prefix="/admin/demo-requests", tags=["demo-requests-admin"])
