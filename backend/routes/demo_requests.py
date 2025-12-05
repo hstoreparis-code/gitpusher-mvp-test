@@ -1,10 +1,20 @@
 from datetime import datetime, timezone
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header, Request
 from pydantic import BaseModel, EmailStr, Field
 
-from .dependencies import get_db, require_admin
+
+async def _get_db():  # lazy import to avoid circular import
+    from server import db
+
+    return db
+
+
+async def _require_admin(authorization: str | None = Header(default=None), request: Request | None = None):
+    from server import require_admin as core_require_admin
+
+    return await core_require_admin(authorization, request)
 
 router = APIRouter(prefix="/public", tags=["demo-requests-public"])
 admin_router = APIRouter(prefix="/admin/demo-requests", tags=["demo-requests-admin"])
