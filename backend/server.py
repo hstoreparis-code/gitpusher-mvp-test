@@ -2191,6 +2191,7 @@ async def admin_status(request: Request, authorization: Optional[str] = Header(d
         raise HTTPException(status_code=401, detail="Not authenticated")
     return AdminStatus(
         is_admin=bool(user.get("is_admin")),
+        is_super_admin=bool(user.get("is_super_admin")),
         two_fa_enabled=bool(user.get("two_fa_enabled")) if "two_fa_enabled" in user else None,
     )
 
